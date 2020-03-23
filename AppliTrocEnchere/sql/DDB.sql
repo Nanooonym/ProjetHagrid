@@ -97,5 +97,3 @@ ON DELETE NO ACTION
 
 INSERT INTO UTILISATEURS VALUES ('Bobby', 'Dylan','Bob','bobdylan@email.com','02.22.22.22.22','rue de la guitare',35000,'Guitarville','12345','50',0);
 INSERT INTO UTILISATEURS VALUES ('Le Vieux', 'Cash','Johnny','oldman@email.com','02.33.33.33.33','rue du désert',75000,'Old Man City','azert','200',1);
-
-TEST
