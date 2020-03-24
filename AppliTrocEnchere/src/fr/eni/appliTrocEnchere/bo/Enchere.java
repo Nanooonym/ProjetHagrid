@@ -78,6 +78,7 @@ public class Enchere {
 		return true;
 	}
 	
+	
 	//toString avec tous les attributs
 
 	@Override
