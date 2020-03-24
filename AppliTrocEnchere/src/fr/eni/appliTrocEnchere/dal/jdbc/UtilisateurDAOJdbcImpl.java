@@ -1,6 +1,7 @@
 package fr.eni.appliTrocEnchere.dal.jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,6 +17,8 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String SELECT_UTILISATEURS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur  FROM UTILISATEURS";
+//	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS VALUES ?,test,test,test,test,test,test,test,test,0,0";
+	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,0,0)";
 	
 	@Override
 	public List<Utilisateur> selectUtilisateurs() throws BusinessException {
@@ -42,6 +45,33 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
 			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEURS_ECHEC);
+			throw be;
+		}
+
+	}
+	
+	@Override
+	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException  {
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement smt = cnx.prepareStatement(INSERT_UTILISATEUR);) {
+			
+			smt.setString(1, utilisateur.getPseudo());
+			smt.setString(2, utilisateur.getNom());
+			smt.setString(3, utilisateur.getPrenom());
+			smt.setString(4, utilisateur.getEmail());
+			smt.setString(5, utilisateur.getTelephone());
+			smt.setString(6, utilisateur.getRue());
+			smt.setString(7, utilisateur.getCodePostal());
+			smt.setString(8, utilisateur.getVille());
+			smt.setString(9, utilisateur.getMotDePasse());
+			
+//			int nombreEnregistrementInsere = smt.executeUpdate();
+			smt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.INSERT_UTILISATEUR_ECHEC);
 			throw be;
 		}
 

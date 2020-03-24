@@ -30,36 +30,36 @@ public class ServletTest extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		utilisateurManager = new UtilisateurManager();
-		List<Utilisateur> utilisateurs = new ArrayList<>();
-		try {
+//		utilisateurManager = new UtilisateurManager();
+//		List<Utilisateur> utilisateurs = new ArrayList<>();
+//		try {
+//			
+//			
+//			utilisateurs = utilisateurManager.selectUtilisateurs();
+//			
+//			for(Utilisateur utilisateur : utilisateurs) {
+//				System.out.println(utilisateur.toString());
+//			}
+//			
+//			
+//			
+//			
+//			
+//			
+//			Utilisateur utilisateur = new Utilisateur();
+//			utilisateur = utilisateurs.get(1);
+//			request.setAttribute("utilisateur", utilisateur);
 			
-			
-			utilisateurs = utilisateurManager.selectUtilisateurs();
-			
-			for(Utilisateur utilisateur : utilisateurs) {
-				System.out.println(utilisateur.toString());
-			}
-			
-			
-			
-			
-			
-			
-			Utilisateur utilisateur = new Utilisateur();
-			utilisateur = utilisateurs.get(1);
-			request.setAttribute("utilisateur", utilisateur);
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/test.jsp");		
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/inscription.jsp");		
 			rd.forward(request, response);
 			
 			
-		} catch (BusinessException e) {
-			
-				System.out.println("Pouet");			
-
-				e.printStackTrace();
-		}
+//		} catch (BusinessException e) {
+//			
+//				System.out.println("Pouet");			
+//
+//				e.printStackTrace();
+//		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

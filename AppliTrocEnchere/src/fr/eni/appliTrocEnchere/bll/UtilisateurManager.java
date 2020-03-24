@@ -11,16 +11,77 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 public class UtilisateurManager {
 	
 	private UtilisateurDAO utilisateurDAO;
+	BusinessException be;
 	
 	public UtilisateurManager() {
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();
 
 	}
 
-	public List<Utilisateur> selectUtilisateurs() throws BusinessException{
+	public List<Utilisateur> selectUtilisateurs () throws BusinessException{
 		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
 		utilisateurs = utilisateurDAO.selectUtilisateurs();
 		return utilisateurs;
 	}
 	
+	public void insertUtilisateur (Utilisateur utilisateur) throws BusinessException{
+		be = new BusinessException();
+		verificationUtilisateur(utilisateur, be);
+		if(!be.hasErreurs()) {
+			utilisateurDAO.insertUtilisateur(utilisateur);
+		}else {
+			System.out.println("Erreur vérification");
+		}
+	}
+	
+	public void verificationUtilisateur (Utilisateur utilisateur, BusinessException be) {
+		String pseudo = utilisateur.getPseudo();
+		if(pseudo == null || pseudo.equals("")) {
+			be.ajouterErreur(CodesResultatBLL.PSEUDO_UTILISATEUR_ERREUR);
+		}
+		
+		String nom = utilisateur.getNom();
+		if(nom == null || nom.equals("")) {
+			be.ajouterErreur(CodesResultatBLL.NOM_UTILISATEUR_ERREUR);
+		}
+		
+		String prenom = utilisateur.getPrenom();
+		if(prenom == null || prenom.equals("")) {
+			be.ajouterErreur(CodesResultatBLL.PRENOM_UTILISATEUR_ERREUR);
+		}
+		
+		String email = utilisateur.getEmail();
+		if(email == null || email.equals("")) {
+			be.ajouterErreur(CodesResultatBLL.EMAIL_UTILISATEUR_ERREUR);
+		}
+		
+		String telephone = utilisateur.getTelephone();
+		if(telephone == null || telephone.equals("")) {
+			be.ajouterErreur(CodesResultatBLL.TELEPHONE_UTILISATEUR_ERREUR);
+		}
+		
+		String rue = utilisateur.getRue();
+		if(rue == null || rue.equals("")) {
+			be.ajouterErreur(CodesResultatBLL.RUE_UTILISATEUR_ERREUR);
+		}
+		
+		String codePostal = utilisateur.getCodePostal();
+		if(codePostal == null || codePostal.equals("")) {
+			be.ajouterErreur(CodesResultatBLL.CODE_POSTAL_UTILISATEUR_ERREUR);
+		}
+		
+		String ville = utilisateur.getVille();
+		if(ville == null || ville.equals("")) {
+			be.ajouterErreur(CodesResultatBLL.VILLE_UTILISATEUR_ERREUR);
+		}
+		
+		String motDePasse = utilisateur.getMotDePasse();
+		if(motDePasse == null || motDePasse.equals("")) {
+			be.ajouterErreur(CodesResultatBLL.MOT_DE_PASSE_UTILISATEUR_ERREUR);
+		}
+		
+		
+	}
 }
+
+
