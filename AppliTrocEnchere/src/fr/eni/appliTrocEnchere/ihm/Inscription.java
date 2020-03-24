@@ -27,6 +27,7 @@ public class Inscription extends HttpServlet {
 	String email;
 	String rue;
 	String ville;
+	String confirmation;
 	UtilisateurManager utilisateurManager;
 	Utilisateur utilisateur;
 	
@@ -42,10 +43,17 @@ public class Inscription extends HttpServlet {
 		email = request.getParameter("email");
 		rue = request.getParameter("rue");
 		ville = request.getParameter("ville");
+		confirmation = request.getParameter("confirmation");
+		
 		utilisateurManager = new UtilisateurManager();
 		utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
 		try {
-			utilisateurManager.insertUtilisateur(utilisateur);
+			if(confirmation.equals(motDePasse)) {
+				utilisateurManager.insertUtilisateur(utilisateur);
+			}else {
+				System.out.println("Mot de passe et confirmation différents");
+			}
+
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
