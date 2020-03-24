@@ -12,8 +12,8 @@ public class Categorie {
 
 	private int noCategorie;
 	private String libelle;
-	//Mise en commentaire de l'arrayList arcticleVendu en attendant la bo articleVendu
-	//private ArrayList<ArticleVendu> categorieArticle = null;
+	//Creation d'une ArrayList (plusieurs articleVendu peuvent être dans une même categorie)
+	private ArrayList<ArticleVendu> categorieArticle = new ArrayList<>();
 	
 	
 	//Creation du constructeur par défaut
@@ -43,7 +43,15 @@ public class Categorie {
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
+	
+	public ArrayList<ArticleVendu> getCategorieArticle() {
+		return categorieArticle;
+	}
 
+	public void setCategorieArticle(ArrayList<ArticleVendu> categorieArticle) {
+		this.categorieArticle = categorieArticle;
+	}
+	
 	//Creation du ToString
 	@Override
 	public String toString() {
@@ -85,8 +93,8 @@ public class Categorie {
 			return false;
 		return true;
 	}
-	
-	
+
+
 	
 	
 }
