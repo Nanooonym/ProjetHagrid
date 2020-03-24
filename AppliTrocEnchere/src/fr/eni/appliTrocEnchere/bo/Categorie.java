@@ -2,8 +2,6 @@ package fr.eni.appliTrocEnchere.bo;
 
 import java.util.ArrayList;
 
-
-
 /**
  * 
  * @author Emeline
