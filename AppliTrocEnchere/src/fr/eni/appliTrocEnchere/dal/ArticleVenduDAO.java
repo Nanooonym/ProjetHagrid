@@ -8,4 +8,5 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 public abstract interface ArticleVenduDAO {
 	
 	List<ArticleVendu> selectArticleVendu() throws BusinessException;
+	public void addArticle(ArticleVendu article) throws BusinessException;
 }

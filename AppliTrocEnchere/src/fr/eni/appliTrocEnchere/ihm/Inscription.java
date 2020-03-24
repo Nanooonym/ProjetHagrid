@@ -30,7 +30,6 @@ public class Inscription extends HttpServlet {
 	String confirmation;
 	UtilisateurManager utilisateurManager;
 	Utilisateur utilisateur;
-	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
