@@ -17,7 +17,7 @@ public class ArticleVenduManager {
 		articleVenduDao = DAOFactory.getArticleVenduDAO();
 	}
 
-	public ArticleVendu ajouterArticleVendu(int noArticle, String nomArticle, String description,
+	public ArticleVendu ajouterArticleVendu(String nomArticle, String description,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, String etatVente,
 			Utilisateur utilisateur, Categorie categorie) throws BusinessException {
 

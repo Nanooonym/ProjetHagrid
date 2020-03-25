@@ -43,7 +43,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	@Override
 	public List<ArticleVendu> selectArticleVendu() throws BusinessException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
