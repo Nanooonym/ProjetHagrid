@@ -116,8 +116,4 @@ public class Enchere {
 		return true;
 	}
 	
-	
-	
-	
-	
 }

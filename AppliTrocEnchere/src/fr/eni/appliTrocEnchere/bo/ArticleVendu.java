@@ -164,8 +164,4 @@ public class ArticleVendu {
 		return builder.toString();
 	}
 	
-	
-	
-
-
 }
