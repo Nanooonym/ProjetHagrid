@@ -19,6 +19,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_UTILISATEURS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur  FROM UTILISATEURS";
 //	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS VALUES ?,test,test,test,test,test,test,test,test,0,0";
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,0,0)";
+	private static final String SELECT_UTILISATEUR_BY_USER_PASS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo LIKE ? AND mot_de_passe LIKE ?";
 	
 	@Override
 	public List<Utilisateur> selectUtilisateurs() throws BusinessException {
@@ -50,6 +51,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	}
 	
+	
+	
 	@Override
 	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException  {
 		try (Connection cnx = ConnectionProvider.getConnection();
@@ -72,6 +75,29 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
 			be.ajouterErreur(CodesResultatDAL.INSERT_UTILISATEUR_ECHEC);
+			throw be;
+		}
+
+	}
+	
+	@Override
+	public Utilisateur selectUtilisateurByLogin(String pseudo, String motDePasse) throws BusinessException {
+		Utilisateur utilisateur = new Utilisateur();
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement smt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_USER_PASS);) {
+			smt.setString(1, pseudo);
+			smt.setString(2, motDePasse);	
+			ResultSet rs = smt.executeQuery();
+			
+			while (rs.next()) {
+				utilisateur = mappingUtilisateur(rs);
+			}
+			return utilisateur;
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEURS_ECHEC);
 			throw be;
 		}
 
@@ -101,5 +127,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 		return utilisateur;
 	}
+
+
+
+
 
 }

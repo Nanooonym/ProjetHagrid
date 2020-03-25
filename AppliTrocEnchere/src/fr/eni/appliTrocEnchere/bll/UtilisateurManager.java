@@ -24,13 +24,19 @@ public class UtilisateurManager {
 		return utilisateurs;
 	}
 	
+	public Utilisateur selectUtilisateursByLogin (String pseudo, String motDePasse) throws BusinessException{
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur = utilisateurDAO.selectUtilisateurByLogin(pseudo, motDePasse);
+		return utilisateur;
+	}
+	
 	public void insertUtilisateur (Utilisateur utilisateur) throws BusinessException{
 		be = new BusinessException();
 		verificationUtilisateur(utilisateur, be);
 		if(!be.hasErreurs()) {
 			utilisateurDAO.insertUtilisateur(utilisateur);
 		}else {
-			System.out.println("Erreur vérification");
+			throw be;
 		}
 	}
 	

@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>Courses</display-name>
   <welcome-file-list>
-    <welcome-file>ServletTest</welcome-file>
+    <welcome-file>Accueil</welcome-file>
   </welcome-file-list>
   <jsp-config>
     <jsp-property-group>

@@ -11,7 +11,7 @@
 		<h1 class="title">Mon profil</h1>
 <div class="container-column">
 
-	<form action="./Inscription" method="get">
+	<form action="./Inscription" method="post">
 		<div class="container-row">
 
 			<div class="container-column">
@@ -66,14 +66,15 @@
 				<label>Confirmation :</label>
 				<input type="text" id="textfield" name="confirmation">
 				</div>
+				<c:out value="${errorMessage}" />
 			</div>
 		</div>
 	
 		<button type="submit">Créer</button>
 	</form>
 </div>
-		<form>
-			<input type="button" value="Annuler">
+		<form action="./Accueil" method="get">
+			<input type="submit" value="Annuler">
 		</form>
 
 </body>

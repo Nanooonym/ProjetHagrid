@@ -4,7 +4,9 @@
 
 <header style=flex>
 <p>ENI-Enchères</p>
-<p>S'inscrire - Se connecter</p>
+
+
+<a href="<%=request.getContextPath()%>/Connexion">S'inscrire - Se connecter</a>
 </header>
 
 <h1>Liste des Enchères</h1>
