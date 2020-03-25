@@ -22,12 +22,12 @@ public class ArticleVenduManager {
 			Utilisateur utilisateur, Categorie categorie) throws BusinessException {
 
 		BusinessException businessException = new BusinessException();
+		this.validerDateDebut(dateDebutEncheres, businessException);
+		this.validerDateFin(dateFinEncheres, dateDebutEncheres, businessException);
 		ArticleVendu articleVendu = null;
 
 		if (!businessException.hasErreurs()) {
 			articleVendu = new ArticleVendu();
-			articleVendu.setNoArticle(noArticle);
-			articleVendu.setNomArticle(nomArticle);
 			articleVendu.setNomArticle(nomArticle);
 			articleVendu.setDescription(description);
 			articleVendu.setDateDebutEncheres(dateDebutEncheres);
@@ -35,6 +35,7 @@ public class ArticleVenduManager {
 			articleVendu.setMiseAPrix(miseAPrix);
 			articleVendu.setEtatVente(etatVente);
 			articleVendu.setUtilisateur(utilisateur);
+			articleVendu.setCategorie(categorie);
 
 			this.articleVenduDao.addArticle(articleVendu);
 		} else {
@@ -42,6 +43,44 @@ public class ArticleVenduManager {
 		}
 
 		return articleVendu;
+	}
+
+	private void validerDateDebut(LocalDate date, BusinessException businessException) {
+		if (date == null || date.isBefore(LocalDate.now())) {
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DATE_DEBUT_ERREUR);
+		}
+
+	}
+	
+	private void validerDateFin(LocalDate dateFin, LocalDate dateDebut,  BusinessException businessException) {
+		if (dateFin==null || dateFin.isBefore(dateDebut) || dateFin.isBefore(LocalDate.now())) {
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_DATE_FIN_ERREUR);
+			
+		}
+	}
+	
+	@SuppressWarnings("unused")
+	private void validerLesChamps (ArticleVendu articleVendu, BusinessException businessException) {
+		String nomArticle = articleVendu.getNomArticle();
+		if(nomArticle == null || nomArticle.equals("")) {
+			businessException.ajouterErreur(CodesResultatBLL.NOM_ARTICLE_ERREUR);
+		}
+		
+		String description = articleVendu.getDescription();
+		if(description == null || description.equals("")) {
+			businessException.ajouterErreur(CodesResultatBLL.DESCRIPTION_ARTICLE_ERREUR);
+		}
+		
+		Categorie categorie = articleVendu.getCategorie();
+		if(categorie == null) {
+			businessException.ajouterErreur(CodesResultatBLL.CATEGORIE_ARTICLE_ERREUR);
+		}
+		
+		int miseAPrix = articleVendu.getMiseAPrix();
+		if(articleVendu == null) {
+			businessException.ajouterErreur(CodesResultatBLL.MISE_A_PRIX_ARTICLE_ERREUR);
+		}
+		
 	}
 
 }
