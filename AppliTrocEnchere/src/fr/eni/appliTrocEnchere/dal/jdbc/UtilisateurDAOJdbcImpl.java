@@ -24,6 +24,32 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_UTILISATEUR_BY_USER_PASS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo LIKE ? AND mot_de_passe LIKE ?";
 
 	private static final String SELECT_UTILISATEUR_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
+	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET ?,?,?,?,?,?,?,?,? WHERE no_utilisateur = ?";
+
+	public void updateUtilisateur (Utilisateur utilisateur) throws BusinessException{
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement smt = cnx.prepareStatement(UPDATE_UTILISATEUR);) {
+			
+			smt.setString(1, utilisateur.getPseudo());
+			smt.setString(2, utilisateur.getNom());
+			smt.setString(3, utilisateur.getPrenom());
+			smt.setString(4, utilisateur.getEmail());
+			smt.setString(5, utilisateur.getTelephone());
+			smt.setString(6, utilisateur.getRue());
+			smt.setString(7, utilisateur.getCodePostal());
+			smt.setString(8, utilisateur.getVille());
+			smt.setString(9, utilisateur.getMotDePasse());
+			smt.setInt(10, utilisateur.getNoUtilisateur());
+			
+			smt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
+			throw be;
+		}
+	}
 
 	public Utilisateur selectUtilisateurById(int noUtilisateur) throws BusinessException {
 		Utilisateur utilisateurCourant;
