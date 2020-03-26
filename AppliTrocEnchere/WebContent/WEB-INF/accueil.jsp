@@ -17,10 +17,10 @@
 <label>Catégories : </label>
 		 <select id="categorie" name="categorie">
 		    <option value="toutes">toutes</option>
-            <option value="cat1">cat1</option>
-            <option value="cat2">cat2</option>
-            <option value="cat3">cat3</option>
-            <option value="cat4">cat4</option>
+            <option value="cat1">Informatique</option>
+            <option value="cat2">Ameublement</option>
+            <option value="cat3">Vêtement</option>
+            <option value="cat4">Sport et Loisirs</option>
         </select>
         <button type="submit">Rechercher</button>
         </form>
