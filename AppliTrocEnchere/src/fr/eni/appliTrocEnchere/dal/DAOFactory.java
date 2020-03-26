@@ -1,6 +1,7 @@
 package fr.eni.appliTrocEnchere.dal;
 
 import fr.eni.appliTrocEnchere.dal.jdbc.ArticleVenduDAOJdbcImpl;
+import fr.eni.appliTrocEnchere.dal.jdbc.EnchereDAOJdbcImpl;
 import fr.eni.appliTrocEnchere.dal.jdbc.UtilisateurDAOJdbcImpl;
 
 public class DAOFactory {
@@ -13,5 +14,10 @@ public class DAOFactory {
 	public static ArticleVenduDAO getArticleVenduDAO() {
 		ArticleVenduDAO articleVenduDAO = new ArticleVenduDAOJdbcImpl();
 		return articleVenduDAO;
+	}
+	
+	public static EnchereDAO getEnchereDAO() {
+		EnchereDAO enchereDAO = new EnchereDAOJdbcImpl();
+		return enchereDAO;
 	}
 }

@@ -103,9 +103,9 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 				Statement smt = cnx.createStatement();) {
 		{
 			
-			PreparedStatement vnte = cnx.prepareStatement(SUPPRIMER_ENCHERE);
-			vnte.setInt(1, id);
-			vnte.executeUpdate();
+			PreparedStatement pst = cnx.prepareStatement(SUPPRIMER_ENCHERE);
+			pst.setInt(1, id);
+			pst.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
