@@ -23,6 +23,7 @@ public class SupprimerCompte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	UtilisateurManager utilisateurManager;
 	HttpSession session;
+	Utilisateur utilisateur;
 
 	public SupprimerCompte() {
 		super();
@@ -38,13 +39,15 @@ public class SupprimerCompte extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		utilisateurManager = new UtilisateurManager();
-		Utilisateur utilisateur = new Utilisateur();
-		String suppressionCheck = request.getParameter("suppression");
+
 
 		try {
 			session = request.getSession();
 
-			if (suppressionCheck.equals("supprimer") && session.getAttribute("utilisateur") != null) {
+			if (session.getAttribute("utilisateur") != null) {
+				
+				utilisateur = new Utilisateur();
+				utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 				utilisateurManager.deleteUtilisateur(utilisateur);
 				session.invalidate();
 				RequestDispatcher rd = request.getRequestDispatcher("/Accueil");

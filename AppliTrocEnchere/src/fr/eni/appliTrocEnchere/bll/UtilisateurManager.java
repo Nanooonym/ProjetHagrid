@@ -48,6 +48,7 @@ public class UtilisateurManager {
 	
 	public void deleteUtilisateur (Utilisateur utilisateur) throws BusinessException{
 		be = new BusinessException();
+		
 		try {
 			utilisateurDAO.deleteUtilisateur(utilisateur);
 		} catch (Exception e) {

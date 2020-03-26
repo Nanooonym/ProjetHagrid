@@ -121,7 +121,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
-			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEURS_ECHEC);
+			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_BY_ID_ECHEC);
 			throw be;
 		}
 
@@ -131,11 +131,13 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement smt = cnx.prepareStatement(DELETE_UTILISATEUR);) {
 
+			System.out.println(utilisateur.getNoUtilisateur());
 			smt.setInt(1, utilisateur.getNoUtilisateur());
 			int nbEnregistrements = smt.executeUpdate();
 			if(nbEnregistrements == 0) {
 				BusinessException be = new BusinessException();
 				be.ajouterErreur(CodesResultatDAL.DELETE_UTILISATEUR_ECHEC);
+				throw be;
 			}
 
 		} catch (SQLException e) {
