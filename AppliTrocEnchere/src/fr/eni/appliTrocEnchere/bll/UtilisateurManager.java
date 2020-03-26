@@ -18,6 +18,7 @@ public class UtilisateurManager {
 
 	}
 	
+	
 	public Utilisateur selectUtilisateurById(int noUtilisateur) throws BusinessException{
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur = utilisateurDAO.selectUtilisateurById(noUtilisateur);
