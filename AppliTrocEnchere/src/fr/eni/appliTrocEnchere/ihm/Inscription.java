@@ -1,6 +1,8 @@
 package fr.eni.appliTrocEnchere.ihm;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import fr.eni.appliTrocEnchere.bll.UtilisateurManager;
 import fr.eni.appliTrocEnchere.bo.Utilisateur;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
+import fr.eni.appliTrocEnchere.exception.LecteurMessage;
 
 /**
  * Servlet implementation class Inscription
@@ -66,18 +69,27 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 						RequestDispatcher rd = request.getRequestDispatcher("/Connexion");
 						rd.forward(request, response);
 					} catch (BusinessException e) {
-						request.setAttribute("errorMessage", "Erreur insertion");
+						
+						
+						//TODO Gestion de la Lecture d'Erreurs; Ajouter les Codes erreurs IHM (CodesResultatIHM) et les messages dans "messages_erreur.properties"
+						List<Integer> listeErreurs = new ArrayList<>();
+						List<String> errorMessages = new ArrayList<>();
+						listeErreurs = e.getListeCodesErreur();
+						for (Integer code : listeErreurs) {
+							errorMessages.add(LecteurMessage.getMessageErreur(code));
+						}
+						request.setAttribute("errorMessages", errorMessages);
 						doGet(request, response);
 					}
 
 				
 				}else {
-					request.setAttribute("errorMessage", "Cet utilisateur existe déjà");
+					request.setAttribute("errorMessage", "Cet utilisateur existe dï¿½jï¿½");
 					doGet(request, response);
 				}
 				
 			}else {
-				request.setAttribute("errorMessage", "Le mot de passe et la confirmation sont différents");
+				request.setAttribute("errorMessage", "Le mot de passe et la confirmation sont diffï¿½rents");
 				doGet(request, response);
 			}
 

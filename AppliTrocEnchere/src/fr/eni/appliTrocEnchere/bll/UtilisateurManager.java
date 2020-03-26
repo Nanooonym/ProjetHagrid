@@ -61,11 +61,6 @@ public class UtilisateurManager {
 			be.ajouterErreur(CodesResultatBLL.EMAIL_UTILISATEUR_ERREUR);
 		}
 		
-		String telephone = utilisateur.getTelephone();
-		if(telephone == null || telephone.equals("")) {
-			be.ajouterErreur(CodesResultatBLL.TELEPHONE_UTILISATEUR_ERREUR);
-		}
-		
 		String rue = utilisateur.getRue();
 		if(rue == null || rue.equals("")) {
 			be.ajouterErreur(CodesResultatBLL.RUE_UTILISATEUR_ERREUR);
