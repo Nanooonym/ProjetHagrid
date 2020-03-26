@@ -17,6 +17,12 @@ public class UtilisateurManager {
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();
 
 	}
+	
+	public Utilisateur selectUtilisateurById(int noUtilisateur) throws BusinessException{
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur = utilisateurDAO.selectUtilisateurById(noUtilisateur);
+		return utilisateur;
+	}
 
 	public List<Utilisateur> selectUtilisateurs () throws BusinessException{
 		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
@@ -30,7 +36,7 @@ public class UtilisateurManager {
 		if(!be.hasErreurs()) {
 			utilisateurDAO.insertUtilisateur(utilisateur);
 		}else {
-			System.out.println("Erreur vérification");
+			System.out.println("Erreur vï¿½rification");
 		}
 	}
 	

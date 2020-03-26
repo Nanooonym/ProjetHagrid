@@ -19,6 +19,41 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_UTILISATEURS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur  FROM UTILISATEURS";
 //	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS VALUES ?,test,test,test,test,test,test,test,test,0,0";
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,0,0)";
+	private static final String SELECT_UTILISATEUR_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
+	
+	
+	
+	public Utilisateur selectUtilisateurById( int noUtilisateur) throws BusinessException{
+			Utilisateur utilisateurCourant;
+		
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement psmt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_ID);){
+			psmt.setInt(1, noUtilisateur);
+			ResultSet rs = psmt.executeQuery();
+			
+			 utilisateurCourant = new Utilisateur();
+			
+			while (rs.next()) {
+				
+					utilisateurCourant = mappingUtilisateur(rs);
+				
+		} 
+			return utilisateurCourant;
+			} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_BY_ID_ECHEC);
+			throw be;
+			
+		}
+		
+		
+		
+	}
+	
+	
 	
 	@Override
 	public List<Utilisateur> selectUtilisateurs() throws BusinessException {
@@ -101,5 +136,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 		return utilisateur;
 	}
+
+
+
+
 
 }
