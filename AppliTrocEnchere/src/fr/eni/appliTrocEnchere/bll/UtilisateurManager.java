@@ -46,6 +46,16 @@ public class UtilisateurManager {
 		}
 	}
 	
+	public void deleteUtilisateur (Utilisateur utilisateur) throws BusinessException{
+		be = new BusinessException();
+		try {
+			utilisateurDAO.deleteUtilisateur(utilisateur);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+	}
+	
 	public void verificationUtilisateur (Utilisateur utilisateur, BusinessException be) {
 		String pseudo = utilisateur.getPseudo();
 		if(pseudo == null || pseudo.equals("")) {
