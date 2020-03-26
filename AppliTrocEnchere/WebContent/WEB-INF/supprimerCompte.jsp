@@ -8,11 +8,17 @@
 	</header>
 
 
-	<h1 class="title">Suppression du Compte</h1>
+	<h1 class="title">Etes-vous sûr de supprimer votre compte ?</h1>
 
-
+	<form action="./SupprimerCompte" method="post">
+		<button type="submit" value="suppression">
+			Supprimer
+		</button>
+	</form>
 	<form action="./Accueil" method="get">
-		<input type="submit" value="Annuler">
+		<button type="submit" value="accueil">
+			Accueil
+		</button>
 	</form>
 
 </body>
