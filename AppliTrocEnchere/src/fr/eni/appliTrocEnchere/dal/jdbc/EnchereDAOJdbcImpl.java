@@ -22,8 +22,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 
 	private final static String AFFICHER_ENCHERES = "SELECT a.nom_article, a.date_fin_encheres, e.montant_enchere, u.pseudo FROM ARTICLES_VENDUS AS a INNER JOIN ENCHERES e ON a.no_utilisateur = e.no_utilisateur INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur";
 	private static final String AJOUTER_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?,?,GETDATE(),?);";											
-	private static final String SUPPRIMER_ENCHERE = "DELETE * FROM ENCHERES WHERE no_enchere=?";	
-	private static final String AFFICHER_ENCHERES_COURS = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, pseudo, rue, ville, code_postal, libelle FROM ARTICLES_VENDUS a LEFT JOIN UTILISATEURS u ON a.no_utilisateur = u.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE av.no_utilisateur = u.no_utilisateur AND c.no_categorie LIKE ? AND nom_article LIKE ?;";	
+	private static final String SUPPRIMER_ENCHERE = "DELETE * FROM ENCHERES WHERE no_enchere=?";		
 	
 	
 	
@@ -116,5 +115,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 			}
 		}
 
+	
+	
+	
+	
+	
+	
+	
 
 }
