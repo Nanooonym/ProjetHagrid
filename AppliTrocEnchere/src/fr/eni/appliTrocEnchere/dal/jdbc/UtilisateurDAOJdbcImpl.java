@@ -17,15 +17,8 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String SELECT_UTILISATEURS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur  FROM UTILISATEURS";
-<<<<<<< HEAD
-=======
-	// private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS
-	// VALUES ?,test,test,test,test,test,test,test,test,0,0";
->>>>>>> branch 'master' of https://github.com/Nanooonym/ProjetHagrid
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,0,0)";
-
 	private static final String SELECT_UTILISATEUR_BY_USER_PASS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo LIKE ? AND mot_de_passe LIKE ?";
-
 	private static final String SELECT_UTILISATEUR_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
 
 	public Utilisateur selectUtilisateurById(int noUtilisateur) throws BusinessException {
@@ -99,10 +92,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			smt.setString(8, utilisateur.getVille());
 			smt.setString(9, utilisateur.getMotDePasse());
 
-<<<<<<< HEAD
-=======
-			// int nombreEnregistrementInsere = smt.executeUpdate();
->>>>>>> branch 'master' of https://github.com/Nanooonym/ProjetHagrid
 			smt.executeUpdate();
 
 		} catch (SQLException e) {
