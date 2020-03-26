@@ -9,5 +9,6 @@ public abstract interface UtilisateurDAO {
 
 	List<Utilisateur> selectUtilisateurs() throws BusinessException;
 	void insertUtilisateur(Utilisateur utilisateur) throws BusinessException;
+	Utilisateur selectUtilisateurByLogin(String pseudo, String motDePasse) throws BusinessException;
 }
 
