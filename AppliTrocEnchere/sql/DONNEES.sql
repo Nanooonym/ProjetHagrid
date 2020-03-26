@@ -3,7 +3,7 @@ INSERT INTO UTILISATEURS VALUES ('Le Vieux', 'Cash','Johnny','oldman@email.com',
 
 INSERT INTO CATEGORIES VALUES ('Informatique');
 INSERT INTO CATEGORIES VALUES ('Ameublement');
-INSERT INTO CATEGORIES VALUES ('Vêtement');
+INSERT INTO CATEGORIES VALUES ('VÃªtement');
 INSERT INTO CATEGORIES VALUES ('Sport&Loisirs');
 
 INSERT INTO ARTICLES_VENDUS VALUES ('Tablette tactile Samsung', 'Galaxy Tab A 2019, WiFi, 32Go, Android 9.0, Argent','2020-03-27','2020-04-03',262,150,1,1);
