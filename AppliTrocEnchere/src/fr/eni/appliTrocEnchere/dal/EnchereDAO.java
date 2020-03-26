@@ -9,6 +9,8 @@ public abstract interface EnchereDAO {
 
 	List<Enchere> afficherEncheres() throws BusinessException;
 	public void addEnchere(Enchere enchere) throws BusinessException;
+	void ajouterEnchere(Enchere enchere) throws BusinessException;
+	void supprimerEnchere(int id) throws BusinessException;
 
 
 }
