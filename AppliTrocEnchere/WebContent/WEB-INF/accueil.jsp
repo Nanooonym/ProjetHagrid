@@ -29,11 +29,11 @@
 </div>
 <div style=flex>
 
-		<c:forEach items="${encheres}" var="enchere">
-			<c:out value="${enchere.articleVendu.nomArticle}" />
-			<c:out value="${enchere.articleVendu.dateFinEncheres}" />
-			<c:out value="${enchere.montantEnchere}" />
-			<c:out value="${enchere.utilisateur.pseudo}" />
+		<c:forEach items="${encheres}" var="enchere"><br>
+			<c:out value="${enchere.articleVendu.nomArticle}" /><br>
+			<c:out value="${enchere.articleVendu.dateFinEncheres}" /><br>
+			<c:out value="${enchere.montantEnchere}" /><br>
+			<c:out value="${enchere.utilisateur.pseudo}" /><br>
 			<br>
 		</c:forEach>
 
