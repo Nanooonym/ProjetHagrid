@@ -17,7 +17,6 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String SELECT_UTILISATEURS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur  FROM UTILISATEURS";
-//	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS VALUES ?,test,test,test,test,test,test,test,test,0,0";
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,0,0)";
 	private static final String SELECT_UTILISATEUR_BY_USER_PASS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo LIKE ? AND mot_de_passe LIKE ?";
 	
@@ -67,8 +66,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			smt.setString(7, utilisateur.getCodePostal());
 			smt.setString(8, utilisateur.getVille());
 			smt.setString(9, utilisateur.getMotDePasse());
-			
-//			int nombreEnregistrementInsere = smt.executeUpdate();
+
 			smt.executeUpdate();
 			
 		} catch (SQLException e) {
