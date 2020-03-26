@@ -20,7 +20,7 @@ public abstract class CodesResultatBLL {
 	public static final int NOM_ARTICLE_ERREUR = 20011;
 	public static final int DESCRIPTION_ARTICLE_ERREUR = 20012;
 	public static final int CATEGORIE_ARTICLE_ERREUR = 20013;
-	public static final int MISE_A_PRIX_ARTICLE_ERREUR = 200014;
+	public static final int MISE_A_PRIX_ARTICLE_ERREUR = 20014;
 	
 	
 	
