@@ -29,17 +29,25 @@
 <label>Catégories : </label>
 		 <select id="categorie" name="categorie">
 		    <option value="toutes">toutes</option>
-            <option value="cat1">cat1</option>
-            <option value="cat2">cat2</option>
-            <option value="cat3">cat3</option>
-            <option value="cat4">cat4</option>
+            <option value="cat1">Informatique</option>
+            <option value="cat2">Ameublement</option>
+            <option value="cat3">Vêtement</option>
+            <option value="cat4">Sport et Loisirs</option>
         </select>
         <button type="submit">Rechercher</button>
         </form>
 </div>
 <div style=flex>
-	<p>Enchere 1</p>
-	<p>Enchere 2</p>
+
+		<c:forEach items="${encheres}" var="enchere"><br>
+			<c:out value="${enchere.articleVendu.nomArticle}" /><br>
+			<c:out value="${enchere.articleVendu.dateFinEncheres}" /><br>
+			<c:out value="${enchere.montantEnchere}" /><br>
+			<c:out value="${enchere.utilisateur.pseudo}" /><br>
+			<br>
+		</c:forEach>
+
+
 </div>
 </body>
 </html>
