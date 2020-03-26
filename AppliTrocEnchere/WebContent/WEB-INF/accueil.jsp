@@ -28,8 +28,16 @@
         </form>
 </div>
 <div style=flex>
-	<p>Enchere 1</p>
-	<p>Enchere 2</p>
+
+		<c:forEach items="${encheres}" var="enchere">
+			<c:out value="${enchere.articleVendu.nomArticle}" />
+			<c:out value="${enchere.articleVendu.dateFinEncheres}" />
+			<c:out value="${enchere.montantEnchere}" />
+			<c:out value="${enchere.utilisateur.pseudo}" />
+			<br>
+		</c:forEach>
+
+
 </div>
 </body>
 </html>
