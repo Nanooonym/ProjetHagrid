@@ -1,5 +1,7 @@
 package fr.eni.appliTrocEnchere.exception;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -45,5 +47,15 @@ public abstract class LecteurMessage {
 			message="Une erreur inconnue est survenue";
 		}
 		return message;
+	}
+	
+	public static List<String> codesErreurToString (BusinessException e){
+		List<Integer> listeErreurs = new ArrayList<>();
+		List<String> errorMessages = new ArrayList<>();
+		listeErreurs = e.getListeCodesErreur();
+		for (Integer code : listeErreurs) {
+			errorMessages.add(LecteurMessage.getMessageErreur(code));
+		}
+		return errorMessages;
 	}
 }

@@ -6,7 +6,17 @@
 <p>ENI-Enchères</p>
 
 
-<a href="<%=request.getContextPath()%>/Connexion">S'inscrire - Se connecter</a>
+	<c:if test="${empty sessionScope.utilisateur}">
+		<a href="<%=request.getContextPath()%>/Connexion">S'inscrire - Se connecter</a>
+	</c:if>
+	
+	<c:if test="${!empty sessionScope['utilisateur'] }">			
+		<c:out value="Utilisateur : ${sessionScope.utilisateur.pseudo}"/>
+		<c:out value="Encheres"/>
+		
+	</c:if>
+
+
 </header>
 
 <h1>Liste des Enchères</h1>

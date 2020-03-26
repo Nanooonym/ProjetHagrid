@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import fr.eni.appliTrocEnchere.bll.UtilisateurManager;
 import fr.eni.appliTrocEnchere.bo.Utilisateur;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
+import fr.eni.appliTrocEnchere.exception.LecteurMessage;
 
 /**
  * Servlet implementation class Connexion
@@ -41,28 +42,35 @@ public class Connexion extends HttpServlet {
 		Utilisateur utilisateur = new Utilisateur();
 
 		try {
+			
 			session = request.getSession();
 			if(session.getAttribute("utilisateur")==null) {
 				String pseudo = request.getParameter("pseudo");
 				String motDePasse = request.getParameter("motDePasse");
 				utilisateur = utilisateurManager.selectUtilisateursByLogin(pseudo, motDePasse);
+				session.setAttribute("utilisateur", utilisateur);
 			}else {
 				utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 			}
 			
-			if (utilisateur.getPseudo() != null) {
-//				session = request.getSession();
-				session.setAttribute("utilisateur", utilisateur);
-			}
-			else {
-				request.setAttribute("errorMessage", "Cet utilisateur n'existe pas");
-			}
+			verificationUtilisateurExistant(utilisateur);
+			RequestDispatcher rd = request.getRequestDispatcher("/Accueil");
+			rd.forward(request, response);
 
 		} catch (BusinessException e) {
 
-			e.printStackTrace();
+			request.setAttribute("errorMessages", LecteurMessage.codesErreurToString(e));
+			doGet(request, response);
 		}
-		doGet(request, response);
+
+	}
+	
+	public void verificationUtilisateurExistant(Utilisateur utilisateur) throws BusinessException{
+		if(utilisateur.getPseudo() == null) {
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatIHM.UTILISATEUR_INEXISTANT);
+			throw be;
+		}
 	}
 
 }
