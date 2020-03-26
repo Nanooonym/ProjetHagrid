@@ -116,11 +116,5 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 			}
 		}
 
-	@Override
-	public void addEnchere(Enchere enchere) throws BusinessException {
-		// TODO Auto-generated method stub
-		
-	}
 
-	
 }
