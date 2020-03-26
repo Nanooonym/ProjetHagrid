@@ -28,16 +28,17 @@
         </form>
 </div>
 <div style=flex>
-
+		
+		<div>
 		<c:forEach items="${encheres}" var="enchere">
 			<br>
-			<c:out value="${enchere.articleVendu.nomArticle}" /><br>
-			<c:out value="${enchere.articleVendu.dateFinEncheres}" /><br>
-			<c:out value="${enchere.montantEnchere}" /><br>
-			<c:out value="${enchere.utilisateur.pseudo}" /><br>
+			<div> <a href="detailVente.jsp"><c:out value="${enchere.articleVendu.nomArticle}" /></a></div><br>
+			<div>Prix : <c:out value="${enchere.montantEnchere}" /> points</div>
+			<div>Fin de l'enchère : <c:out value="${enchere.articleVendu.dateFinEncheres}" /></div>
+			<div>Vendeur : <c:out value="${enchere.utilisateur.pseudo}" /></div>
 			<br>
 		</c:forEach>
-
+		</div>
 
 </div>
 </body>
