@@ -1,6 +1,8 @@
 package fr.eni.appliTrocEnchere.ihm;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,30 +11,64 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.appliTrocEnchere.bll.EnchereManager;
+import fr.eni.appliTrocEnchere.bo.Enchere;
+import fr.eni.appliTrocEnchere.exception.BusinessException;
+
+
 
 /**
- * Servlet implementation class Connexion
+ * Servlet implementation class AfficherEncheres
  */
-@WebServlet("/Accueil")
+@WebServlet("/AfficherEncheres")
 public class Accueil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	public Accueil() {
-		super();
-
-	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
-			rd.forward(request, response);
+    EnchereManager enchereManager;
 	
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Accueil() {
+        super();
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		enchereManager = new EnchereManager();
+		List<Enchere> listeEncheres = new ArrayList<Enchere>();
+		
+		try {
+			
+			listeEncheres = enchereManager.afficherEncheres();
+			
+			/*for (Enchere enchere : listeEncheres) {
+				System.out.println(enchere.getArticleVendu().getNomArticle());				
+				System.out.println(enchere.getMontantEnchere());
+				System.out.println(enchere.getUtilisateur().getPseudo());
+				System.out.println(enchere.getArticleVendu().getDateFinEncheres());
+			}*/
+			
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		
+		//Enchere enchere = new Enchere();
+		//enchere =listeEncheres.get(1);
+		request.setAttribute("encheres", listeEncheres);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+		rd.forward(request, response);
+
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		doGet(request, response);
 	}
 
