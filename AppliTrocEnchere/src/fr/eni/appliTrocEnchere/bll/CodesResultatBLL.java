@@ -1,7 +1,7 @@
 package fr.eni.appliTrocEnchere.bll;
 
 /**
- * Les codes disponibles sont entre 20000 et 29999
+ * Liste des codes erreurs dans la BLL
  */
 public abstract class CodesResultatBLL {
 
@@ -21,6 +21,9 @@ public abstract class CodesResultatBLL {
 	public static final int DESCRIPTION_ARTICLE_ERREUR = 20012;
 	public static final int CATEGORIE_ARTICLE_ERREUR = 20013;
 	public static final int MISE_A_PRIX_ARTICLE_ERREUR = 20014;
+	public static final int RUE_RETRAIT_ERREUR = 20015;
+	public static final int CODE_POSTAL_RETRAIT_ERREUR = 20016;
+	public static final int VILLE_RETRAIT_ERREUR = 200017;
 	
 	
 	

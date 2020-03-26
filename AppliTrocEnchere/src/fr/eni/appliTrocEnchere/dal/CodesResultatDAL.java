@@ -6,7 +6,7 @@ package fr.eni.appliTrocEnchere.dal;
 public abstract class CodesResultatDAL {
 
 	/**
-	 * Echec général quand erreur à l'insertion
+	 * Listes des codes erreurs possibles dans la DAL
 	 */
 	public static final int SELECT_UTILISATEURS_ECHEC = 10000;
 	public static final int INSERT_UTILISATEUR_ECHEC = 10001;
@@ -15,5 +15,8 @@ public abstract class CodesResultatDAL {
 	public static final int AFFICHER_ENCHERES_ECHEC = 10004;
 	public static final int SUPPRIMER_ENCHERE_ECHEC = 10005;
 	public static final int AJOUTER_ENCHERE_ECHEC = 10007;
+	public static final int INSERT_NOUVEAU_LIEU_RETRAIT_ECHEC = 10008;
+	public static final int UPDATE_LIEU_RETRAIT_ECHEC = 10009;
+	public static final int SELECT_ALL_LIEU_RETRAIT_ECHEC = 10010;
 
 }
