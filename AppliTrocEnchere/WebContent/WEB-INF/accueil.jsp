@@ -13,6 +13,8 @@
 	<c:if test="${!empty sessionScope['utilisateur'] }">			
 		<c:out value="Utilisateur : ${sessionScope.utilisateur.pseudo}"/>
 		<c:out value="Encheres"/>
+		<a href="<%=request.getContextPath()%>/SupprimerCompte">Supprimer Compte</a>
+		<a href="<%=request.getContextPath()%>/Deconnexion">Déconnexion</a>
 		
 	</c:if>
 
@@ -28,7 +30,7 @@
 <input type="text" id="textfield" name="filtre_nom_article">
 <label>Catégories : </label>
 		 <select id="categorie" name="categorie">
-		    <option value="toutes">toutes</option>
+		    <option value="toutes">Toutes</option>
             <option value="cat1">Informatique</option>
             <option value="cat2">Ameublement</option>
             <option value="cat3">Vêtement</option>

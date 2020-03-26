@@ -20,6 +20,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,0,0)";
 	private static final String SELECT_UTILISATEUR_BY_USER_PASS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo LIKE ? AND mot_de_passe LIKE ?";
 	private static final String SELECT_UTILISATEUR_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
+	private static final String DELETE_UTILISATEUR = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
 
 	public Utilisateur selectUtilisateurById(int noUtilisateur) throws BusinessException {
 		Utilisateur utilisateurCourant;
@@ -120,7 +121,29 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
-			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEURS_ECHEC);
+			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_BY_ID_ECHEC);
+			throw be;
+		}
+
+	}
+	
+	public void deleteUtilisateur(Utilisateur utilisateur) throws BusinessException {
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement smt = cnx.prepareStatement(DELETE_UTILISATEUR);) {
+
+			System.out.println(utilisateur.getNoUtilisateur());
+			smt.setInt(1, utilisateur.getNoUtilisateur());
+			int nbEnregistrements = smt.executeUpdate();
+			if(nbEnregistrements == 0) {
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatDAL.DELETE_UTILISATEUR_ECHEC);
+				throw be;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.DELETE_UTILISATEUR_ECHEC);
 			throw be;
 		}
 
