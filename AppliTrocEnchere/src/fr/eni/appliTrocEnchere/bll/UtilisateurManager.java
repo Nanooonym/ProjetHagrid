@@ -18,6 +18,12 @@ public class UtilisateurManager {
 
 	}
 
+	public Utilisateur selectUtilisateurById(int noUtilisateur) throws BusinessException{
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur = utilisateurDAO.selectUtilisateurById(noUtilisateur);
+		return utilisateur;
+	}
+	
 	public List<Utilisateur> selectUtilisateurs () throws BusinessException{
 		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
 		utilisateurs = utilisateurDAO.selectUtilisateurs();
