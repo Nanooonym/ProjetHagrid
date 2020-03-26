@@ -13,5 +13,5 @@ public abstract class CodesResultatDAL {
 	public static final int INSERT_NOUVEL_ARTICLE_ECHEC = 10002;
 	public static final int SELECT_AFFICHER_ENCHERES_ECHEC = 10003;
 	public static final int AJOUTER_ENCHERE_ECHEC = 10004;
-	public static final int SUPPRIMER_ENCHERE_ECHEC = 10004;
+	public static final int SUPPRIMER_ENCHERE_ECHEC = 10005;
 }
