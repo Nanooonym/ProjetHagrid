@@ -5,7 +5,6 @@ package fr.eni.appliTrocEnchere.ihm;
  */
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,6 @@ import fr.eni.appliTrocEnchere.bll.ArticleVenduManager;
 import fr.eni.appliTrocEnchere.bll.EnchereManager;
 import fr.eni.appliTrocEnchere.bll.RetraitManager;
 import fr.eni.appliTrocEnchere.bll.UtilisateurManager;
-import fr.eni.appliTrocEnchere.bo.ArticleVendu;
 import fr.eni.appliTrocEnchere.bo.Enchere;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
 
@@ -50,21 +48,14 @@ public class DetailVente extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		enchereManager = new EnchereManager();
-		List<Enchere> listeEncheres = new ArrayList<Enchere>();
+		List<Enchere> listeDetailEnchere = new ArrayList<Enchere>();
 		
-		try {
-			
-			listeEncheres = enchereManager.afficherEncheres();
-			
-		} catch (BusinessException e) {
-			e.printStackTrace();
-		}
+		listeDetailEnchere = enchereManager.afficherDetailEnchere();
 		
-		//Enchere enchere = new Enchere();
-		//enchere =listeEncheres.get(1);
-		request.setAttribute("encheres", listeEncheres);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+		request.setAttribute("encheres", listeDetailEnchere);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/detailVente.jsp");
 		rd.forward(request, response);
 
 	}

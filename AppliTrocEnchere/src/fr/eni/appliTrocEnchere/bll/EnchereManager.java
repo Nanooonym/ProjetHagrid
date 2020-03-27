@@ -7,7 +7,6 @@ import fr.eni.appliTrocEnchere.bo.Enchere;
 import fr.eni.appliTrocEnchere.dal.DAOFactory;
 import fr.eni.appliTrocEnchere.dal.EnchereDAO;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
-import fr.eni.appliTrocEnchere.ihm.DetailVente;
 
 public class EnchereManager {
 	
@@ -25,6 +24,14 @@ public class EnchereManager {
 	listeEnchere =	enchereDAO.afficherEncheres();
 
 		return listeEnchere;
+	}
+	
+	public List<Enchere> afficherDetailEnchere() {
+	
+	List<Enchere> listeDetailEnchere = new ArrayList<Enchere>();
+		
+	return listeDetailEnchere;
+		
 	}
 	
 }

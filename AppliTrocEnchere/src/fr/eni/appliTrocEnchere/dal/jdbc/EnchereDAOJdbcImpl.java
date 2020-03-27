@@ -17,7 +17,7 @@ import fr.eni.appliTrocEnchere.dal.CodesResultatDAL;
 import fr.eni.appliTrocEnchere.dal.ConnectionProvider;
 import fr.eni.appliTrocEnchere.dal.EnchereDAO;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
-import fr.eni.appliTrocEnchere.ihm.DetailVente;
+
 
 
 public class EnchereDAOJdbcImpl implements EnchereDAO{
@@ -36,7 +36,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 	public  List<Enchere> afficherEncheres() throws BusinessException {
 
 		List<Enchere> listeEncheres = new ArrayList<Enchere>();
-
 		
 		try (Connection cnx = ConnectionProvider.getConnection();
 				Statement smt = cnx.createStatement();) {
@@ -130,10 +129,29 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 			}
 		}
 
-	@Override
-	public void afficherDetailEnchere() throws BusinessException {
-		// TODO Auto-generated method stub
-		
-	}
 
+
+	@Override
+	public List<Enchere> afficherDetailEnchere() throws BusinessException {
+		List<Enchere> listeDetailEnchere = new ArrayList<Enchere>();
+		try (Connection cnx = ConnectionProvider.getConnection(); Statement smt = cnx.createStatement();) {
+			ResultSet rs = smt.executeQuery(AFFICHER_ENCHERES);
+			Enchere enchereCourant = new Enchere();
+			while (rs.next()) {
+				if (rs.getInt("no_article") != enchereCourant.getNoArticle()) {
+					enchereCourant = mappingEnchere(rs);
+					listeDetailEnchere.add(enchereCourant);
+				}
+			}
+			return listeDetailEnchere;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.AFFICHER_ENCHERES_ECHEC);
+			throw be;
+		}
+	}
+	
+	
 }
