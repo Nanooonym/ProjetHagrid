@@ -18,6 +18,12 @@ public class UtilisateurManager {
 
 	}
 
+	public Utilisateur selectUtilisateurById(int noUtilisateur) throws BusinessException{
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur = utilisateurDAO.selectUtilisateurById(noUtilisateur);
+		return utilisateur;
+	}
+	
 	public List<Utilisateur> selectUtilisateurs () throws BusinessException{
 		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
 		utilisateurs = utilisateurDAO.selectUtilisateurs();
@@ -38,6 +44,17 @@ public class UtilisateurManager {
 		}else {
 			throw be;
 		}
+	}
+	
+	public void deleteUtilisateur (Utilisateur utilisateur) throws BusinessException{
+		be = new BusinessException();
+		
+		try {
+			utilisateurDAO.deleteUtilisateur(utilisateur);
+		} catch (Exception e) {
+			throw e;
+		}
+		
 	}
 	
 	public void verificationUtilisateur (Utilisateur utilisateur, BusinessException be) {

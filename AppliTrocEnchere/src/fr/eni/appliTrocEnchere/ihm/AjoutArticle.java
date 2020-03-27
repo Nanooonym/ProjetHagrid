@@ -1,7 +1,6 @@
 package fr.eni.appliTrocEnchere.ihm;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.time.LocalDate;
 
 import javax.servlet.ServletException;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.appliTrocEnchere.bll.ArticleVenduManager;
 import fr.eni.appliTrocEnchere.bo.ArticleVendu;
-import fr.eni.appliTrocEnchere.bo.Categorie;
 import fr.eni.appliTrocEnchere.bo.Utilisateur;
 
 /**

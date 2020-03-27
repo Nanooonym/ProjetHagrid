@@ -68,10 +68,12 @@
 				</div>
 
 			</div>
+			
 			<c:forEach items="${errorMessages}" var="error">
 				<c:out value="${error}" />
 				<br>
 			</c:forEach>
+			
 			<button type="submit">Créer</button>
 		</form>
 	</div>

@@ -13,56 +13,56 @@ import fr.eni.appliTrocEnchere.bll.UtilisateurManager;
 import fr.eni.appliTrocEnchere.bo.Utilisateur;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
 
-/**
- * Servlet implementation class ServletTest
- */
-@WebServlet("/ServletTest")
-public class ServletTest extends HttpServlet {
+
+@WebServlet("/ServletAfficherUtilisateur")
+public class ServletAfficherUtilisateur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	UtilisateurManager utilisateurManager;
-
-    public ServletTest() {
+  
+    public ServletAfficherUtilisateur() {
         super();
-
+        // TODO Auto-generated constructor stub
     }
 
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		utilisateurManager = new UtilisateurManager();
 		Utilisateur utilisateur = new Utilisateur();
 		
-	
 		
 		
 		try {
 			
 			
-		//	utilisateur = utilisateurManager.selectUtilisateurById(request.getParameter("utilisateur"));
-			utilisateur = utilisateurManager.selectUtilisateurById(1);
-			
-			request.setAttribute("utilisateur", utilisateur);
+			//	utilisateur = utilisateurManager.selectUtilisateurById(request.getParameter("utilisateur"));
+				utilisateur = utilisateurManager.selectUtilisateurById(1);
+				
+				request.setAttribute("utilisateur", utilisateur);
+					
+				
+		
+			/*	Utilisateur user = new Utilisateur();
+				user = utilisateur.getNoUtilisateur();  
+				request.setAttribute("utilisateur", user);
+			*/
+				
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/afficherProfil.jsp");		
+				rd.forward(request, response);
 				
 			
-	
-		/*	Utilisateur user = new Utilisateur();
-			user = utilisateur.getNoUtilisateur();  
-			request.setAttribute("utilisateur", user);
-		*/
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/test.jsp");		
-			rd.forward(request, response);
-			
-		
-		} catch (BusinessException e) {
-			
-				System.out.println("Pouet");			
+			} catch (BusinessException e) {
+				
+					System.out.println("Pouet");			
 
-				e.printStackTrace();
-		}
+					e.printStackTrace();
+			}
+		
 	}
 
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

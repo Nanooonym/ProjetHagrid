@@ -17,30 +17,57 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String SELECT_UTILISATEURS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur  FROM UTILISATEURS";
-//	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS VALUES ?,test,test,test,test,test,test,test,test,0,0";
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,0,0)";
 	private static final String SELECT_UTILISATEUR_BY_USER_PASS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo LIKE ? AND mot_de_passe LIKE ?";
-	
+	private static final String SELECT_UTILISATEUR_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
+	private static final String DELETE_UTILISATEUR = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
+
+	public Utilisateur selectUtilisateurById(int noUtilisateur) throws BusinessException {
+		Utilisateur utilisateurCourant;
+
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement psmt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_ID);) {
+			psmt.setInt(1, noUtilisateur);
+			ResultSet rs = psmt.executeQuery();
+
+			utilisateurCourant = new Utilisateur();
+
+			while (rs.next()) {
+
+				utilisateurCourant = mappingUtilisateur(rs);
+
+			}
+			return utilisateurCourant;
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_BY_ID_ECHEC);
+			throw be;
+
+		}
+
+	}
+
 	@Override
 	public List<Utilisateur> selectUtilisateurs() throws BusinessException {
 
 		List<Utilisateur> listeUtilisateurs = new ArrayList<Utilisateur>();
-		
 
-		try (Connection cnx = ConnectionProvider.getConnection();
-				Statement smt = cnx.createStatement();) {
-			
+		try (Connection cnx = ConnectionProvider.getConnection(); Statement smt = cnx.createStatement();) {
+
 			ResultSet rs = smt.executeQuery(SELECT_UTILISATEURS);
-			
+
 			Utilisateur utilisateurCourant = new Utilisateur();
-			
+
 			while (rs.next()) {
 				if (rs.getInt("no_utilisateur") != utilisateurCourant.getNoUtilisateur()) {
 					utilisateurCourant = mappingUtilisateur(rs);
 					listeUtilisateurs.add(utilisateurCourant);
 				}
 			}
-			
+
 			return listeUtilisateurs;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -50,14 +77,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 
 	}
-	
-	
-	
+
 	@Override
-	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException  {
+	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement smt = cnx.prepareStatement(INSERT_UTILISATEUR);) {
-			
+
 			smt.setString(1, utilisateur.getPseudo());
 			smt.setString(2, utilisateur.getNom());
 			smt.setString(3, utilisateur.getPrenom());
@@ -67,10 +92,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			smt.setString(7, utilisateur.getCodePostal());
 			smt.setString(8, utilisateur.getVille());
 			smt.setString(9, utilisateur.getMotDePasse());
-			
-//			int nombreEnregistrementInsere = smt.executeUpdate();
+
 			smt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
@@ -79,33 +103,55 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 
 	}
-	
+
 	@Override
 	public Utilisateur selectUtilisateurByLogin(String pseudo, String motDePasse) throws BusinessException {
 		Utilisateur utilisateur = new Utilisateur();
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement smt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_USER_PASS);) {
 			smt.setString(1, pseudo);
-			smt.setString(2, motDePasse);	
+			smt.setString(2, motDePasse);
 			ResultSet rs = smt.executeQuery();
-			
+
 			while (rs.next()) {
 				utilisateur = mappingUtilisateur(rs);
 			}
 			return utilisateur;
-			
-		}catch (SQLException e) {
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
-			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEURS_ECHEC);
+			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_BY_ID_ECHEC);
 			throw be;
 		}
 
 	}
 	
+	public void deleteUtilisateur(Utilisateur utilisateur) throws BusinessException {
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement smt = cnx.prepareStatement(DELETE_UTILISATEUR);) {
+
+			System.out.println(utilisateur.getNoUtilisateur());
+			smt.setInt(1, utilisateur.getNoUtilisateur());
+			int nbEnregistrements = smt.executeUpdate();
+			if(nbEnregistrements == 0) {
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatDAL.DELETE_UTILISATEUR_ECHEC);
+				throw be;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.DELETE_UTILISATEUR_ECHEC);
+			throw be;
+		}
+
+	}
+
 	public Utilisateur mappingUtilisateur(ResultSet rs) throws SQLException {
 		Utilisateur utilisateur = new Utilisateur();
-		
+
 		utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 		utilisateur.setPseudo(rs.getString("pseudo"));
 		utilisateur.setNom(rs.getString("nom"));
@@ -117,19 +163,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		utilisateur.setVille(rs.getString("ville"));
 		utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
 		utilisateur.setCredit(rs.getInt("credit"));
-		
+
 		int check = rs.getByte("administrateur");
-		if(check == 1) {
+		if (check == 1) {
 			utilisateur.setAdministrateur(true);
-		}else {
+		} else {
 			utilisateur.setAdministrateur(false);
 		}
 
 		return utilisateur;
 	}
-
-
-
-
 
 }

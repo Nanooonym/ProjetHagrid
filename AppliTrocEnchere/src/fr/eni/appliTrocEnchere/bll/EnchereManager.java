@@ -9,9 +9,8 @@ import fr.eni.appliTrocEnchere.dal.EnchereDAO;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
 
 public class EnchereManager {
-
-	private EnchereDAO enchereDAO ;
 	
+	private EnchereDAO enchereDAO ;
 	
 	
 	public EnchereManager() {
