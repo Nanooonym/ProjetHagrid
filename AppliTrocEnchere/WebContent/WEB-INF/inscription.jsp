@@ -3,8 +3,8 @@
 </head>
 <body>
 
-	<header style="">
-		<h2>ENI-Enchères</h2>
+	<header>
+		<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
 	</header>
 
 

@@ -2,7 +2,7 @@
 </head>
 <body>
 
-<header style=flex>
+<header>
 <p>ENI-Enchères</p>
 
 
@@ -39,7 +39,7 @@
         <button type="submit">Rechercher</button>
         </form>
 </div>
-<div style=flex>
+<div>
 
 		<c:forEach items="${encheres}" var="enchere"><br>
 			<c:out value="${enchere.articleVendu.nomArticle}" /><br>

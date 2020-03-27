@@ -4,6 +4,7 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-4-col-portfolio/blob/master/LICENSE)
  */
 
+
 .container-column {
   display:flex;
   flex-direction:column;
@@ -28,6 +29,56 @@
   margin-right:100px;
 }
 
+.grid > div {
+	border: solid 1px #999;
+	background-color: #ccc;
+}
+
+.grid-accueil{
+	display:grid;
+	grid-template-columns: 1fr 8fr 2fr 8fr 4fr;
+/* 	grid-column-gap: 20px; */
+	grid-template-rows: 60px 40px 400px 400px;
+}
+
+body{
+	margin: 0;
+	padding: 0;
+}
+
+.child{
+/* 	grid-column-start : 2; */
+/* 	grid-column-end : span 2; */
+/* 	display:flex; */
+/* 	text-align:center; */
+	
+}
+
+
+.eni-encheres{
+	grid-column : 1 / span 2;
+	padding-left : 20px;
+	padding-top : 20px;
+	display:flex;
+	justify-self:left;
+	font-size: 20px;
+}
+
+.options{
+	grid-column : 4 / span 2;
+	padding-right : 20px;
+	padding-top : 20px;
+	display:flex;
+	justify-self:right;
+	font-size: 15px;
+	
+}
+
 .title{
-	text-align:center;
+	grid-column : 1 / span 5;
+	grid-row : 2 / span 1;
+	display:flex;
+	justify-self:center;
+	font-size: 25px;
+	
 }
