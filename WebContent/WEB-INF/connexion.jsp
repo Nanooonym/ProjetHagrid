@@ -3,7 +3,7 @@
 </head>
 <body>
 
-<header class="container">
+<header style=flex>
 <h2>ENI-Enchères</h2>
 </header>
 

@@ -93,10 +93,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			smt.setString(8, utilisateur.getVille());
 			smt.setString(9, utilisateur.getMotDePasse());
 
-			smt.executeUpdate();
+			int nbEnregistrement = smt.executeUpdate();
+			if(nbEnregistrement == 0) {
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatDAL.INSERT_UTILISATEUR_ECHEC);
+				throw be;
+			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 			BusinessException be = new BusinessException();
 			be.ajouterErreur(CodesResultatDAL.INSERT_UTILISATEUR_ECHEC);
 			throw be;

@@ -2,7 +2,7 @@
 </head>
 <body>
 
-<header>
+<header style=flex>
 <p>ENI-Enchères</p>
 
 
@@ -30,9 +30,7 @@
 <input type="text" id="textfield" name="filtre_nom_article">
 <label>Catégories : </label>
 		 <select id="categorie" name="categorie">
-
 		    <option value="toutes">Toutes</option>
-
             <option value="cat1">Informatique</option>
             <option value="cat2">Ameublement</option>
             <option value="cat3">Vêtement</option>
@@ -41,19 +39,16 @@
         <button type="submit">Rechercher</button>
         </form>
 </div>
-<div>
+<div style=flex>
 
-		
-		<div>
-		<c:forEach items="${encheres}" var="enchere">
-			<br>
-			<div> <a href="<%=request.getContextPath()%>/DetailVente"><c:out value="${enchere.articleVendu.nomArticle}" /></a></div><br>
-			<div>Prix : <c:out value="${enchere.montantEnchere}" /> points</div>
-			<div>Fin de l'enchère : <c:out value="${enchere.articleVendu.dateFinEncheres}" /></div>
-			<div>Vendeur : <c:out value="${enchere.utilisateur.pseudo}" /></div>
+		<c:forEach items="${encheres}" var="enchere"><br>
+			<c:out value="${enchere.articleVendu.nomArticle}" /><br>
+			<c:out value="${enchere.articleVendu.dateFinEncheres}" /><br>
+			<c:out value="${enchere.montantEnchere}" /><br>
+			<c:out value="${enchere.utilisateur.pseudo}" /><br>
 			<br>
 		</c:forEach>
-		</div>
+
 
 </div>
 </body>

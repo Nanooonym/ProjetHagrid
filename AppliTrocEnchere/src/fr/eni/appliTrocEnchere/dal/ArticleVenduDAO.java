@@ -9,5 +9,7 @@ public abstract interface ArticleVenduDAO {
 	
 	List<ArticleVendu> selectArticleVendu() throws BusinessException;
 	public void addArticle(ArticleVendu article) throws BusinessException;
-	
+
+	public void updateArticle(ArticleVendu article) throws BusinessException;
+
 }

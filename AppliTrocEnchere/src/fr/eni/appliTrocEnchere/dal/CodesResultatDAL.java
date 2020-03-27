@@ -19,5 +19,7 @@ public abstract class CodesResultatDAL {
 	public static final int UPDATE_LIEU_RETRAIT_ECHEC = 10009;
 	public static final int SELECT_ALL_LIEU_RETRAIT_ECHEC = 10010;
 	public static final int DELETE_UTILISATEUR_ECHEC = 10011;
+	public static final int SELECT_CATEGORIE_ECHEC = 14012;
+	public static final int SELECT_CATEGORIE_BY_NUMERO_ECHEC = 14013;
 
 }

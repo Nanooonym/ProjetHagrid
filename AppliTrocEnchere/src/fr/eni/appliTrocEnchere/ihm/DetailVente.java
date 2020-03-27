@@ -56,13 +56,6 @@ public class DetailVente extends HttpServlet {
 			
 			listeEncheres = enchereManager.afficherEncheres();
 			
-			/*for (Enchere enchere : listeEncheres) {
-				System.out.println(enchere.getArticleVendu().getNomArticle());				
-				System.out.println(enchere.getMontantEnchere());
-				System.out.println(enchere.getUtilisateur().getPseudo());
-				System.out.println(enchere.getArticleVendu().getDateFinEncheres());
-			}*/
-			
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}

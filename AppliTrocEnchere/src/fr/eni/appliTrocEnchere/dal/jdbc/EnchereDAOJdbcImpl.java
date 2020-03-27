@@ -17,17 +17,21 @@ import fr.eni.appliTrocEnchere.dal.CodesResultatDAL;
 import fr.eni.appliTrocEnchere.dal.ConnectionProvider;
 import fr.eni.appliTrocEnchere.dal.EnchereDAO;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
+import fr.eni.appliTrocEnchere.ihm.DetailVente;
 
 
 public class EnchereDAOJdbcImpl implements EnchereDAO{
 
-	private final static String AFFICHER_ENCHERES = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, e.montant_enchere, a.prix_vente, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS AS a INNER JOIN ENCHERES e ON a.no_utilisateur = e.no_utilisateur INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie ";
+	private final static String AFFICHER_ENCHERES = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, e.montant_enchere "
+			+ ", a.prix_vente, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS AS a "
+			+ "INNER JOIN ENCHERES e ON a.no_utilisateur = e.no_utilisateur INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur "
+			+ "INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie ";
 	private static final String AJOUTER_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?,?,GETDATE(),?);";											
 	private static final String SUPPRIMER_ENCHERE = "DELETE * FROM ENCHERES WHERE no_enchere=?";		
 	
 	
 	
-	//Methode pour afficher toutes les encheres en page d'accueil
+	//Methode pour afficher toutes les encheres
 	@Override
 	public  List<Enchere> afficherEncheres() throws BusinessException {
 
@@ -126,12 +130,10 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 			}
 		}
 
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public void afficherDetailEnchere() throws BusinessException {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
