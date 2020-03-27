@@ -23,7 +23,7 @@
 
 				<div class="container-formulaire">
 					<label>Mot de passe :</label>
-					<input type="text" id="textfield" name="motDePasse">
+					<input type="password" id="textfield" name="motDePasse">
 				</div>
 				<div class="container-formulaire">
 
@@ -49,10 +49,11 @@
 
 
 </div>
-<c:out value="${sessionScope.utilisateur.pseudo}" />
-<p>${utilisateur.pseudo}</p>
-<c:out value="${errorMessage}" />
-<c:out value="${compteur}" />
+
+			<c:forEach items="${errorMessages}" var="error">
+				<c:out value="${error}" />
+				<br>
+			</c:forEach>
 
 		<form action="./Accueil" method="get">
 			<input type="submit" value="Annuler">

@@ -17,7 +17,7 @@
 	<h1 class="title">Mon profil</h1>
 	<div class="container-column">
 
-		<form action="./ServletModificationProfil" method="post">
+		<form action="./ModificationProfil" method="post">
 			<div class="container-row">
 
 				<div class="container-column">
@@ -76,11 +76,11 @@
 				</div>
 
 			</div>
+			<input type="submit" value="Enregistrer" class="btn btn-primary">
+		</form>
+		
 			
-		</form>
-		<form action="./afficherMonProfil">
-			<button type="submit">Enregistrer</button>
-		</form>
+		
 	</div>
 </body>
 </html>

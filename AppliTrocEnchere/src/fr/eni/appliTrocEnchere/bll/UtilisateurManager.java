@@ -40,6 +40,14 @@ public class UtilisateurManager {
 		return utilisateurs;
 	}
 	
+	public Utilisateur selectUtilisateurByPseudoEmail (String pseudo, String email) throws BusinessException{
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur = utilisateurDAO.selectUtilisateurByPseudo(pseudo);
+		utilisateur = utilisateurDAO.selectUtilisateurByEmail(email);
+		return utilisateur;
+		
+	}
+	
 	public Utilisateur selectUtilisateursByLogin (String pseudo, String motDePasse) throws BusinessException{
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur = utilisateurDAO.selectUtilisateurByLogin(pseudo, motDePasse);
@@ -54,6 +62,17 @@ public class UtilisateurManager {
 		}else {
 			throw be;
 		}
+	}
+	
+	public void deleteUtilisateur (Utilisateur utilisateur) throws BusinessException{
+		be = new BusinessException();
+		
+		try {
+			utilisateurDAO.deleteUtilisateur(utilisateur);
+		} catch (Exception e) {
+			throw e;
+		}
+		
 	}
 	
 	public void verificationUtilisateur (Utilisateur utilisateur, BusinessException be) {

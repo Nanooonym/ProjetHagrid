@@ -15,5 +15,11 @@ public abstract interface UtilisateurDAO {
 	Utilisateur selectUtilisateurById(int noUtilisateur) throws BusinessException;
 
 	void updateUtilisateur(Utilisateur utilisateur) throws BusinessException;
+	
+	void deleteUtilisateur(Utilisateur utilisateur) throws BusinessException;
+	
+	Utilisateur selectUtilisateurByPseudo(String pseudo) throws BusinessException;
+	
+	Utilisateur selectUtilisateurByEmail(String email) throws BusinessException;
 }
 

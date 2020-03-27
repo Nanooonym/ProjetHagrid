@@ -16,12 +16,12 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 /**
  * Servlet implementation class ServletMonProfil
  */
-@WebServlet("/ServletMonProfil")
-public class ServletMonProfil extends HttpServlet {
+@WebServlet("/MonProfil")
+public class MonProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	UtilisateurManager utilisateurManager; 
     
-    public ServletMonProfil() {
+    public MonProfil() {
         super();
         // TODO Auto-generated constructor stub
     }

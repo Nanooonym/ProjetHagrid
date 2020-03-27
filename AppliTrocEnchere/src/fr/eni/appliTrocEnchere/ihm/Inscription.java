@@ -1,8 +1,6 @@
 package fr.eni.appliTrocEnchere.ihm;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -50,64 +48,44 @@ import fr.eni.appliTrocEnchere.exception.LecteurMessage;
 
 	
 		utilisateurManager = new UtilisateurManager();
-
-		
 		confirmation = request.getParameter("confirmation");
 		motDePasse = request.getParameter("motDePasse");
 		
 		try {
 			
-			if(confirmation.equals(motDePasse)) {
-				
+				confirmationMotDePasse(motDePasse, confirmation);
 				utilisateur = mappingUtilisateur(request);
-				check = utilisateurExistantCheck(utilisateur, utilisateurManager);
-				if(check==true) {
-					try {
-						utilisateurManager.insertUtilisateur(utilisateur);
-						session = request.getSession();
-						session.setAttribute("utilisateur", utilisateur);
-						RequestDispatcher rd = request.getRequestDispatcher("/Connexion");
-						rd.forward(request, response);
-					} catch (BusinessException e) {
-						
-						
-						//TODO Gestion de la Lecture d'Erreurs; Ajouter les Codes erreurs IHM (CodesResultatIHM) et les messages dans "messages_erreur.properties"
-						List<Integer> listeErreurs = new ArrayList<>();
-						List<String> errorMessages = new ArrayList<>();
-						listeErreurs = e.getListeCodesErreur();
-						for (Integer code : listeErreurs) {
-							errorMessages.add(LecteurMessage.getMessageErreur(code));
-						}
-						request.setAttribute("errorMessages", errorMessages);
-						doGet(request, response);
-					}
-
-				
-				}else {
-					request.setAttribute("errorMessage", "Cet utilisateur existe d�j�");
-					doGet(request, response);
-				}
-				
-			}else {
-				request.setAttribute("errorMessage", "Le mot de passe et la confirmation sont diff�rents");
-				doGet(request, response);
-			}
+				utilisateurExistantCheck(utilisateur, utilisateurManager);
+				utilisateurManager.insertUtilisateur(utilisateur);
+				session = request.getSession();
+				session.setAttribute("utilisateur", utilisateur);
+				RequestDispatcher rd = request.getRequestDispatcher("/Connexion");
+				rd.forward(request, response);
 
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			request.setAttribute("errorMessages", LecteurMessage.codesErreurToString(e));
 			doGet(request, response);
+			
 		}
 	}
 	
-	public boolean utilisateurExistantCheck(Utilisateur utilisateur, UtilisateurManager utilisateurManager) throws BusinessException {
+	public void utilisateurExistantCheck(Utilisateur utilisateur, UtilisateurManager utilisateurManager) throws BusinessException {
 		Utilisateur utilisateurCheck = new Utilisateur();
 		utilisateurCheck = utilisateurManager.selectUtilisateursByLogin(utilisateur.getPseudo(), utilisateur.getMotDePasse());
 		
 		if(utilisateurCheck.getPseudo()!=null) {
-			return false;
-		}else {
-			return true;
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatIHM.UTILISATEUR_DEJA_EXISTANT);
+			throw be;
+		}
+	}
+	
+	public void confirmationMotDePasse(String motDePasse, String confirmation) throws BusinessException {
+		if(!confirmation.equals(motDePasse)) {
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatIHM.MOT_DE_PASSE_CONFIRMATION_DIFFERENTS);
+			throw be;
 		}
 	}
 	

@@ -66,7 +66,7 @@
 
 </div>
 <div class="contenu">
-		<a href="<%=request.getContextPath()%>/modifierProfil"><input
+		<a href="<%=request.getContextPath()%>/ModificationProfil"><input
 			type="button" class="btn btn-primary"
 			value="Modifier" /></a>
 </div>
