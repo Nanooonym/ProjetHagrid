@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.appliTrocEnchere.bo.Enchere;
 import fr.eni.appliTrocEnchere.bo.Utilisateur;
+import fr.eni.appliTrocEnchere.dal.EnchereDAO;
+import fr.eni.appliTrocEnchere.dal.UtilisateurDAO;
 
 
 
