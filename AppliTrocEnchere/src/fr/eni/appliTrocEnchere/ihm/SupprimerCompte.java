@@ -16,46 +16,43 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 import fr.eni.appliTrocEnchere.exception.LecteurMessage;
 
 /**
- * Servlet implementation class Connexion
+ * Servlet implementation class SupprimerCompte
  */
-@WebServlet("/Connexion")
-public class Connexion extends HttpServlet {
+@WebServlet("/SupprimerCompte")
+public class SupprimerCompte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	UtilisateurManager utilisateurManager;
 	HttpSession session;
+	Utilisateur utilisateur;
 
-	public Connexion() {
+	public SupprimerCompte() {
 		super();
 
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/connexion.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/supprimerCompte.jsp");
 		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		utilisateurManager = new UtilisateurManager();
-		Utilisateur utilisateur = new Utilisateur();
+
 
 		try {
-			
 			session = request.getSession();
-			if(session.getAttribute("utilisateur")==null) {
-				String pseudo = request.getParameter("pseudo");
-				String motDePasse = request.getParameter("motDePasse");
-				utilisateur = utilisateurManager.selectUtilisateursByLogin(pseudo, motDePasse);
-				session.setAttribute("utilisateur", utilisateur);
-			}else {
+
+			if (session.getAttribute("utilisateur") != null) {
+				
+				utilisateur = new Utilisateur();
 				utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+				utilisateurManager.deleteUtilisateur(utilisateur);
+				session.invalidate();
+				RequestDispatcher rd = request.getRequestDispatcher("/Accueil");
+				rd.forward(request, response);
 			}
-			
-			verificationUtilisateurExistant(utilisateur);
-			RequestDispatcher rd = request.getRequestDispatcher("/Accueil");
-			rd.forward(request, response);
 
 		} catch (BusinessException e) {
 
@@ -63,14 +60,6 @@ public class Connexion extends HttpServlet {
 			doGet(request, response);
 		}
 
-	}
-	
-	public void verificationUtilisateurExistant(Utilisateur utilisateur) throws BusinessException{
-		if(utilisateur.getPseudo() == null) {
-			BusinessException be = new BusinessException();
-			be.ajouterErreur(CodesResultatIHM.UTILISATEUR_INEXISTANT);
-			throw be;
-		}
 	}
 
 }

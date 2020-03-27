@@ -49,10 +49,11 @@
 
 
 </div>
-<c:out value="${sessionScope.utilisateur.pseudo}" />
-<p>${utilisateur.pseudo}</p>
-<c:out value="${errorMessage}" />
-<c:out value="${compteur}" />
+
+			<c:forEach items="${errorMessages}" var="error">
+				<c:out value="${error}" />
+				<br>
+			</c:forEach>
 
 		<form action="./Accueil" method="get">
 			<input type="submit" value="Annuler">
