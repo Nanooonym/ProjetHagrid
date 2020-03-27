@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.appliTrocEnchere.bo.ArticleVendu;
+import fr.eni.appliTrocEnchere.bo.Retrait;
 import fr.eni.appliTrocEnchere.dal.ArticleVenduDAO;
 import fr.eni.appliTrocEnchere.dal.CodesResultatDAL;
 import fr.eni.appliTrocEnchere.dal.ConnectionProvider;
@@ -17,23 +18,25 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
-	private static final String INSERT_NOUVEL_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article,"
-			+ "description,date_debut_encheres,date_fin_encheres,"
-			+ "prix_initial,prix_vente,no_utilisateur,no_categorie) " + "VALUES (?,?,?,?,?,?,?,?);";
+	private static final String INSERT_NOUVEL_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description,date_debut_encheres,date_fin_encheres, prix_initial,prix_vente,no_utilisateur,no_categorie) VALUES (?,?,?,?,?,?,?,?)";
 	private static final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDUS set nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_vente=? no_categorie=? where no_article=?; ";
 	private static final String SELECT_ALL = "SELECT no_article, nom_article,description, prix_vente, date_fin_encheres, pseudo"
-			+"FROM ARTICLES_VENDUS inner join utilisateurs on ARTICLES_VENDUS.no_utilisateur=UTILISATEURS.no_utilisateur;"; 
+			+ "FROM ARTICLES_VENDUS inner join utilisateurs on ARTICLES_VENDUS.no_utilisateur=UTILISATEURS.no_utilisateur;";
+	private static final String INSERT_RETRAIT = "INSERT INTO RETRAITS VALUES (?,?,?,?)";
 
 	@Override
-	public void addArticle(ArticleVendu article) throws BusinessException {
+	public void addArticle(Retrait retrait) throws BusinessException {
 		Connection cnx = null;
 		BusinessException be = new BusinessException();
 		PreparedStatement psmt = null;
 
 		try {
 			cnx = ConnectionProvider.getConnection();
+			cnx.setAutoCommit(false);
 			// préparation de la requête avec récupération de l'id correspondant à
 			// l'insertion
+			ArticleVendu article = new ArticleVendu();
+			article = retrait.getArticle();
 			psmt = cnx.prepareStatement(INSERT_NOUVEL_ARTICLE, PreparedStatement.RETURN_GENERATED_KEYS);
 			psmt.setString(1, article.getNomArticle());
 			psmt.setString(2, article.getDescription());
@@ -43,21 +46,53 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			psmt.setInt(6, article.getPrixVente());
 			psmt.setInt(7, article.getUtilisateur().getNoUtilisateur());
 			psmt.setInt(8, article.getCategorie().getNoCategorie());
+
 			int nombreArticleInsere = psmt.executeUpdate();
-			if (nombreArticleInsere == 1) {
+
+			if (nombreArticleInsere != 1) {
+				be.ajouterErreur(CodesResultatDAL.INSERT_NOUVEL_ARTICLE_ECHEC);
+				throw be;
+			} else {
 				ResultSet rs = psmt.getGeneratedKeys();
 				if (rs.next()) {
 					article.setNoArticle(rs.getInt(1));
 				}
 				rs.close();
+				psmt.close();
+			}
+
+			psmt = cnx.prepareStatement(INSERT_RETRAIT);
+			psmt.setInt(1, article.getNoArticle());
+			psmt.setString(2, retrait.getRue());
+			psmt.setString(3, retrait.getCodePostal());
+			psmt.setString(4, retrait.getVille());
+			
+			nombreArticleInsere = psmt.executeUpdate();
+
+			if (nombreArticleInsere != 1) {
+				be.ajouterErreur(CodesResultatDAL.INSERT_RETRAIT_ECHEC);
+				throw be;
 			}
 			psmt.close();
+			cnx.commit();
+
 		} catch (Exception e) {
-			e.printStackTrace();
-			be.ajouterErreur(CodesResultatDAL.INSERT_NOUVEL_ARTICLE_ECHEC);
 
+			try {
+				cnx.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				cnx.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			if (be.hasErreurs()) {
+				throw be;
+			}
 		}
-
 	}
 
 	@Override
@@ -82,13 +117,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			throw be;
 		}
 	}
-	
+
 	@Override
 	public void updateArticle(ArticleVendu article) throws BusinessException {
-		
-		
-		
-		
+
 	}
 
 	private ArticleVendu mappingArticle(ResultSet rs) throws SQLException {
@@ -100,7 +132,5 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		newArticle.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
 		return newArticle;
 	}
-
-	
 
 }

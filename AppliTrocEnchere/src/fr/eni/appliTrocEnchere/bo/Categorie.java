@@ -1,6 +1,6 @@
 package fr.eni.appliTrocEnchere.bo;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * 
@@ -8,26 +8,28 @@ import java.util.ArrayList;
  *
  */
 
-public class Categorie {
+public class Categorie implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3257461444937293750L;
+	// attributs
 	private int noCategorie;
 	private String libelle;
-	//Creation d'une ArrayList (plusieurs articleVendu peuvent être dans une même categorie)
-	private ArrayList<ArticleVendu> categorieArticle = new ArrayList<>();
-	
-	
-	//Creation du constructeur par défaut
+
+	// Creation du constructeur par d�faut
 	public Categorie() {
 	}
 
-	//Creation du constructeur avec les attributs
+	// Creation du constructeur avec les attributs
 	public Categorie(int noCategorie, String libelle) {
 		super();
 		this.noCategorie = noCategorie;
 		this.libelle = libelle;
 	}
-	
-	//Creation des getters et setters
+
+	// Creation des getters et setters
 	public int getNoCategorie() {
 		return noCategorie;
 	}
@@ -43,16 +45,8 @@ public class Categorie {
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
-	
-	public ArrayList<ArticleVendu> getCategorieArticle() {
-		return categorieArticle;
-	}
 
-	public void setCategorieArticle(ArrayList<ArticleVendu> categorieArticle) {
-		this.categorieArticle = categorieArticle;
-	}
-	
-	//Creation du ToString
+	// Creation du ToString
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -64,7 +58,7 @@ public class Categorie {
 		return builder.toString();
 	}
 
-	//Creation du HashCode
+	// Creation du HashCode
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -73,8 +67,8 @@ public class Categorie {
 		result = prime * result + noCategorie;
 		return result;
 	}
-	
-	//Creation du Equals
+
+	// Creation du Equals
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -94,7 +88,4 @@ public class Categorie {
 		return true;
 	}
 
-
-	
-	
 }
