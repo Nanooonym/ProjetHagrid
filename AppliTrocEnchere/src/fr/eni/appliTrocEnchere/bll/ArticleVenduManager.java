@@ -3,7 +3,6 @@ package fr.eni.appliTrocEnchere.bll;
 import java.time.LocalDate;
 import fr.eni.appliTrocEnchere.bo.ArticleVendu;
 import fr.eni.appliTrocEnchere.bo.Categorie;
-import fr.eni.appliTrocEnchere.bo.Utilisateur;
 import fr.eni.appliTrocEnchere.dal.ArticleVenduDAO;
 import fr.eni.appliTrocEnchere.dal.DAOFactory;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
@@ -17,25 +16,23 @@ public class ArticleVenduManager {
 		articleVenduDao = DAOFactory.getArticleVenduDAO();
 	}
 
-	public ArticleVendu ajouterArticleVendu(String nomArticle, String description,
-			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, String etatVente,
-			Utilisateur utilisateur, Categorie categorie) throws BusinessException {
+	public ArticleVendu ajouterArticleVendu(ArticleVendu article) throws BusinessException {
 
 		BusinessException businessException = new BusinessException();
-		this.validerDateDebut(dateDebutEncheres, businessException);
-		this.validerDateFin(dateFinEncheres, dateDebutEncheres, businessException);
+		this.validerDateDebut(article.getDateDebutEncheres(), businessException);
+		this.validerDateFin(article.getDateFinEncheres(), article.getDateDebutEncheres(), businessException);
 		ArticleVendu articleVendu = null;
 
 		if (!businessException.hasErreurs()) {
 			articleVendu = new ArticleVendu();
-			articleVendu.setNomArticle(nomArticle);
-			articleVendu.setDescription(description);
-			articleVendu.setDateDebutEncheres(dateDebutEncheres);
-			articleVendu.setDateFinEncheres(dateFinEncheres);
-			articleVendu.setMiseAPrix(miseAPrix);
-			articleVendu.setEtatVente(etatVente);
-			articleVendu.setUtilisateur(utilisateur);
-			articleVendu.setCategorie(categorie);
+			articleVendu.setNomArticle(article.getNomArticle());
+			articleVendu.setDescription(article.getDescription());
+			articleVendu.setDateDebutEncheres(article.getDateDebutEncheres());
+			articleVendu.setDateFinEncheres(article.getDateFinEncheres());
+			articleVendu.setMiseAPrix(article.getMiseAPrix());
+			articleVendu.setEtatVente(article.getEtatVente());
+			articleVendu.setUtilisateur(article.getUtilisateur());
+			articleVendu.setCategorie(article.getCategorie());
 
 			this.articleVenduDao.addArticle(articleVendu);
 		} else {
