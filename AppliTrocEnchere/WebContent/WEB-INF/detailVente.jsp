@@ -15,12 +15,14 @@
 			<br>
 			<div><c:out value="${enchere.articleVendu.nomArticle}" /></div><br>
 			<div>Description :  <c:out value="${enchere.articleVendu.description}" /></div><br>
-			<div>Categorie :  <c:out value="${enchere.montantEnchere}" /> points</div>
+			<div>Categorie :  <c:out value="${enchere.categorie.libelle}" /> points</div>
 			<div>Meilleure offre : <c:out value="${enchere.articleVendu.prix_vente}" /></div>
-			<div>Mise à prix : <c:out value="${enchere.utilisateur.pseudo}" /></div>
+			<div>Mise à prix : <c:out value="${enchere.prix_vente}" /></div>
 			<div>Fin de l'enchère : <c:out value="${enchere.articleVendu.dateFinEncheres}" /></div>
-			<div>Retrait : </div>
-			<div>Vendeur : </div>
+			<div>Retrait : <c:out value="${enchere.retrait.rue}" /></div>
+							<c:out value="${enchere.retrait.code_postal}" />
+							<c:out value="${enchere.retrait.ville}" />
+			<div>Vendeur : <c:out value="${enchere.utilisateur.pseudo}" /></div>
 			<div>Ma proposition : </div>
 			<br>
 		</c:forEach>
