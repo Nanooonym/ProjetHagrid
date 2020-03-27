@@ -17,6 +17,16 @@ public class UtilisateurManager {
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();
 
 	}
+	
+	public void updateUtilisateur (Utilisateur utilisateur) throws BusinessException{
+		be = new BusinessException();
+		verificationUtilisateur(utilisateur, be);
+		if (!be.hasErreurs()) {
+			utilisateurDAO.updateUtilisateur(utilisateur);
+		}else {
+			throw be;
+		}
+	}
 
 	public Utilisateur selectUtilisateurById(int noUtilisateur) throws BusinessException{
 		Utilisateur utilisateur = new Utilisateur();
