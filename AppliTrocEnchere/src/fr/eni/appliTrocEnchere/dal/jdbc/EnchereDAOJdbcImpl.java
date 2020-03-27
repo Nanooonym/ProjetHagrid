@@ -130,7 +130,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 		}
 
 
-
+	//Methode pour afficher une enchere ****CA MARCHE PAS*****
 	@Override
 	public List<Enchere> afficherDetailEnchere() throws BusinessException {
 		List<Enchere> listeDetailEnchere = new ArrayList<Enchere>();
