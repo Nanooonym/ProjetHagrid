@@ -20,7 +20,7 @@ import fr.eni.appliTrocEnchere.bll.EnchereManager;
 import fr.eni.appliTrocEnchere.bll.RetraitManager;
 import fr.eni.appliTrocEnchere.bll.UtilisateurManager;
 import fr.eni.appliTrocEnchere.bo.Enchere;
-import fr.eni.appliTrocEnchere.exception.BusinessException;
+
 
 
 
