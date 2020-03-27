@@ -21,14 +21,14 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
  * Servlet implementation class AfficherEncheres
  */
 @WebServlet("/AfficherEncheres")
-public class Accueil extends HttpServlet {
+public class AfficherEncheres extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     EnchereManager enchereManager;
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Accueil() {
+    public AfficherEncheres() {
         super();
     }
 
