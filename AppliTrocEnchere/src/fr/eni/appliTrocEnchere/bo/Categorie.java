@@ -8,15 +8,13 @@ import java.io.Serializable;
  *
  */
 
+
 public class Categorie implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3257461444937293750L;
-	//attributs
-public class Categorie implements Serializable {
-
 	private int noCategorie;
 	private String libelle;
 	
