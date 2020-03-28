@@ -15,11 +15,13 @@ public class Categorie implements Serializable {
 	 */
 	private static final long serialVersionUID = -3257461444937293750L;
 	//attributs
+public class Categorie implements Serializable {
+
 	private int noCategorie;
 	private String libelle;
 	
 	
-	//Creation du constructeur par dÃ©faut
+	// Creation du constructeur par défaut
 	public Categorie() {
 	}
 

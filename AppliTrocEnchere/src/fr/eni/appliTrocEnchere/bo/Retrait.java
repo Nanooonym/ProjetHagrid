@@ -9,7 +9,6 @@ public class Retrait implements Serializable {
 	 */
 	private static final long serialVersionUID = -3158055634188880288L;
 	// ATTRIBUTS
-	private int noArticle;
 	private ArticleVendu article;
 	private String rue;
 	private String codePostal;
@@ -20,8 +19,7 @@ public class Retrait implements Serializable {
 
 	}
 
-	public Retrait(int noArticle, ArticleVendu article, String rue, String codePostal, String ville) {
-		this.noArticle = noArticle;
+	public Retrait(ArticleVendu article, String rue, String codePostal, String ville) {
 		this.article = article;
 		this.rue = rue;
 		this.codePostal = codePostal;
@@ -29,13 +27,6 @@ public class Retrait implements Serializable {
 	}
 
 	// GETTERS & SETTERS
-	public int getNoArticle() {
-		return noArticle;
-	}
-
-	public void setNoArticle(int noArticle) {
-		this.noArticle = noArticle;
-	}
 
 	public ArticleVendu getArticle() {
 		return article;
@@ -73,7 +64,7 @@ public class Retrait implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + noArticle;
+		result = prime * result + article.getNoArticle();
 		return result;
 	}
 
@@ -86,7 +77,7 @@ public class Retrait implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Retrait other = (Retrait) obj;
-		if (noArticle != other.noArticle)
+		if (article.getNoArticle() != other.article.getNoArticle())
 			return false;
 		return true;
 	}
@@ -95,7 +86,7 @@ public class Retrait implements Serializable {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Retrait [noArticle=");
-		builder.append(noArticle);
+		builder.append(article.getNoArticle());
 		builder.append(", article=");
 		builder.append(article);
 		builder.append(", rue=");
@@ -107,7 +98,5 @@ public class Retrait implements Serializable {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
 
 }

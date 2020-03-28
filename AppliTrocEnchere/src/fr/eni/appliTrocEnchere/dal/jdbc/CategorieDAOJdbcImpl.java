@@ -20,7 +20,11 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 public class CategorieDAOJdbcImpl implements CategorieDAO {
 
 	private final static String SELECT_CATEGORIE = "SELECT no_categorie, libelle FROM CATEGORIES;";
+<<<<<<< HEAD
 	private final static String SELECT_CATEGORIE_BY_NUMERO = "SELECT libelle FROM CATEGORIES where no_categorie = ?;";
+=======
+	private final static String SELECT_CATEGORIE_BY_NUMERO = "SELECT no_categorie, libelle FROM CATEGORIES WHERE no_categorie = ?";
+>>>>>>> refs/heads/vendrediRemi
 
 	@Override
 	public List<Categorie> selectCategorie() throws BusinessException {
