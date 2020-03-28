@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html >
 <html>
 <head>
@@ -7,71 +7,77 @@
 <title>Mon profil</title>
 </head>
 <body>
-<div class="container-column">
-
-<div class="container-formulaire">
-
-<label type="text" value="pseudo">Pseudo :</label> 
-<p>${utilisateur.pseudo }</p>
 
 
-</div>
+	<div class="container-formulaire">
 
-<div class="container-formulaire">
+		<label type="text" value="pseudo">Pseudo :</label>
+		<p>${sessionScope.utilisateur.pseudo}</p>
 
-<label type="text" value="Nom">Nom :</label>
-<p>${utilisateur.nom }</p>
 
-</div>
+	</div>
 
-<div class="container-formulaire">
+	<div class="container-formulaire">
 
-<label type="text" value="Prenom">Prénom :</label>
-<p>${utilisateur.prenom }</p>
+		<label type="text" value="Nom">Nom :</label>
+		<p>${sessionScope.utilisateur.nom}</p>
 
-</div>
+	</div>
 
-<div class="container-formulaire">
+	<div class="container-formulaire">
 
-<label type="text" value="Email">Email :</label>
-<p>${utilisateur.email }</p>
+		<label type="text" value="Prenom">Prénom :</label>
+		<p>${sessionScope.utilisateur.prenom}</p>
 
-</div>
+	</div>
 
-<div class="container-formulaire">
+	<div class="container-formulaire">
 
-<label type="text" value="pseudo">Téléphone :</label>
-<p>${utilisateur.telephone }</p>
+		<label type="text" value="Email">Email :</label>
+		<p>${sessionScope.utilisateur.email}</p>
 
-</div>
+	</div>
 
-<div class="container-formulaire">
+	<div class="container-formulaire">
 
-<label type="text" value="pseudo">Rue :</label>
-<p>${utilisateur.rue }</p>
+		<label type="text" value="pseudo">Téléphone :</label>
+		<p>${sessionScope.utilisateur.telephone}</p>
 
-</div>
+	</div>
 
-<div class="container-formulaire">
+	<div class="container-formulaire">
 
-<label type="text" value="pseudo">Code postal :</label>
-<p>${utilisateur.codePostal }</p>
+		<label type="text" value="pseudo">Rue :</label>
+		<p>${sessionScope.utilisateur.rue}</p>
 
-</div>
+	</div>
 
-<div class="container-formulaire">
+	<div class="container-formulaire">
 
-<label type="text" value="pseudo">ville :</label>
-<p>${utilisateur.ville }</p>
+		<label type="text" value="pseudo">Code postal :</label>
+		<p>${sessionScope.utilisateur.codePostal}</p>
 
-</div>
-<div class="contenu">
-		<a href="<%=request.getContextPath()%>/ModificationProfil"><input
-			type="button" class="btn btn-primary"
-			value="Modifier" /></a>
-</div>
-						
+	</div>
 
-</div>
+	<div class="container-formulaire">
+
+		<label type="text" value="pseudo">ville :</label>
+		<p>${sessionScope.utilisateur.ville}</p>
+
+	</div>
+
+	<div class="container-formulaire">
+
+		<div class="contenu">
+			<a href="<%=request.getContextPath()%>/ModificationProfil"><input
+				type="button" class="btn btn-primary" value="Modifier" /></a>
+		</div>
+
+		<form action="<%=request.getContextPath()%>/Accueil" method="get">
+			<button type="submit" value="accueil">Accueil</button>
+		</form>
+
+
+	</div>
 </body>
 </html>

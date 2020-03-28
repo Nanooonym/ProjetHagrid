@@ -40,12 +40,16 @@ public class UtilisateurManager {
 		return utilisateurs;
 	}
 	
-	public Utilisateur selectUtilisateurByPseudoEmail (String pseudo, String email) throws BusinessException{
+	public Utilisateur selectUtilisateurByPseudo(String pseudo) throws BusinessException{
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur = utilisateurDAO.selectUtilisateurByPseudo(pseudo);
+		return utilisateur;	
+	}
+	
+	public Utilisateur selectUtilisateurByEmail(String email) throws BusinessException{
+		Utilisateur utilisateur = new Utilisateur();
 		utilisateur = utilisateurDAO.selectUtilisateurByEmail(email);
-		return utilisateur;
-		
+		return utilisateur;	
 	}
 	
 	public Utilisateur selectUtilisateursByLogin (String pseudo, String motDePasse) throws BusinessException{

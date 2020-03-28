@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html >
 <html>
 <head>
@@ -13,7 +13,6 @@
 		<h2>ENI-Enchères</h2>
 	</header>
 
-
 	<h1 class="title">Mon profil</h1>
 	<div class="container-column">
 
@@ -23,64 +22,66 @@
 				<div class="container-column">
 					<div class="container-formulaire">
 						<label>Pseudo :</label> <input type="text" id="textfield"
-							name="pseudo">
+							name="pseudo" value="${sessionScope.utilisateur.pseudo}">
 					</div>
 
 					<div class="container-formulaire">
 						<label>Prénom :</label> <input type="text" id="textfield"
-							name="prenom">
+							name="prenom" value="${sessionScope.utilisateur.prenom}">
 					</div>
 
 					<div class="container-formulaire">
 						<label>Téléphone :</label> <input type="text" id="textfield"
-							name="telephone">
+							name="telephone" value="${sessionScope.utilisateur.telephone}">
 					</div>
 
 					<div class="container-formulaire">
 						<label>Code postal :</label> <input type="text" id="textfield"
-							name="codePostal">
+							name="codePostal" value="${sessionScope.utilisateur.codePostal}">
 					</div>
 
 					<div class="container-formulaire">
 						<label>Mot de passe :</label> <input type="text" id="textfield"
-							name="motDePasse">
+							name="motDePasse" value="${sessionScope.utilisateur.motDePasse}">
 					</div>
 				</div>
 
 				<div class="container-column">
 					<div class="container-formulaire">
-						<label>Nom :</label> <input type="text" id="textfield" name="nom">
+						<label>Nom :</label> <input type="text" id="textfield" name="nom"
+							value="${sessionScope.utilisateur.nom}">
 					</div>
 
 					<div class="container-formulaire">
 						<label>Email :</label> <input type="text" id="textfield"
-							name="email">
+							name="email" value="${sessionScope.utilisateur.email}">
 					</div>
 
 					<div class="container-formulaire">
-						<label>Rue :</label> <input type="text" id="textfield" name="rue">
+						<label>Rue :</label> <input type="text" id="textfield" name="rue"
+							value="${sessionScope.utilisateur.rue}">
 					</div>
 
 					<div class="container-formulaire">
 						<label>Ville :</label> <input type="text" id="textfield"
-							name="ville">
+							name="ville" value="${sessionScope.utilisateur.ville}">
 					</div>
 
 					<div class="container-formulaire">
 						<label>Confirmation :</label> <input type="text" id="textfield"
 							name="confirmation">
 					</div>
-					
-					<p>${ Utilisateur.credit }</p>
 
 				</div>
 
 			</div>
 			<input type="submit" value="Enregistrer" class="btn btn-primary">
 		</form>
-		
-			
-		
+
+		<form action="<%=request.getContextPath()%>/MonProfil" method="get">
+			<button type="submit" value="monProfil">Retour</button>
+		</form>
+
 	</div>
 </body>
 </html>
