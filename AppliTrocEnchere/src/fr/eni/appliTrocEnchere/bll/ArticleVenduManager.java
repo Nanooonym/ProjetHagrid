@@ -56,7 +56,7 @@ public class ArticleVenduManager {
 		}
 
 		int miseAPrix = retrait.getArticle().getMiseAPrix();
-		if (miseAPrix <= 0) {
+		if (miseAPrix < 0) {
 			be.ajouterErreur(CodesResultatBLL.MISE_A_PRIX_ARTICLE_ERREUR);
 		}
 

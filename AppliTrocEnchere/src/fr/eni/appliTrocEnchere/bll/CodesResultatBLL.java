@@ -23,7 +23,7 @@ public abstract class CodesResultatBLL {
 	public static final int MISE_A_PRIX_ARTICLE_ERREUR = 20014;
 	public static final int RUE_RETRAIT_ERREUR = 20015;
 	public static final int CODE_POSTAL_RETRAIT_ERREUR = 20016;
-	public static final int VILLE_RETRAIT_ERREUR = 200017;
+	public static final int VILLE_RETRAIT_ERREUR = 20017;
 	
 	
 	

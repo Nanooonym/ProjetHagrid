@@ -2,7 +2,6 @@ package fr.eni.appliTrocEnchere.ihm;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import javax.servlet.RequestDispatcher;
@@ -30,9 +29,12 @@ public class AjoutArticle extends HttpServlet {
 	String nomArticle;
 	String description;
 	Categorie categorie;
+	String miseAPrixCheck;
 	int miseAPrix;
 	LocalDate dateDebutEncheres;
 	LocalDate dateFinEncheres;
+	String debut;
+	String fin;
 	String rue;
 	String codePostal;
 	String ville;
@@ -61,21 +63,24 @@ public class AjoutArticle extends HttpServlet {
 		try {
 			verificationSaisieArticle(request);
 
+			//Récupération de l'utilisateur
 			session = request.getSession();
 			utilisateur = new Utilisateur();
 			utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 
+			//Récupération de la catégorie choisie
 			categorie = new Categorie();
-			noCategorie = Integer.parseInt(request.getParameter("noCategorie"));
+			noCategorie = Integer.parseInt(request.getParameter("categorie"));
 			categorie = articleVenduManager.selectCategorieById(noCategorie);
 
+			//Création de l'Article
 			articleVendu = new ArticleVendu();
 			articleVendu = mappingArticle(request);
 
+			//Création du lieu de retrait
 			rue = request.getParameter("rue");
 			ville = request.getParameter("ville");
 			codePostal = request.getParameter("codePostal");
-
 			retrait = new Retrait(articleVendu, rue, ville, codePostal);
 			
 			articleVenduManager.ajouterArticleVendu(retrait);
@@ -93,29 +98,23 @@ public class AjoutArticle extends HttpServlet {
 		nomArticle = request.getParameter("nomArticle");
 		BusinessException be = new BusinessException();
 
-		if (nomArticle == null || nomArticle.trim().isEmpty()) {
-			be.ajouterErreur(CodesResultatIHM.FORMAT_NOM_ERREUR);
+		//Vérification de la mise à prix
+		miseAPrixCheck = request.getParameter("miseAPrix");
+		if(miseAPrixCheck == null || miseAPrixCheck.equals("")) {
+			miseAPrixCheck = "0";
 		}
-		// lecture de la description
-		description = request.getParameter("description");
-		if (description == null || description.trim().isEmpty()) {
-			be.ajouterErreur(CodesResultatIHM.FORMAT_DESCRIPTION_ERREUR);
-		}
-
-		// lecture de la mise à  prix
 		miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
-		if (miseAPrix <= 0) {
+		if (miseAPrix <= 0 || miseAPrix%1 != 0) {
 			be.ajouterErreur(CodesResultatIHM.FORMAT_MISE_A_PRIX_ERREUR);
 		}
 
-		// lecture du début de l'enchÃ¨re
+		//Vérification des dates de la vente
 		try {
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-			dateDebutEncheres = LocalDate.parse(request.getParameter("dateDebut"), dtf);
-			dateFinEncheres = LocalDate.parse(request.getParameter("dateFin"), dtf);
+			dateDebutEncheres = LocalDate.parse(request.getParameter("dateDebut"));
+			dateFinEncheres = LocalDate.parse(request.getParameter("dateFin"));
 
 		} catch (DateTimeParseException e) {
-			be.ajouterErreur(CodesResultatIHM.FORMAT__DATE_ERREUR);
+			be.ajouterErreur(CodesResultatIHM.FORMAT_DATE_ERREUR);
 		}
 
 		if (be.hasErreurs()) {
@@ -128,10 +127,14 @@ public class AjoutArticle extends HttpServlet {
 		nomArticle = request.getParameter("nomArticle");
 		description = request.getParameter("description");
 		miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
+		debut = request.getParameter("dateDebut");
+		fin = request.getParameter("dateFin");
+		dateDebutEncheres = LocalDate.parse(debut);
+		dateFinEncheres = LocalDate.parse(fin);
 		if (dateDebutEncheres.isBefore(LocalDate.now())) {
-			etatVente.equals("En Cours");
+			etatVente = "En cours";
 		} else {
-			etatVente.equals("Créée");
+			etatVente = "Créée";
 		}
 
 		ArticleVendu article = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix,
