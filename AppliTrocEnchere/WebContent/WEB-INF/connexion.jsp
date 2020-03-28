@@ -23,7 +23,7 @@
 
 				<div class="container-formulaire">
 					<label>Mot de passe :</label>
-					<input type="text" id="textfield" name="motDePasse">
+					<input type="password" id="textfield" name="motDePasse">
 				</div>
 				<div class="container-formulaire">
 

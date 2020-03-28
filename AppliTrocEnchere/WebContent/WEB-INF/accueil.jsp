@@ -14,7 +14,7 @@
 		<c:out value="Utilisateur : ${sessionScope.utilisateur.pseudo}"/>
 		<c:out value="Encheres"/>
 		<a href="<%=request.getContextPath()%>/AjoutArticle">Vendre un article</a>
-		<a href="<%=request.getContextPath()%>/SupprimerCompte">Supprimer Compte</a>
+		<a href="<%=request.getContextPath()%>/MonProfil">Mon Profil</a>
 		<a href="<%=request.getContextPath()%>/Deconnexion">Déconnexion</a>
 		
 	</c:if>

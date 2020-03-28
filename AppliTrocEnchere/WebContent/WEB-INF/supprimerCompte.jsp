@@ -15,7 +15,7 @@
 			Supprimer
 		</button>
 	</form>
-	<form action="./Accueil" method="get">
+	<form action="<%=request.getContextPath()%>/Accueil" method="get">
 		<button type="submit" value="accueil">
 			Accueil
 		</button>
