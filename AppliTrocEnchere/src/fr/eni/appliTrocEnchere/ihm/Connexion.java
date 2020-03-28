@@ -48,12 +48,13 @@ public class Connexion extends HttpServlet {
 				String pseudo = request.getParameter("pseudo");
 				String motDePasse = request.getParameter("motDePasse");
 				utilisateur = utilisateurManager.selectUtilisateursByLogin(pseudo, motDePasse);
-				session.setAttribute("utilisateur", utilisateur);
+
 			}else {
 				utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 			}
 			
 			verificationUtilisateurExistant(utilisateur);
+			session.setAttribute("utilisateur", utilisateur);
 			RequestDispatcher rd = request.getRequestDispatcher("/Accueil");
 			rd.forward(request, response);
 

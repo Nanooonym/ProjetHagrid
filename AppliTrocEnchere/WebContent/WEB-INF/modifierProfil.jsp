@@ -41,8 +41,12 @@
 					</div>
 
 					<div class="container-formulaire">
-						<label>Mot de passe :</label> <input type="text" id="textfield"
-							name="motDePasse" value="${sessionScope.utilisateur.motDePasse}">
+						<label>Mot de passe actuel:</label> <input type="text" id="textfield"
+							name="motDePasseActuel">
+					</div>
+					
+					<div class="container-formulaire">
+						<label>Nouveau mot de passe:</label> <input type="text" id="textfield" name="nouveauMotDePasse">
 					</div>
 				</div>
 

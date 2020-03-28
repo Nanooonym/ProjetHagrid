@@ -27,7 +27,8 @@ public class ModificationProfil extends HttpServlet {
 		String prenom;
 		String telephone;
 		String codePostal;
-		String motDePasse;
+		String motDePasseActuel;
+		String nouveauMotDePasse;
 		String nom;
 		String email;
 		String rue;
@@ -55,11 +56,11 @@ public class ModificationProfil extends HttpServlet {
 		utilisateurSession = new Utilisateur();
 		utilisateurManager = new UtilisateurManager();
 		confirmation = request.getParameter("confirmation");
-		motDePasse = request.getParameter("motDePasse");
+		nouveauMotDePasse = request.getParameter("nouveauMotDePasse");
 		Utilisateur utilisateurUpdate = new Utilisateur();
 		
 		try {
-			Utilities.confirmationMotDePasse(motDePasse, confirmation);
+			Utilities.confirmationMotDePasse(nouveauMotDePasse, confirmation);
 			
 			//Création d'un utilisateur temporaire pour ne pas modifier l'utilisateur en cours en cas d'échec
 			utilisateurUpdate = mappingUtilisateur(request);
@@ -67,6 +68,9 @@ public class ModificationProfil extends HttpServlet {
 			//Récupération de l'utilisateur
 			session = request.getSession();	
 			utilisateurSession = (Utilisateur) session.getAttribute("utilisateur");
+			
+			motDePasseActuel = request.getParameter("motDePasseActuel");
+			Utilities.validationMotDePasse(utilisateurSession, motDePasseActuel);
 			
 			//Affectation des valeurs non-demandées dans le formulaire, pour contourner les nullPointerException
 			utilisateurUpdate.setNoUtilisateur(utilisateurSession.getNoUtilisateur());
@@ -125,13 +129,13 @@ public class ModificationProfil extends HttpServlet {
 		prenom = request.getParameter("prenom");
 		telephone = request.getParameter("telephone");
 		codePostal = request.getParameter("codePostal");
-		motDePasse = request.getParameter("motDePasse");
+		nouveauMotDePasse = request.getParameter("motDePasse");
 		nom = request.getParameter("nom");
 		email = request.getParameter("email");
 		rue = request.getParameter("rue");
 		ville = request.getParameter("ville");
 
-		Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
+		Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, nouveauMotDePasse);
 		return utilisateur;
 	}
 }
