@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.appliTrocEnchere.bll.UtilisateurManager;
+import fr.eni.appliTrocEnchere.bll.Utilities;
 import fr.eni.appliTrocEnchere.bo.Utilisateur;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
 import fr.eni.appliTrocEnchere.exception.LecteurMessage;
@@ -53,7 +54,7 @@ import fr.eni.appliTrocEnchere.exception.LecteurMessage;
 		
 		try {
 			
-				confirmationMotDePasse(motDePasse, confirmation);
+				Utilities.confirmationMotDePasse(motDePasse, confirmation);
 				utilisateur = mappingUtilisateur(request);
 				utilisateurExistantCheck(utilisateur, utilisateurManager);
 				utilisateurManager.insertUtilisateur(utilisateur);
@@ -77,14 +78,6 @@ import fr.eni.appliTrocEnchere.exception.LecteurMessage;
 		if(utilisateurCheck.getPseudo()!=null) {
 			BusinessException be = new BusinessException();
 			be.ajouterErreur(CodesResultatIHM.UTILISATEUR_DEJA_EXISTANT);
-			throw be;
-		}
-	}
-	
-	public void confirmationMotDePasse(String motDePasse, String confirmation) throws BusinessException {
-		if(!confirmation.equals(motDePasse)) {
-			BusinessException be = new BusinessException();
-			be.ajouterErreur(CodesResultatIHM.MOT_DE_PASSE_CONFIRMATION_DIFFERENTS);
 			throw be;
 		}
 	}
