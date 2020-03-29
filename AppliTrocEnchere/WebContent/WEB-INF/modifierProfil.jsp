@@ -75,13 +75,17 @@
 						<label>Confirmation :</label> <input type="text" id="textfield"
 							name="confirmation">
 					</div>
-
+							<c:out value="${sessionScope.utilisateur.credit}"/>
 				</div>
 
 			</div>
 			<input type="submit" value="Enregistrer" class="btn btn-primary">
 		</form>
 
+
+		<form action="<%=request.getContextPath()%>/SupprimerCompte" method="get">
+			<button type="submit" value="supprimerCompte">Supprimer mon compte</button>
+		</form>
 		<form action="<%=request.getContextPath()%>/MonProfil" method="get">
 			<button type="submit" value="monProfil">Retour</button>
 		</form>
