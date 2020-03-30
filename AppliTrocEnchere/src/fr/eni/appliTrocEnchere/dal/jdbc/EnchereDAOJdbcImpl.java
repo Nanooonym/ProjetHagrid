@@ -20,11 +20,12 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO{
 
-	private final static String AFFICHER_ENCHERES = "SELECT a.nom_article, a.date_fin_encheres, e.montant_enchere, u.pseudo FROM ARTICLES_VENDUS AS a INNER JOIN ENCHERES e ON a.no_utilisateur = e.no_utilisateur INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur";
+	private final static String AFFICHER_ENCHERES = "SELECT a.nom_article, a.date_fin_encheres, a.prix_vente, u.pseudo FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur";
 	private static final String AJOUTER_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?,?,GETDATE(),?);";											
-	private static final String SUPPRIMER_ENCHERE = "DELETE * FROM ENCHERES WHERE no_enchere=?";		
-	
-	
+	private static final String SUPPRIMER_ENCHERE = "DELETE * FROM ENCHERES WHERE no_enchere=?";
+	private static final String AFFICHER_ENCHERES_OUVERTES = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.etat_vente LIKE '%En cours%'";
+	private static final String AFFICHER_ENCHERES_EN_COURS = "SELECT a.no_article, a.etat_vente, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur, e.date_enchere, e.montant_enchere FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie RIGHT JOIN ENCHERES e ON e.no_utilisateur = a.no_utilisateur WHERE a.etat_vente LIKE 'En cours' AND e.no_utilisateur = ?";
+	private static final String AFFICHER_ENCHERES_REMPORTEES = "SELECT a.no_article, a.etat_vente, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur, e.date_enchere, e.montant_enchere FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie RIGHT JOIN ENCHERES e ON e.no_utilisateur = a.no_utilisateur WHERE a.etat_vente LIKE 'Terminée' AND e.montant_enchere = a.prix_vente AND a.no_utilisateur = ?";
 	
 	//Methode pour afficher toutes les encheres en page d'accueil
 	@Override
@@ -33,10 +34,89 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 		List<Enchere> listeEncheres = new ArrayList<Enchere>();
 
 		
-		try (Connection cnx = ConnectionProvider.getConnection();
+		try (Connection cnx = ConnectionProvider.getConnection();	
+				
 				Statement smt = cnx.createStatement();) {
 			
 			ResultSet rs = smt.executeQuery(AFFICHER_ENCHERES);
+			
+			while(rs.next())
+			{
+				listeEncheres.add(mappingEnchere(rs));
+			}	
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.AFFICHER_ENCHERES_ECHEC);
+			throw be;
+		}
+			return listeEncheres;		
+
+	}
+	
+	public  List<Enchere> afficherEncheresEnCours(Utilisateur utilisateur) throws BusinessException {
+
+		List<Enchere> listeEncheres = new ArrayList<Enchere>();
+
+		
+		try (Connection cnx = ConnectionProvider.getConnection();	
+
+				PreparedStatement psmt = cnx.prepareStatement(AFFICHER_ENCHERES_EN_COURS);) {
+			psmt.setInt(1, utilisateur.getNoUtilisateur());
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next())
+			{
+				listeEncheres.add(mappingEnchere(rs));
+			}	
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.AFFICHER_ENCHERES_ECHEC);
+			throw be;
+		}
+			return listeEncheres;		
+
+	}
+	
+	@Override
+	public  List<Enchere> afficherEncheresOuvertes() throws BusinessException {
+
+		List<Enchere> listeEncheres = new ArrayList<Enchere>();
+
+		
+		try (Connection cnx = ConnectionProvider.getConnection();	
+				
+				Statement smt = cnx.createStatement();) {
+			
+			ResultSet rs = smt.executeQuery(AFFICHER_ENCHERES_OUVERTES);
+			
+			while(rs.next())
+			{
+				listeEncheres.add(mappingEnchere(rs));
+			}	
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.AFFICHER_ENCHERES_ECHEC);
+			throw be;
+		}
+			return listeEncheres;		
+
+	}
+	
+	public  List<Enchere> afficherEncheresRemportees(Utilisateur utilisateur) throws BusinessException {
+
+		List<Enchere> listeEncheres = new ArrayList<Enchere>();
+		
+		try (Connection cnx = ConnectionProvider.getConnection();	
+
+				PreparedStatement psmt = cnx.prepareStatement(AFFICHER_ENCHERES_REMPORTEES);) {
+			psmt.setInt(1, utilisateur.getNoUtilisateur());
+			ResultSet rs = psmt.executeQuery();
 			
 			while(rs.next())
 			{
@@ -59,13 +139,14 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 		ArticleVendu articleVendu = new ArticleVendu();
 		Utilisateur utilisateur = new Utilisateur();
 		
-		enchere.setArticleVendu(articleVendu);
+
 		articleVendu.setNomArticle(rs.getString("nom_Article"));
 		articleVendu.setDateFinEncheres(LocalDate.parse(rs.getString("date_fin_encheres")));
+		articleVendu.setPrixVente(rs.getInt("prix_vente"));
+		enchere.setArticleVendu(articleVendu);
 		
 		utilisateur.setPseudo(rs.getString("pseudo"));
 		enchere.setUtilisateur(utilisateur);
-		enchere.setMontantEnchere(rs.getInt("montant_enchere"));
 		
 		return enchere;
 	}

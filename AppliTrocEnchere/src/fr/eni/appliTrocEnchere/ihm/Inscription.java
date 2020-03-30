@@ -56,7 +56,7 @@ import fr.eni.appliTrocEnchere.exception.LecteurMessage;
 			
 				Utilities.confirmationMotDePasse(motDePasse, confirmation);
 				utilisateur = mappingUtilisateur(request);
-				utilisateurExistantCheck(utilisateur, utilisateurManager);
+				existantCheck(utilisateur);
 				utilisateurManager.insertUtilisateur(utilisateur);
 				session = request.getSession();
 				session.setAttribute("utilisateur", utilisateur);
@@ -71,15 +71,30 @@ import fr.eni.appliTrocEnchere.exception.LecteurMessage;
 		}
 	}
 	
-	public void utilisateurExistantCheck(Utilisateur utilisateur, UtilisateurManager utilisateurManager) throws BusinessException {
-		Utilisateur utilisateurCheck = new Utilisateur();
-		utilisateurCheck = utilisateurManager.selectUtilisateursByLogin(utilisateur.getPseudo(), utilisateur.getMotDePasse());
+	public void existantCheck(Utilisateur utilisateur) throws BusinessException {
 		
-		if(utilisateurCheck.getPseudo()!=null) {
-			BusinessException be = new BusinessException();
-			be.ajouterErreur(CodesResultatIHM.UTILISATEUR_DEJA_EXISTANT);
-			throw be;
-		}
+		Utilisateur utilisateurCheck = new Utilisateur();
+		
+		//Vérifie si le pseudo de session et le pseudo saisi sont différents
+			
+			//Vérifier si un Pseudo similaire existe
+			utilisateurCheck = utilisateurManager.selectUtilisateurByPseudo(utilisateur.getPseudo());
+			
+			if(utilisateurCheck.getPseudo()!=null) {
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatIHM.UTILISATEUR_DEJA_EXISTANT);
+				throw be;
+			}
+		
+		//Vérifie si l'email de session et l'email saisi sont différents
+		
+			utilisateurCheck = utilisateurManager.selectUtilisateurByEmail(utilisateur.getEmail());
+			
+			if(utilisateurCheck.getEmail()!=null) {
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatIHM.EMAIL_DEJA_EXISTANT);
+				throw be;
+			}
 	}
 	
 	public Utilisateur mappingUtilisateur(HttpServletRequest request) {
