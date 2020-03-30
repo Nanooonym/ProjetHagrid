@@ -102,10 +102,16 @@ public class Accueil extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		request.setAttribute("encheres", listeEncheres);
+		if(listeEncheres != null) {
+			request.setAttribute("encheres", listeEncheres);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+			rd.forward(request, response);
+		}else {
+			doGet(request, response);
+		}
 
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
-		rd.forward(request, response);
+
+
 	}
 
 }
