@@ -28,12 +28,91 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 			+ "INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie ";
 	private static final String AJOUTER_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?,?,GETDATE(),?);";											
 	private static final String SUPPRIMER_ENCHERE = "DELETE * FROM ENCHERES WHERE no_enchere=?";		
+	private final static String SELECT_ARTICLES_BY_CATEGORIES = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente,"
+			+ " a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur"
+			+ " INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.no_categorie = ?";
+	private final static String SELECT_ARTICLES_NOM_LIKE = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial,"
+			+ " a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur "
+			+ "INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.nom_article LIKE %?%";
+	private final static String SELECT_ARTICLES_NOM_LIKE_BY_CAT = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, "
+			+ "u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = "
+			+ "a.no_categorie WHERE a.nom_article LIKE %?% AND a.no_categorie = ?";
 	
 	
+	
+	
+	
+	
+	
+
 	
 	//Methode pour afficher toutes les encheres
 	@Override
-	public  List<Enchere> afficherEncheres() throws BusinessException {
+	public  List<Enchere> afficherEncheres(String categorie, String article) throws BusinessException {
+
+		List<Enchere> listeEncheres = new ArrayList<Enchere>();
+		ArticleVendu articleVendu = new ArticleVendu();
+		
+		try (Connection cnx = ConnectionProvider.getConnection();
+				Statement smt = cnx.createStatement();) {
+		
+			
+			if(articleVendu==null){
+				
+			ResultSet rs = smt.executeQuery(AFFICHER_ENCHERES);
+			
+			}else {
+			PreparedStatement prd = prd.prepareStatement(SELECT_ARTICLES_BY_CATEGORIES);
+			ResultSet rs = smt.executeQuery(SELECT_ARTICLES_BY_CATEGORIES);
+			
+			}else {
+			
+			ResultSet rs = smt.executeQuery(SELECT_ARTICLES_NOM_LIKE);
+			
+			}else {
+			
+			ResultSet rs = smt.executeQuery(SELECT_ARTICLES_NOM_LIKE_BY_CAT);
+			
+			}
+			
+			while(rs.next())
+			{
+				listeEncheres.add(mappingEnchere(rs));
+			}	
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.AFFICHER_ENCHERES_ECHEC);
+			throw be;
+		}
+			return listeEncheres;		
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/**	//Methode pour afficher toutes les encheres
+	@Override
+	public  List<Enchere> afficherEncheres(String categorie, String article) throws BusinessException {
 
 		List<Enchere> listeEncheres = new ArrayList<Enchere>();
 		
@@ -56,6 +135,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 			return listeEncheres;		
 
 	}
+	**/
+	
 	
 	//Mapping d'une enchere
 	public static Enchere mappingEnchere(ResultSet rs) throws SQLException {
@@ -151,6 +232,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 			be.ajouterErreur(CodesResultatDAL.AFFICHER_ENCHERES_ECHEC);
 			throw be;
 		}
+	}
+
+	@Override
+	public List<Enchere> afficherEncheres() throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
