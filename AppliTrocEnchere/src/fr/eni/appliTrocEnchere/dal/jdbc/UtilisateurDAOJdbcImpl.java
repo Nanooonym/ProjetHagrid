@@ -21,7 +21,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,0,0)";
 
 	private static final String SELECT_UTILISATEUR_BY_USER_PASS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo LIKE ? AND mot_de_passe LIKE ?";
-
+	private static final String SELECT_UTILISATEUR_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo LIKE ? ";
+	private static final String SELECT_UTILISATEUR_BY_EMAIL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE email LIKE ?" ;
 	private static final String SELECT_UTILISATEUR_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
 	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET ?,?,?,?,?,?,?,?,? WHERE no_utilisateur = ?";
 	private static final String DELETE_UTILISATEUR = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
@@ -156,6 +157,51 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 
 	}
+	
+	public Utilisateur selectUtilisateurByPseudo(String pseudo) throws BusinessException{
+		Utilisateur utilisateur = new Utilisateur();
+		
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement smt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_PSEUDO);) {
+			smt.setString(1, pseudo);
+			
+			ResultSet rs = smt.executeQuery();
+
+			while (rs.next()) {
+				utilisateur = mappingUtilisateur(rs);
+			}
+			return utilisateur;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_BY_PSEUDO_ECHEC);
+			throw be;
+		}
+	}
+		
+		public Utilisateur selectUtilisateurByEmail(String email) throws BusinessException{
+			Utilisateur utilisateur = new Utilisateur();
+			
+			try (Connection cnx = ConnectionProvider.getConnection();
+					PreparedStatement smt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_EMAIL);) {
+				smt.setString(1, email);
+				
+				ResultSet rs = smt.executeQuery();
+
+				while (rs.next()) {
+					utilisateur = mappingUtilisateur(rs);
+				}
+				return utilisateur;
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_BY_EMAIL_ECHEC);
+				throw be;
+		}	
+	}
+	
 	public void deleteUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement smt = cnx.prepareStatement(DELETE_UTILISATEUR);) {

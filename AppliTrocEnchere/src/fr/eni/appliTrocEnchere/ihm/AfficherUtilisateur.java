@@ -14,12 +14,12 @@ import fr.eni.appliTrocEnchere.bo.Utilisateur;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
 
 
-@WebServlet("/ServletAfficherUtilisateur")
-public class ServletAfficherUtilisateur extends HttpServlet {
+@WebServlet("/AfficherUtilisateur")
+public class AfficherUtilisateur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	UtilisateurManager utilisateurManager;
   
-    public ServletAfficherUtilisateur() {
+    public AfficherUtilisateur() {
         super();
         // TODO Auto-generated constructor stub
     }
