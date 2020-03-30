@@ -25,6 +25,7 @@ public abstract class CodesResultatDAL {
 	public static final int INSERT_RETRAIT_ECHEC = 13001;
 	public static final int SELECT_CATEGORIE_ECHEC = 14012;
 	public static final int SELECT_CATEGORIE_BY_NUMERO_ECHEC = 14013;
+	public static final int DELETE_ARTICLE_ECHEC = 14014;
 
 
 
