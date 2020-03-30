@@ -41,7 +41,7 @@
 					</div>
 
 					<div class="container-formulaire">
-						<label>Mot de passe :</label> <input type="text" id="textfield"
+						<label>Mot de passe :</label> <input type="password" id="textfield"
 							name="motDePasse" value="${sessionScope.utilisateur.motDePasse}">
 					</div>
 				</div>
@@ -68,7 +68,7 @@
 					</div>
 
 					<div class="container-formulaire">
-						<label>Confirmation :</label> <input type="text" id="textfield"
+						<label>Confirmation :</label> <input type="password" id="textfield"
 							name="confirmation">
 					</div>
 
