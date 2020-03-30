@@ -17,12 +17,15 @@ public class EnchereManager {
 		enchereDAO = DAOFactory.getEnchereDAO();
 	}
 	
-	public List<Enchere> afficherEncheres() throws BusinessException {
-		
-	List<Enchere> listeEnchere = new ArrayList<Enchere>();
-	
-	listeEnchere =	enchereDAO.afficherEncheres();
-
+	public List<Enchere> afficherEncheres(String categorie, String article) throws BusinessException {
+		int noCategorie; 
+		if(categorie==null) {
+			noCategorie=0;
+		}else {
+		noCategorie = Integer.parseInt(categorie);
+		}
+		List<Enchere> listeEnchere = new ArrayList<Enchere>();
+		listeEnchere =	enchereDAO.afficherEncheres(noCategorie,article);
 		return listeEnchere;
 	}
 	

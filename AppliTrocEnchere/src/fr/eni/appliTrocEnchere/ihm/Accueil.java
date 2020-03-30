@@ -36,8 +36,13 @@ public class Accueil extends HttpServlet {
 		List<Enchere> listeEncheres = new ArrayList<Enchere>();
 		
 		try {
-			
-			listeEncheres = enchereManager.afficherEncheres();
+			String categorie;
+			String article;
+			categorie=request.getParameter("categorie");
+			article=request.getParameter("article");
+			System.out.println(categorie);
+			System.out.println(article);
+			listeEncheres = enchereManager.afficherEncheres(categorie,article);
 			
 		} catch (BusinessException e) {
 			e.printStackTrace();

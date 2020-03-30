@@ -35,15 +35,15 @@
 			<p>Filtres :</p>
 			
 			<form>
-				<input class="formulaire-items" type="text" id="textfield" name="filtre_nom_article" value="Le nom de l'article contient" size="60" style="height:30px">
+				<input class="formulaire-items" type="text" id="textfield" name="filtre_nom_article" placeholder="Le nom de l'article contient" size="60" style="height:30px">
 					<div class="formulaire">
 						<label class="formulaire-items">Catégorie : </label>
 						<select class="formulaire-items" id="categorie" name="categorie">
-						    <option value="toutes">Toutes</option>
-				            <option value="cat1">Informatique</option>
-				            <option value="cat2">Ameublement</option>
-				            <option value="cat3">Vêtement</option>
-				            <option value="cat4">Sport et Loisirs</option>
+						    <option value="0">Toutes</option>
+				            <option value="1">Informatique</option>
+				            <option value="2">Ameublement</option>
+				            <option value="3">Vêtement</option>
+				            <option value="4">Sport et Loisirs</option>
 				        </select>
 			        </div>
 			        
