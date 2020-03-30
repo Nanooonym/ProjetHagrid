@@ -17,6 +17,16 @@ public class UtilisateurManager {
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();
 
 	}
+	
+	public void updateUtilisateur (Utilisateur utilisateur) throws BusinessException{
+		be = new BusinessException();
+		verificationUtilisateur(utilisateur, be);
+		if (!be.hasErreurs()) {
+			utilisateurDAO.updateUtilisateur(utilisateur);
+		}else {
+			throw be;
+		}
+	}
 
 	public Utilisateur selectUtilisateurById(int noUtilisateur) throws BusinessException{
 		Utilisateur utilisateur = new Utilisateur();
@@ -28,6 +38,18 @@ public class UtilisateurManager {
 		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
 		utilisateurs = utilisateurDAO.selectUtilisateurs();
 		return utilisateurs;
+	}
+	
+	public Utilisateur selectUtilisateurByPseudo(String pseudo) throws BusinessException{
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur = utilisateurDAO.selectUtilisateurByPseudo(pseudo);
+		return utilisateur;	
+	}
+	
+	public Utilisateur selectUtilisateurByEmail(String email) throws BusinessException{
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur = utilisateurDAO.selectUtilisateurByEmail(email);
+		return utilisateur;	
 	}
 	
 	public Utilisateur selectUtilisateursByLogin (String pseudo, String motDePasse) throws BusinessException{

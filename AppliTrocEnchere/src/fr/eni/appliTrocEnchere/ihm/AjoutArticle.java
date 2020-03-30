@@ -2,10 +2,7 @@ package fr.eni.appliTrocEnchere.ihm;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,11 +10,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.appliTrocEnchere.bll.ArticleVenduManager;
 import fr.eni.appliTrocEnchere.bo.ArticleVendu;
+import fr.eni.appliTrocEnchere.bo.Categorie;
+import fr.eni.appliTrocEnchere.bo.Retrait;
+import fr.eni.appliTrocEnchere.bo.Utilisateur;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
-
+import fr.eni.appliTrocEnchere.exception.LecteurMessage;
 
 /**
  * 
@@ -27,102 +28,118 @@ public class AjoutArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	String nomArticle;
 	String description;
-	String categorie;
-	String miseAPrix;
+	Categorie categorie;
+	String miseAPrixCheck;
+	int miseAPrix;
 	LocalDate dateDebutEncheres;
 	LocalDate dateFinEncheres;
+	String debut;
+	String fin;
 	String rue;
 	String codePostal;
 	String ville;
-	
+	String etatVente;
+	Utilisateur utilisateur;
+	HttpSession session;
+	Retrait retrait;
+	int noCategorie;
+	ArticleVendu articleVendu;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/nouvelleVente.jsp");
 		rd.forward(request, response);
 
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		//Lecture de tous les paramètres :
-		request.setCharacterEncoding("UTF-8");
-		List<Integer> listeCodesErreur = new ArrayList<>();
-		
-		//lecture du nom
-		nomArticle = request.getParameter("nomArticle");
-		if (nomArticle == null || nomArticle.trim().isEmpty()) {
-			 listeCodesErreur.add(CodesResultatIHM.FORMAT_NOM_ERREUR);
-		}
-		//lecture de la description
-		description = request.getParameter("description");
-		if (description == null || description.trim().isEmpty()) {
-			 listeCodesErreur.add(CodesResultatIHM.FORMAT_DESCRIPTION_ERREUR);
-		}
-		categorie = request.getParameter("categorie");
-		if (categorie ==null) {
-			 listeCodesErreur.add(CodesResultatIHM.FORMAT_CATEGORIE_ERREUR);
-		}
-		//lecture de la mise à  prix
-	     miseAPrix = request.getParameter("miseAPrix");
-	     if (miseAPrix==null) {
-	    	 listeCodesErreur.add(CodesResultatIHM.FORMAT_MISE_A_PRIX_ERREUR);
-		}
-	     //lecture du début de l'enchÃ¨re
-	     try {
-	    	 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	    	 dateDebutEncheres = LocalDate.parse(request.getParameter("dateDebut"),dtf);
-			
-		} catch (DateTimeParseException e) {
-			e.printStackTrace();
-			listeCodesErreur.add(CodesResultatIHM.FORMAT__DATE_ERREUR);
-		}
-	     try {
-	    	 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	    	 dateFinEncheres = LocalDate.parse(request.getParameter("dateFin"),dtf);
-			
-		} catch (DateTimeParseException e) {
-			e.printStackTrace();
-		}
-	     if (listeCodesErreur.size()>0) {
-				request.setAttribute("listeCodesErreur",listeCodesErreur);
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/nouvelleVente.jsp");
-				rd.forward(request, response);
-			
-		}
-	     else {
-	    	 //Ajout du nouvel Article
-			ArticleVenduManager articleVenduManager = new ArticleVenduManager();
-			ArticleVendu articleVendu = new ArticleVendu();
-			try {
-				articleVenduManager.ajouterArticleVendu(articleVendu);
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
-				
-			} catch (BusinessException be) {
-				be.printStackTrace();
-				request.setAttribute("listeCodesErreur",be.getListeCodesErreur());
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/nouvelleVente.jsp");
-				rd.forward(request, response);
-				
-			}
-		}
-	
-	
 
-		
+		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
+		// Lecture de tous les paramètres :
+		request.setCharacterEncoding("UTF-8");
+
+		try {
+			verificationSaisieArticle(request);
+
+			//Récupération de l'utilisateur
+			session = request.getSession();
+			utilisateur = new Utilisateur();
+			utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+
+			//Récupération de la catégorie choisie
+			categorie = new Categorie();
+			noCategorie = Integer.parseInt(request.getParameter("categorie"));
+			categorie = articleVenduManager.selectCategorieById(noCategorie);
+
+			//Création de l'Article
+			articleVendu = new ArticleVendu();
+			articleVendu = mappingArticle(request);
+
+			//Création du lieu de retrait
+			rue = request.getParameter("rue");
+			ville = request.getParameter("ville");
+			codePostal = request.getParameter("codePostal");
+			retrait = new Retrait(articleVendu, rue, ville, codePostal);
+			
+			articleVenduManager.ajouterArticleVendu(retrait);
+
+			RequestDispatcher rd = request.getRequestDispatcher("/Accueil");
+			rd.forward(request, response);
+
+		} catch (BusinessException e) {
+			request.setAttribute("errorMessages", LecteurMessage.codesErreurToString(e));
+			doGet(request, response);
+		}
+	}
+
+	public void verificationSaisieArticle(HttpServletRequest request) throws BusinessException {
+		nomArticle = request.getParameter("nomArticle");
+		BusinessException be = new BusinessException();
+
+		//Vérification de la mise à prix
+		miseAPrixCheck = request.getParameter("miseAPrix");
+		if(miseAPrixCheck == null || miseAPrixCheck.equals("")) {
+			miseAPrixCheck = "0";
+		}
+		miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
+		if (miseAPrix <= 0 || miseAPrix%1 != 0) {
+			be.ajouterErreur(CodesResultatIHM.FORMAT_MISE_A_PRIX_ERREUR);
+		}
+
+		//Vérification des dates de la vente
+		try {
+			dateDebutEncheres = LocalDate.parse(request.getParameter("dateDebut"));
+			dateFinEncheres = LocalDate.parse(request.getParameter("dateFin"));
+
+		} catch (DateTimeParseException e) {
+			be.ajouterErreur(CodesResultatIHM.FORMAT_DATE_ERREUR);
+		}
+
+		if (be.hasErreurs()) {
+			throw be;
+		}
+	}
+
+	public ArticleVendu mappingArticle(HttpServletRequest request) {
+
+		nomArticle = request.getParameter("nomArticle");
+		description = request.getParameter("description");
+		miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
+		debut = request.getParameter("dateDebut");
+		fin = request.getParameter("dateFin");
+		dateDebutEncheres = LocalDate.parse(debut);
+		dateFinEncheres = LocalDate.parse(fin);
+		if (dateDebutEncheres.isBefore(LocalDate.now())) {
+			etatVente = "En cours";
+		} else {
+			etatVente = "Créée";
+		}
+
+		ArticleVendu article = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix,
+				miseAPrix, etatVente, utilisateur, categorie);
+		return article;
 	}
 
 }
