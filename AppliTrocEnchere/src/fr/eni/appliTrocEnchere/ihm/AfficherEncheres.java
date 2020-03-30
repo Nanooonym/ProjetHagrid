@@ -44,19 +44,10 @@ public class AfficherEncheres extends HttpServlet {
 			
 			listeEncheres = enchereManager.afficherEncheres();
 			
-			/*for (Enchere enchere : listeEncheres) {
-				System.out.println(enchere.getArticleVendu().getNomArticle());				
-				System.out.println(enchere.getMontantEnchere());
-				System.out.println(enchere.getUtilisateur().getPseudo());
-				System.out.println(enchere.getArticleVendu().getDateFinEncheres());
-			}*/
-			
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
 		
-		//Enchere enchere = new Enchere();
-		//enchere =listeEncheres.get(1);
 		request.setAttribute("encheres", listeEncheres);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
