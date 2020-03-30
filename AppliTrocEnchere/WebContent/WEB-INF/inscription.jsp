@@ -4,7 +4,9 @@
 <body>
 
 	<header style="">
-		<h2>ENI-Enchères</h2>
+	<div class="eni-encheres">
+				<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
+			</div>
 	</header>
 
 

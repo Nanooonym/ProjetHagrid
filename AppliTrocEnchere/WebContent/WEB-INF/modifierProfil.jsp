@@ -41,8 +41,12 @@
 					</div>
 
 					<div class="container-formulaire">
-						<label>Mot de passe :</label> <input type="password" id="textfield"
-							name="motDePasse" value="${sessionScope.utilisateur.motDePasse}">
+						<label>Mot de passe actuel:</label> <input type="password" id="textfield"
+							name="motDePasseActuel">
+					</div>
+					
+					<div class="container-formulaire">
+						<label>Nouveau mot de passe:</label> <input type="password" id="textfield" name="nouveauMotDePasse">
 					</div>
 				</div>
 
@@ -71,13 +75,17 @@
 						<label>Confirmation :</label> <input type="password" id="textfield"
 							name="confirmation">
 					</div>
-
+							<c:out value="${sessionScope.utilisateur.credit}"/>
 				</div>
 
 			</div>
 			<input type="submit" value="Enregistrer" class="btn btn-primary">
 		</form>
 
+
+		<form action="<%=request.getContextPath()%>/SupprimerCompte" method="get">
+			<button type="submit" value="supprimerCompte">Supprimer mon compte</button>
+		</form>
 		<form action="<%=request.getContextPath()%>/MonProfil" method="get">
 			<button type="submit" value="monProfil">Retour</button>
 		</form>

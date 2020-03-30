@@ -4,11 +4,13 @@
 <body>
 
 <header style=flex>
-<h2>ENI-Enchères</h2>
+<div class="eni-encheres">
+				<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
+			</div>
 </header>
 
 
-		<h1 class="title">Mon profil</h1>
+		
 <div class="container-column">
 
 
