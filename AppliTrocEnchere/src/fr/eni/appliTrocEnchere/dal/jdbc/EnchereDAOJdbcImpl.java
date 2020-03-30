@@ -53,6 +53,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 		List<Enchere> listeEncheres = new ArrayList<Enchere>();
 		ArticleVendu articleVendu = new ArticleVendu();
 		
+		
 		try (Connection cnx = ConnectionProvider.getConnection();
 				Statement smt = cnx.createStatement();) {
 		
