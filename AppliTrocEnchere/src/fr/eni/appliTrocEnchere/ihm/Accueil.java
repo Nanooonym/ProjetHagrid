@@ -30,6 +30,7 @@ public class Accueil extends HttpServlet {
 	String categorie;
 	String article;
 
+
 	public Accueil() {
 		super();
 
@@ -88,10 +89,7 @@ public class Accueil extends HttpServlet {
 				if (checkValue.equals("encheresEnCours")) {
 					HttpSession session = request.getSession();
 					Utilisateur utilisateur = new Utilisateur();
-					// utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-
-					utilisateur.setNoUtilisateur(1);
-
+					 utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 					listeEncheresFiltre = enchereManager.afficherEncheresEnCours(utilisateur, categorie, article);
 					for (Enchere enchere : listeEncheresFiltre) {
 						listeEncheres.add(enchere);
@@ -102,9 +100,7 @@ public class Accueil extends HttpServlet {
 				if (checkValue.equals("encheresRemportees")) {
 					HttpSession session = request.getSession();
 					Utilisateur utilisateur = new Utilisateur();
-					// utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-
-					utilisateur.setNoUtilisateur(2);
+					 utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 					listeEncheresFiltre = enchereManager.afficherEncheresRemportees(utilisateur, categorie,
 							article);
 					for (Enchere enchere : listeEncheresFiltre) {

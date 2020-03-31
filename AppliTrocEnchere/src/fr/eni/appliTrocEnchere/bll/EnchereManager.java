@@ -16,6 +16,16 @@ public class EnchereManager {
 	public EnchereManager() {
 		enchereDAO = DAOFactory.getEnchereDAO();
 	}
+	
+	public void ajouterEnchere(Enchere enchere) throws BusinessException {
+
+		BusinessException be = new BusinessException();
+			if(!be.hasErreurs()) {
+				enchereDAO.ajouterEnchere(enchere);
+			}else {
+				throw be;
+			}
+	    }
 
 	public List<Enchere> afficherEncheres(String categorie, String article) throws BusinessException {
 		List<Enchere> listeEnchere = new ArrayList<Enchere>();

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fr.eni.appliTrocEnchere.bo.ArticleVendu;
@@ -284,10 +285,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 			smt.setInt(1, enchere.getUtilisateur().getNoUtilisateur());
 			smt.setInt(2, enchere.getArticleVendu().getNoArticle());
-			// smt.setDate(3, enchere.getDateEnchere());
-			smt.setFloat(4, enchere.getMontantEnchere());
+			// smt.setDate(3, LocalDate.valueOf(enchere.getDateEnchere()));
+			smt.setInt(4, enchere.getMontantEnchere());
 
 			smt.executeUpdate();
+			cnx.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();

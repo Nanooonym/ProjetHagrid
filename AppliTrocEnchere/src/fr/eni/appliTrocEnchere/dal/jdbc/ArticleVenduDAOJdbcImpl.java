@@ -23,6 +23,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String SELECT_ALL = "SELECT no_article, nom_article,description, prix_vente, date_fin_encheres, pseudo"
 			+ "FROM ARTICLES_VENDUS inner join utilisateurs on ARTICLES_VENDUS.no_utilisateur=UTILISATEURS.no_utilisateur;";
 	private static final String INSERT_RETRAIT = "INSERT INTO RETRAITS VALUES (?,?,?,?)";
+	private static final String SELECT_ARTICLE_BY_ID = "SELECT a.no_article, nom_article,description,libelle, prix_vente, prix_initial,date_debut_encheres, date_fin_encheres,r.rue, r.code_postal,r.ville,pseudo, telephone"
+			+ "FROM ARTICLES_VENDUS inner join CATEGORIES c on a.no_categorie=c.no_categorie"
+			+ "inner join  RETRAITS r on a.no_article=r.no_article inner join UTILISATEURS u on a.no_utilisateur=u.no_utilisateur where a.no_article=?;";
+	private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ? ";
 	private final static String SELECT_ARTICLES_BY_CATEGORIES = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.no_categorie = ?";
 	private final static String SELECT_ARTICLES_NOM_LIKE = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.nom_article LIKE %?%";
 	private final static String SELECT_ARTICLES_NOM_LIKE_BY_CAT = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.nom_article LIKE %?% AND a.no_categorie = ?";
@@ -138,9 +142,40 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	}
 
 	@Override
-	public void addArticle(ArticleVendu article) throws BusinessException {
-		// TODO Auto-generated method stub
-		
+	public ArticleVendu selectArticleById(int noArticle) throws BusinessException {
+		ArticleVendu article = new ArticleVendu();
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement smt = cnx.prepareStatement(SELECT_ARTICLE_BY_ID);) {
+			smt.setInt(1, noArticle);
+			ResultSet rs = smt.executeQuery();
+
+			while (rs.next()) {
+				article = mappingArticle(rs);
+			}
+			return article;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_BY_ID_ECHEC);
+			throw be;
+		}
+	}
+@Override
+	public void deleteArticle(ArticleVendu article) throws BusinessException {
+
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement stmt = cnx.prepareStatement(DELETE_ARTICLE);) {
+			stmt.setInt(1, article.getNoArticle());
+			stmt.executeUpdate();
+			cnx.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.DELETE_ARTICLE_ECHEC);
+			throw be;
+		}
+
 	}
 
 }
