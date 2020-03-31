@@ -12,6 +12,7 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 public class EnchereManager {
 
 	private EnchereDAO enchereDAO;
+	BusinessException be;
 
 	public EnchereManager() {
 		enchereDAO = DAOFactory.getEnchereDAO();
@@ -19,7 +20,7 @@ public class EnchereManager {
 	
 	public void ajouterEnchere(Enchere enchere) throws BusinessException {
 
-		BusinessException be = new BusinessException();
+		be = new BusinessException();
 			if(!be.hasErreurs()) {
 				enchereDAO.ajouterEnchere(enchere);
 			}else {

@@ -21,15 +21,6 @@ public class ArticleVenduManager {
 		articleVenduDAO = DAOFactory.getArticleVenduDAO();
 		categorieDAO = DAOFactory.getCategorieDAO();
 	}
-	
-	public Retrait selectArticleById(int idArticle) throws BusinessException {
-	Retrait retrait = new Retrait();
-	
-	retrait = articleVenduDAO.selectArticleById(idArticle);
-	
-	return retrait ;
-	}
-
 
 	public Retrait ajouterArticleVendu(Retrait retrait) throws BusinessException {
 
@@ -42,6 +33,14 @@ public class ArticleVenduManager {
 		}
 		return retrait;
 	}
+	
+	public Retrait selectArticleById(int idArticle) throws BusinessException {
+		Retrait retrait = new Retrait();
+		
+		retrait = articleVenduDAO.selectArticleById(idArticle);
+		
+		return retrait ;
+		}
 	
 	public Categorie selectCategorieById(int noCategorie) throws BusinessException{
 		Categorie categorie = new Categorie();

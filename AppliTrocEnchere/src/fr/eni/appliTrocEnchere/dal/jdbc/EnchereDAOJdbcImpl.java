@@ -298,7 +298,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 			smt.setInt(1, enchere.getUtilisateur().getNoUtilisateur());
 			smt.setInt(2, enchere.getArticleVendu().getNoArticle());
-
+//			smt.setTime(3, Time.valueOf(enchere.getDateEnchere()));
 			// smt.setDate(3, LocalDate.valueOf(enchere.getDateEnchere()));
 			smt.setInt(4, enchere.getMontantEnchere());
 
@@ -322,7 +322,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	@Override
 	public void supprimerEnchere(int id) throws BusinessException {
 
-		try (Connection cnx = ConnectionProvider.getConnection(); Statement smt = cnx.createStatement();) {
+		try (Connection cnx = ConnectionProvider.getConnection();
+				Statement smt = cnx.createStatement();) {
 			{
 
 				PreparedStatement pst = cnx.prepareStatement(SUPPRIMER_ENCHERE);

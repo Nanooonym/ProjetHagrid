@@ -26,9 +26,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String INSERT_RETRAIT = "INSERT INTO RETRAITS VALUES (?,?,?,?)";
 	private static final String SELECT_ARTICLE_BY_ID = "SELECT a.no_article, a.nom_article, a.description, a.prix_initial, a.prix_vente,  a.date_debut_encheres, a.date_fin_encheres, r.rue, r.code_postal, r.ville, u.pseudo, u.telephone FROM ARTICLES_VENDUS a INNER JOIN RETRAITS r ON r.no_article = a.no_article INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur  WHERE a.no_article=?";
 	private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ? ";
-	private final static String SELECT_ARTICLES_BY_CATEGORIES = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.no_categorie = ?";
-	private final static String SELECT_ARTICLES_NOM_LIKE = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.nom_article LIKE %?%";
-	private final static String SELECT_ARTICLES_NOM_LIKE_BY_CAT = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.nom_article LIKE %?% AND a.no_categorie = ?";
+	private static final String UPDATE_PRIX_VENTE = "UPDATE ARTICLES_VENDUS SET prix_vente= (SELECT MAX(montant_enchere) as montant_enchere from ENCHERES where no_article=?) where no_article=?;";
 	
 	@Override
 	public void addArticle(Retrait retrait) throws BusinessException {
@@ -128,6 +126,24 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	@Override
 	public void updateArticle(ArticleVendu article) throws BusinessException {
 
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_ARTICLE);){
+			pstmt.setString(1, article.getNomArticle());
+			pstmt.setString(2, article.getDescription());
+			pstmt.setDate(3, Date.valueOf(article.getDateDebutEncheres()));
+			pstmt.setDate(4, Date.valueOf(article.getDateFinEncheres()));
+			pstmt.setInt(5, article.getMiseAPrix());
+			pstmt.setInt(6, article.getCategorie().getNoCategorie());
+			pstmt.setInt(7, article.getNoArticle());
+			pstmt.executeUpdate();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.UPDATE_ARTICLE_ECHEC);
+			throw be;
+		}
+
 	}
 
 	private ArticleVendu mappingArticle(ResultSet rs) throws SQLException {
@@ -141,6 +157,17 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		newArticle.setMiseAPrix(rs.getInt("prix_initial"));
 		newArticle.setPrixVente(rs.getInt("prix_vente"));
 		
+		Retrait retrait = new Retrait();
+		retrait.setVille(rs.getString("ville"));
+		retrait.setCodePostal(rs.getString("code_postal"));
+		retrait.setRue(rs.getString("rue"));
+		
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setPseudo(rs.getString("pseudo"));
+		utilisateur.setTelephone(rs.getString("telephone"));
+		
+		newArticle.setUtilisateur(utilisateur);
+		retrait.setArticle(newArticle);
 		
 		return newArticle;
 	}
@@ -209,4 +236,21 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	}
 
+	@Override
+	public void updatePrixDeVente(int noArticle) throws BusinessException {
+
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement stmt = cnx.prepareStatement(UPDATE_PRIX_VENTE);) {
+			stmt.setInt(1, noArticle);
+			stmt.setInt(2, noArticle);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.UPDATE_PRIX_VENTE_ERREUR);
+			throw be;
+
+		}
+
+	}
 }
