@@ -30,7 +30,6 @@ public class Accueil extends HttpServlet {
 	String categorie;
 	String article;
 
-
 	public Accueil() {
 		super();
 
@@ -43,10 +42,10 @@ public class Accueil extends HttpServlet {
 		listeEncheres = new ArrayList<>();
 
 		try {
-				listeEncheresFiltre = enchereManager.afficherEncheres(categorie, article);
-				for (Enchere enchere : listeEncheresFiltre) {
-					listeEncheres.add(enchere);
-				}
+			listeEncheresFiltre = enchereManager.afficherEncheres(categorie, article);
+			for (Enchere enchere : listeEncheresFiltre) {
+				listeEncheres.add(enchere);
+			}
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
@@ -67,11 +66,10 @@ public class Accueil extends HttpServlet {
 		enchereManager = new EnchereManager();
 		categorie = request.getParameter("categorie");
 		article = request.getParameter("article");
-		
-		if(typesAchats==null) {
-			typesAchats= new String[] {"tout"};
+
+		if (typesAchats == null) {
+			typesAchats = new String[] { "tout" };
 		}
-			
 
 		try {
 
@@ -89,7 +87,7 @@ public class Accueil extends HttpServlet {
 				if (checkValue.equals("encheresEnCours")) {
 					HttpSession session = request.getSession();
 					Utilisateur utilisateur = new Utilisateur();
-					 utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+					utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 					listeEncheresFiltre = enchereManager.afficherEncheresEnCours(utilisateur, categorie, article);
 					for (Enchere enchere : listeEncheresFiltre) {
 						listeEncheres.add(enchere);
@@ -100,14 +98,13 @@ public class Accueil extends HttpServlet {
 				if (checkValue.equals("encheresRemportees")) {
 					HttpSession session = request.getSession();
 					Utilisateur utilisateur = new Utilisateur();
-					 utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-					listeEncheresFiltre = enchereManager.afficherEncheresRemportees(utilisateur, categorie,
-							article);
+					utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+					listeEncheresFiltre = enchereManager.afficherEncheresRemportees(utilisateur, categorie, article);
 					for (Enchere enchere : listeEncheresFiltre) {
 						listeEncheres.add(enchere);
 					}
 				}
-				
+
 				if (checkValue.equals("tout")) {
 					listeEncheresFiltre = enchereManager.afficherEncheres(categorie, article);
 					for (Enchere enchere : listeEncheresFiltre) {
@@ -118,18 +115,11 @@ public class Accueil extends HttpServlet {
 			request.setAttribute("encheres", listeEncheres);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 			rd.forward(request, response);
-			
+
 		} catch (BusinessException e) {
 			request.setAttribute("errorMessage", LecteurMessage.codesErreurToString(e));
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 			rd.forward(request, response);
 		}
-		
 	}
-<<<<<<< HEAD
-	}
-=======
-
 }
-
->>>>>>> refs/heads/maximeD
