@@ -28,30 +28,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String DELETE_UTILISATEUR = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
 	private static final String UPDATE_CREDIT_UTILISATEUR = "UPDATE UTILISATEURS SET credit =? where no_utilisateur=?;";
 
-	public void updateUtilisateur (Utilisateur utilisateur) throws BusinessException{
-		try (Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement smt = cnx.prepareStatement(UPDATE_UTILISATEUR);) {
-			
-			smt.setString(1, utilisateur.getPseudo());
-			smt.setString(2, utilisateur.getNom());
-			smt.setString(3, utilisateur.getPrenom());
-			smt.setString(4, utilisateur.getEmail());
-			smt.setString(5, utilisateur.getTelephone());
-			smt.setString(6, utilisateur.getRue());
-			smt.setString(7, utilisateur.getCodePostal());
-			smt.setString(8, utilisateur.getVille());
-			smt.setString(9, utilisateur.getMotDePasse());
-			smt.setInt(10, utilisateur.getNoUtilisateur());
-			
-			smt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			BusinessException be = new BusinessException();
-			be.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
-			throw be;
-		}
-	}
+	
 
 	public Utilisateur selectUtilisateurById(int noUtilisateur) throws BusinessException {
 		Utilisateur utilisateurCourant;
@@ -280,6 +257,16 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 
 		return utilisateur;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see fr.eni.appliTrocEnchere.dal.UtilisateurDAO#updateCreditUtilisateur(int, int)
+	 */
+	@Override
+	public void updateCreditUtilisateur(int credit, int noUtilisateur) throws BusinessException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -21,6 +21,12 @@ public class ArticleVenduManager {
 		articleVenduDAO = DAOFactory.getArticleVenduDAO();
 		categorieDAO = DAOFactory.getCategorieDAO();
 	}
+	
+	public ArticleVendu selectArticleById(int idArticle) throws BusinessException {
+	ArticleVendu	article = new ArticleVendu();
+	article = articleVenduDAO.selectArticleById(idArticle);
+	return article;
+	}
 
 	public Retrait ajouterArticleVendu(Retrait retrait) throws BusinessException {
 
