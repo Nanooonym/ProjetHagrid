@@ -38,9 +38,9 @@
 
 			<p>Filtres :</p>
 
-
-				<input class="formulaire-items" type="text" id="textfield"
-					name="filtre_nom_article" placeholder="Le nom de l'article contient"
+<!-- 					Filtres par nom et par catégorie -->
+				<input class="formulaire-items" type="text" id="article"
+					name="article" placeholder="Le nom de l'article contient"
 					size="60" style="height: 30px">
 				<div class="formulaire">
 					<label class="formulaire-items">Catégorie : </label> <select
@@ -53,7 +53,7 @@
 					</select>
 				</div>
 
-
+<!-- 					Checkbox et Radio Buttons -->
 				<div class=choix>
 					<div class="achatVente">
 						<div class="formulaire">
@@ -162,6 +162,12 @@
 							${enchere.utilisateur.pseudo}</a>
 					</div>
 				</div>
+			</c:forEach>
+			
+<!-- 			Messages d'erreur -->
+			<c:forEach items="${errorMessages}" var="error">
+				<c:out value="${error}" />
+				<br>
 			</c:forEach>
 
 		</div>

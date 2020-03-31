@@ -16,7 +16,7 @@ import fr.eni.appliTrocEnchere.bll.EnchereManager;
 import fr.eni.appliTrocEnchere.bo.Enchere;
 import fr.eni.appliTrocEnchere.bo.Utilisateur;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
-
+import fr.eni.appliTrocEnchere.exception.LecteurMessage;
 
 /**
  * Servlet implementation class Connexion
@@ -27,7 +27,9 @@ public class Accueil extends HttpServlet {
 	EnchereManager enchereManager;
 	List<Enchere> listeEncheres;
 	List<Enchere> listeEncheresFiltre;
-	
+	String categorie;
+	String article;
+
 	public Accueil() {
 		super();
 
@@ -37,85 +39,95 @@ public class Accueil extends HttpServlet {
 			throws ServletException, IOException {
 
 		enchereManager = new EnchereManager();
-		listeEncheres = new ArrayList<Enchere>();
-		
+		listeEncheres = new ArrayList<>();
+
 		try {
-			String categorie;
-			String article;
-			categorie=request.getParameter("categorie");
-			article=request.getParameter("article");
-			listeEncheres = enchereManager.afficherEncheres(categorie,article);
-			
+				listeEncheresFiltre = enchereManager.afficherEncheres(categorie, article);
+				for (Enchere enchere : listeEncheresFiltre) {
+					listeEncheres.add(enchere);
+				}
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
-		
+
 		request.setAttribute("encheres", listeEncheres);
-		
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 		rd.forward(request, response);
-	
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		try {
-			String[] achatValues = request.getParameterValues("Achat");
-
-			listeEncheres = new ArrayList<Enchere>();
-			listeEncheresFiltre = new ArrayList<Enchere>();
-			enchereManager = new EnchereManager();
+		String[] typesAchats = request.getParameterValues("Achat");
+		listeEncheres = new ArrayList<Enchere>();
+		listeEncheresFiltre = new ArrayList<Enchere>();
+		enchereManager = new EnchereManager();
+		categorie = request.getParameter("categorie");
+		article = request.getParameter("article");
+		
+		if(typesAchats==null) {
+			typesAchats= new String[] {"tout"};
+		}
 			
-			for (String checkValue : achatValues) {
-				if(checkValue.equals("encheresOuvertes")) {
-	
-					listeEncheresFiltre = enchereManager.afficherEncheresOuvertes();
+
+		try {
+
+			for (String checkValue : typesAchats) {
+
+				// Filtre Encheres Ouvertes
+				if (checkValue.equals("encheresOuvertes")) {
+					listeEncheresFiltre = enchereManager.afficherEncheresOuvertes(categorie, article);
+					for (Enchere enchere : listeEncheresFiltre) {
+						listeEncheres.add(enchere);
+					}
+				}
+
+				// Filtre Encheres en Cours
+				if (checkValue.equals("encheresEnCours")) {
+					HttpSession session = request.getSession();
+					Utilisateur utilisateur = new Utilisateur();
+					// utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+
+					utilisateur.setNoUtilisateur(1);
+
+					listeEncheresFiltre = enchereManager.afficherEncheresEnCours(utilisateur, categorie, article);
+					for (Enchere enchere : listeEncheresFiltre) {
+						listeEncheres.add(enchere);
+					}
+				}
+
+				// Filtre Enchères Remportées
+				if (checkValue.equals("encheresRemportees")) {
+					HttpSession session = request.getSession();
+					Utilisateur utilisateur = new Utilisateur();
+					// utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+
+					utilisateur.setNoUtilisateur(2);
+					listeEncheresFiltre = enchereManager.afficherEncheresRemportees(utilisateur, categorie,
+							article);
 					for (Enchere enchere : listeEncheresFiltre) {
 						listeEncheres.add(enchere);
 					}
 				}
 				
-				if(checkValue.equals("encheresEnCours")) {
-					HttpSession session = request.getSession();
-					Utilisateur utilisateur = new Utilisateur();
-//					utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-					
-					utilisateur.setNoUtilisateur(1);
-					
-					listeEncheresFiltre = enchereManager.afficherEncheresEnCours(utilisateur);
-					for (Enchere enchere : listeEncheresFiltre) {
-						listeEncheres.add(enchere);
-					}
-				}
-				
-				if(checkValue.equals("encheresRemportees")) {
-					HttpSession session = request.getSession();
-					Utilisateur utilisateur = new Utilisateur();
-//					utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-					
-					utilisateur.setNoUtilisateur(1);
-					listeEncheresFiltre = enchereManager.afficherEncheresRemportees(utilisateur);
+				if (checkValue.equals("tout")) {
+					listeEncheresFiltre = enchereManager.afficherEncheres(categorie, article);
 					for (Enchere enchere : listeEncheresFiltre) {
 						listeEncheres.add(enchere);
 					}
 				}
 			}
-
-		} catch (BusinessException e) {
-			e.printStackTrace();
-		}
-		
-		if(listeEncheres != null) {
 			request.setAttribute("encheres", listeEncheres);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 			rd.forward(request, response);
-		}else {
-			doGet(request, response);
+			
+		} catch (BusinessException e) {
+			request.setAttribute("errorMessage", LecteurMessage.codesErreurToString(e));
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+			rd.forward(request, response);
 		}
-
-
-
+		
 	}
-
-}
+	}

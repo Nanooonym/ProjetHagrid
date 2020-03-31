@@ -9,9 +9,9 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 public abstract interface EnchereDAO {
 
 	List<Enchere> afficherEncheres() throws BusinessException;
-	List<Enchere> afficherEncheresOuvertes() throws BusinessException;
-	List<Enchere> afficherEncheresEnCours(Utilisateur utilisateur) throws BusinessException;
-	List<Enchere> afficherEncheresRemportees(Utilisateur utilisateur) throws BusinessException;
+	List<Enchere> afficherEncheresOuvertes(int categorie, String article) throws BusinessException;
+	List<Enchere> afficherEncheresEnCours(Utilisateur utilisateur, int categorie, String article) throws BusinessException;
+	List<Enchere> afficherEncheresRemportees(Utilisateur utilisateur, int categorie, String article) throws BusinessException;
 	void ajouterEnchere(Enchere enchere) throws BusinessException;
 	void supprimerEnchere(int id) throws BusinessException;
 	List<Enchere> afficherDetailEnchere() throws BusinessException;
