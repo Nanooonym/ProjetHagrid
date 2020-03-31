@@ -112,6 +112,8 @@
 			<c:forEach items="${encheres}" var="enchere">
 				<div class="enchere">
 					<div><c:out value="${enchere.articleVendu.nomArticle}" /></div>
+					
+					<div> <a href ="<%=request.getContextPath()%>/RemporteVente?idArticle=${enchere.articleVendu.noArticle}" > ${ enchere.articleVendu.nomArticle } </a></div>
 					<div><c:out value="Prix : ${enchere.montantEnchere}" /></div>
 					
 					<fmt:parseDate value="${enchere.articleVendu.dateFinEncheres}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />

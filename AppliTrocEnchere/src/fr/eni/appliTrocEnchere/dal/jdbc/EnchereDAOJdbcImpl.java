@@ -20,7 +20,7 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO{
 
-	private final static String AFFICHER_ENCHERES = "SELECT a.nom_article, a.date_fin_encheres, e.montant_enchere, u.pseudo FROM ARTICLES_VENDUS AS a INNER JOIN ENCHERES e ON a.no_utilisateur = e.no_utilisateur INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur";
+	private final static String AFFICHER_ENCHERES = "SELECT a.nom_article, a.no_article, a.date_fin_encheres, e.montant_enchere, u.pseudo FROM ARTICLES_VENDUS AS a INNER JOIN ENCHERES e ON a.no_utilisateur = e.no_utilisateur INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur";
 	private static final String AJOUTER_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?,?,GETDATE(),?);";											
 	private static final String SUPPRIMER_ENCHERE = "DELETE * FROM ENCHERES WHERE no_enchere=?";		
 	
@@ -60,6 +60,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 		Utilisateur utilisateur = new Utilisateur();
 		
 		enchere.setArticleVendu(articleVendu);
+		articleVendu.setNoArticle(rs.getInt("no_article"));
 		articleVendu.setNomArticle(rs.getString("nom_Article"));
 		articleVendu.setDateFinEncheres(LocalDate.parse(rs.getString("date_fin_encheres")));
 		
