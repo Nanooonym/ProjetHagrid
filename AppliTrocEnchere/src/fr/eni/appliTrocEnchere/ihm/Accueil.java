@@ -126,4 +126,10 @@ public class Accueil extends HttpServlet {
 		}
 		
 	}
+<<<<<<< HEAD
 	}
+=======
+
+}
+
+>>>>>>> refs/heads/maximeD

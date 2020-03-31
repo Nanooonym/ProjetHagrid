@@ -143,7 +143,7 @@
 					</div>
 					
 					<div>
-						<a href="<%=request.getContextPath()%>/EnchereRemportee">${enchere.articleVendu.nomArticle} :</a>
+						<div> <a href ="<%=request.getContextPath()%>/RemporteVente?idArticle=${enchere.articleVendu.noArticle}" > ${ enchere.articleVendu.nomArticle } </a></div>
 					</div>
 					
 					<div>

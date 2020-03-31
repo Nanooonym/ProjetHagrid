@@ -17,14 +17,18 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String SELECT_UTILISATEURS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur  FROM UTILISATEURS";
+
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,0,0)";
+
 	private static final String SELECT_UTILISATEUR_BY_USER_PASS = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo LIKE ? AND mot_de_passe LIKE ?";
 	private static final String SELECT_UTILISATEUR_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo LIKE ? ";
-	private static final String SELECT_UTILISATEUR_BY_EMAIL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE email LIKE ?";
+	private static final String SELECT_UTILISATEUR_BY_EMAIL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE email LIKE ?" ;
 	private static final String SELECT_UTILISATEUR_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
+	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET ?,?,?,?,?,?,?,?,? WHERE no_utilisateur = ?";
 	private static final String DELETE_UTILISATEUR = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
-	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 	private static final String UPDATE_CREDIT_UTILISATEUR = "UPDATE UTILISATEURS SET credit =? where no_utilisateur=?;";
+
+	
 
 	public Utilisateur selectUtilisateurById(int noUtilisateur) throws BusinessException {
 		Utilisateur utilisateurCourant;
@@ -97,6 +101,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			smt.setString(8, utilisateur.getVille());
 			smt.setString(9, utilisateur.getMotDePasse());
 
+		
+			
 			int nbEnregistrement = smt.executeUpdate();
 			if (nbEnregistrement == 0) {
 				BusinessException be = new BusinessException();
@@ -105,6 +111,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			}
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			BusinessException be = new BusinessException();
 			be.ajouterErreur(CodesResultatDAL.INSERT_UTILISATEUR_ECHEC);
 			throw be;
@@ -129,19 +136,19 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
-			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_BY_ID_ECHEC);
+			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEURS_ECHEC);
 			throw be;
 		}
 
 	}
-
-	public Utilisateur selectUtilisateurByPseudo(String pseudo) throws BusinessException {
+	
+	public Utilisateur selectUtilisateurByPseudo(String pseudo) throws BusinessException{
 		Utilisateur utilisateur = new Utilisateur();
-
+		
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement smt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_PSEUDO);) {
 			smt.setString(1, pseudo);
-
+			
 			ResultSet rs = smt.executeQuery();
 
 			while (rs.next()) {
@@ -156,29 +163,29 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw be;
 		}
 	}
+		
+		public Utilisateur selectUtilisateurByEmail(String email) throws BusinessException{
+			Utilisateur utilisateur = new Utilisateur();
+			
+			try (Connection cnx = ConnectionProvider.getConnection();
+					PreparedStatement smt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_EMAIL);) {
+				smt.setString(1, email);
+				
+				ResultSet rs = smt.executeQuery();
 
-	public Utilisateur selectUtilisateurByEmail(String email) throws BusinessException {
-		Utilisateur utilisateur = new Utilisateur();
+				while (rs.next()) {
+					utilisateur = mappingUtilisateur(rs);
+				}
+				return utilisateur;
 
-		try (Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement smt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_EMAIL);) {
-			smt.setString(1, email);
-
-			ResultSet rs = smt.executeQuery();
-
-			while (rs.next()) {
-				utilisateur = mappingUtilisateur(rs);
-			}
-			return utilisateur;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			BusinessException be = new BusinessException();
-			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_BY_EMAIL_ECHEC);
-			throw be;
-		}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_BY_EMAIL_ECHEC);
+				throw be;
+		}	
 	}
-
+	
 	public void deleteUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement smt = cnx.prepareStatement(DELETE_UTILISATEUR);) {
@@ -186,7 +193,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			System.out.println(utilisateur.getNoUtilisateur());
 			smt.setInt(1, utilisateur.getNoUtilisateur());
 			int nbEnregistrements = smt.executeUpdate();
-			if (nbEnregistrements == 0) {
+			if(nbEnregistrements == 0) {
 				BusinessException be = new BusinessException();
 				be.ajouterErreur(CodesResultatDAL.DELETE_UTILISATEUR_ECHEC);
 				throw be;
@@ -200,6 +207,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 
 	}
+
 
 	public void updateUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection();
@@ -251,24 +259,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		return utilisateur;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see fr.eni.appliTrocEnchere.dal.UtilisateurDAO#updateCreditUtilisateur(int, int)
+	 */
 	@Override
 	public void updateCreditUtilisateur(int credit, int noUtilisateur) throws BusinessException {
-
-		try (Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement psmt = cnx.prepareStatement(UPDATE_CREDIT_UTILISATEUR);) {
-
-			psmt.setInt(1, credit);
-			psmt.setInt(2, noUtilisateur);
-			psmt.executeUpdate();
-
-			psmt.close();
-			cnx.close();
-
-		} catch (SQLException e) {
-			BusinessException be = new BusinessException();
-			be.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
-			throw be;
-		}
-
+		// TODO Auto-generated method stub
+		
 	}
+
 }

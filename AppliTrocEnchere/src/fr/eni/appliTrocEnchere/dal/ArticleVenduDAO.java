@@ -16,6 +16,7 @@ public abstract interface ArticleVenduDAO {
 
 	public void updateArticle(ArticleVendu article) throws BusinessException;
 		public void deleteArticle(ArticleVendu article) throws BusinessException;
-	public ArticleVendu selectArticleById(int noArticle) throws BusinessException;
+	//public ArticleVendu selectArticleById(int noArticle) throws BusinessException;
+		public Retrait selectArticleById(int noArticle) throws BusinessException;
 
 }

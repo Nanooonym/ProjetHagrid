@@ -41,12 +41,21 @@
 					</div>
 
 					<div class="container-formulaire">
+<<<<<<< HEAD
+						<label>Mot de passe actuel:</label> <input type="password" id="textfield"
+							name="motDePasseActuel">
+					</div>
+					
+					<div class="container-formulaire">
+						<label>Nouveau mot de passe:</label> <input type="password" id="textfield" name="nouveauMotDePasse">
+=======
 						<label>Mot de passe actuel:</label> <input type="text" id="textfield"
 							name="motDePasseActuel">
 					</div>
 					
 					<div class="container-formulaire">
 						<label>Nouveau mot de passe:</label> <input type="text" id="textfield" name="nouveauMotDePasse">
+>>>>>>> refs/heads/master
 					</div>
 				</div>
 
@@ -72,7 +81,7 @@
 					</div>
 
 					<div class="container-formulaire">
-						<label>Confirmation :</label> <input type="text" id="textfield"
+						<label>Confirmation :</label> <input type="password" id="textfield"
 							name="confirmation">
 					</div>
 							<c:out value="${sessionScope.utilisateur.credit}"/>
