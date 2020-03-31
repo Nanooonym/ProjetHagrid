@@ -12,62 +12,51 @@
 
 		<!-- Nom de l'article sélectionné -->
 		<div id="nomArticle">
-			<label id=labelArticle for="article">${articleVendu.nomArticle}</label>
+			<label id=labelArticle for="article">${retrait.article.nomArticle}</label>
 			<input type="hidden" name="noArticle"
-				value="${articleVendu.noArticle}" readonly>
+				value="${retrait.article.noArticle}" readonly>
 		</div>
 		<!-- Description de l'article -->
 		<div id="descriptionArticle">
-			<label>Description : </label>
-			<textarea id="textarea" rows="3" cols="40" readonly>${articleVendu.description}</textarea>
+			<p>Description : ${retrait.article.description} </p>
+		</div>
+		
+		<div>
+			<p> Meilleur offre : ${retrait.article.prixVente} points par ${utilisateurMax.pseudo}  </p>
 		</div>
 
 		<!-- Catégorie de l'article -->
 		<div id="categorieArticle">
 			<label>Catégorie : </label> <input type="text" name="categorie"
-				value="${articleEnchere.categorie.libelle}" readonly>
+				value="${retrait.article.categorie.libelle}" readonly>
 
 		</div>
 
 
-		<!-- Meilleure enchère + pseudo -->
-		<div id="meilleurOffre">
-			<c:if test="${articleVendu.prixVente > articleVendu.miseAPrix}">
-				<!-- Montant de l'enchère : -->
-				<p>Meilleure offre: ${articleVendu.prixVente} points par
-					${utilisateur.pseudo}</p>
-				<input type="hidden" name="meilleureOffre"
-					value="${articleVendu.prixVente}">
-				<input type="hidden" name="noUtilisateur"
-					value="${utilisateur.noUtilisateur}">
-			</c:if>
-
-		</div>
 
 
 		<!-- Mise à prix de l'article -->
 		<div id="miseAPrix">
-			<label>Mise à prix : </label>
-			<p>${articleVendu.miseAPrix}points</p>
+			
+			<p>Mise à prix :${retrait.article.miseAPrix}points</p>
 		</div>
 
 		<!-- Date de fin d'enchère -->
 		<div id="finEnchereArticle">
-			<label>Fin de l'enchère :</label> <input name="finEnchere"
-				id="finEnchere" value="${articleVendu.dateFinEncheres}" readonly>
+			<p>Fin de l'enchère : ${retrait.article.dateFinEncheres}</p> 
 		</div>
 
 		<!-- Adresse de retrait -->
 		<div id="retrait">
-			<p>Retrait: ${articleEnchere.retrait.rue}
-				${articleEnchere.retrait.codePostal} ${articleEnchere.retrait.ville}</p>
+			<p>Retrait: ${retrait.rue}
+				${retrait.codePostal} 
+				${retrait.ville}</p>
 		</div>
 
 
 		<!-- Nom du vendeur -->
 		<div id="vendeurArticle">
-			<label>Vendeur : </label> <input id="vendeur" name="vendeur"
-				value="${articleVendu.utilisateur.pseudo}" readonly>
+			<p>Vendeur : ${retrait.article.utilisateur.pseudo} </p>
 		</div>
 
 
@@ -75,7 +64,7 @@
 		<div id="proposition">
 			<label>Ma proposition : </label> <input type="number"
 				id="proposition" name="proposition"
-				min="${articleVendu.prixVente+1}" max="100000000">
+				min="${retrait.article.prixVente+1}" max="100000000">
 		</div>
 
 		<div id="boutonEncherir">

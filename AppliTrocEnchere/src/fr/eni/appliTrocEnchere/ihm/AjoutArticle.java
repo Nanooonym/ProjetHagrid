@@ -71,7 +71,8 @@ public class AjoutArticle extends HttpServlet {
 			//R�cup�ration de la cat�gorie choisie
 			categorie = new Categorie();
 			noCategorie = Integer.parseInt(request.getParameter("categorie"));
-			categorie = articleVenduManager.selectCategorieById(noCategorie);
+			//Requête modifiée (gestion de retraits)
+			//categorie = articleVenduManager.selectCategorieById(noCategorie);
 
 			//Cr�ation de l'Article
 			articleVendu = new ArticleVendu();

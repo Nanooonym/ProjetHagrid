@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO{
 
-	private final static String AFFICHER_ENCHERES = "SELECT a.nom_article, a.date_fin_encheres, a.prix_vente, u.pseudo FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur";
+	private final static String AFFICHER_ENCHERES = "SELECT a.no_article, a.nom_article, a.description, a.prix_vente, a.date_fin_encheres, a.prix_initial, u.pseudo, u.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur";
 	private static final String AJOUTER_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?,?,GETDATE(),?);";											
 	private static final String SUPPRIMER_ENCHERE = "DELETE * FROM ENCHERES WHERE no_enchere=?";
 	private static final String AFFICHER_ENCHERES_OUVERTES = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.etat_vente LIKE '%En cours%'";
@@ -140,7 +141,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 		ArticleVendu articleVendu = new ArticleVendu();
 		Utilisateur utilisateur = new Utilisateur();
 		
-
+		articleVendu.setNoArticle(rs.getInt("no_article"));
 		articleVendu.setNomArticle(rs.getString("nom_Article"));
 		articleVendu.setDateFinEncheres(LocalDate.parse(rs.getString("date_fin_encheres")));
 		articleVendu.setPrixVente(rs.getInt("prix_vente"));
@@ -162,11 +163,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 				
 			smt.setInt(1, enchere.getUtilisateur().getNoUtilisateur());
 			smt.setInt(2, enchere.getArticleVendu().getNoArticle());
-			smt.setDate(3, Date.valueOf(enchere.getDateEnchere()));
+			smt.setTime(3, Time.valueOf(enchere.getDateEnchere()));
 			smt.setInt(4, enchere.getMontantEnchere());
 
 			smt.executeUpdate();
 			cnx.close();
+			
 		
 		
 		} catch (SQLException e) {

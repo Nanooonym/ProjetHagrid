@@ -29,20 +29,54 @@ public class ArticleVenduManager {
 			validerLesChamps(retrait, be);
 			articleVenduDAO.addArticle(retrait);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw be;
 		}
 		return retrait;
 	}
-	
-	public Categorie selectCategorieById(int noCategorie) throws BusinessException{
-		Categorie categorie = new Categorie();
-		categorie = categorieDAO.selectCategorieByNumeroCategorie(noCategorie);
-		return categorie;
+
+	public Retrait selectArticleById(int idArticle) throws BusinessException {
+		Retrait retrait = new Retrait();
+		
+		retrait = articleVenduDAO.selectArticleById(idArticle);
+		
+		return retrait ;
+		}
+
+	public void deleteArticle(ArticleVendu article) throws BusinessException {
+		try {
+			be = new BusinessException();
+			articleVenduDAO.deleteArticle(article);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw be;
+
+		}
+
 	}
 	
-	 public void deleteArticle(ArticleVendu article) throws BusinessException {
-	        articleVenduDAO.deleteArticle(article);
-	    }
+	public void updatePrixDeVente(int noArticle) throws BusinessException {
+		try {
+			be = new BusinessException();
+			articleVenduDAO.updatePrixDeVente(noArticle);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw be;
+		}
+	}
+	
+	public void updateArticle(ArticleVendu article) throws BusinessException {
+		try {
+			be = new BusinessException();
+			articleVenduDAO.updateArticle(article);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw be;
+
+		}
+	}
+	
+	
 
 	private void validerLesChamps(Retrait retrait, BusinessException be) throws BusinessException {
 		String nomArticle = retrait.getArticle().getNomArticle();

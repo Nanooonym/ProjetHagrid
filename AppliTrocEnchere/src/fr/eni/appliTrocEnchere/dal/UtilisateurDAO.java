@@ -23,5 +23,7 @@ public abstract interface UtilisateurDAO {
 	Utilisateur selectUtilisateurByPseudo(String pseudo) throws BusinessException;
 	
 	Utilisateur selectUtilisateurByEmail(String email) throws BusinessException;
+	
+	Utilisateur selectUtilisateurByEnchereMax (int noArticle) throws BusinessException;
 }
 

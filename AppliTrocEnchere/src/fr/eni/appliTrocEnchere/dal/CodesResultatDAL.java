@@ -26,6 +26,9 @@ public abstract class CodesResultatDAL {
 	public static final int SELECT_CATEGORIE_ECHEC = 14012;
 	public static final int SELECT_CATEGORIE_BY_NUMERO_ECHEC = 14013;
 	public static final int DELETE_ARTICLE_ECHEC = 14014;
+	public static final int UPDATE_PRIX_VENTE_ERREUR = 14015;
+	public static final int UPDATE_ARTICLE_ECHEC = 14016;
+	public static final int SELECT_UTILISATEUR_BY_ENCHERE_MAX=14017;
 
 
 

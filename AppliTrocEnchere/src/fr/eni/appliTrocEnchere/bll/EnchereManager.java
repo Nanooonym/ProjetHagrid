@@ -34,7 +34,6 @@ public class EnchereManager {
 		List<Enchere> listeEnchere = new ArrayList<Enchere>();
 
 		listeEnchere = enchereDAO.afficherEncheres();
-
 		return listeEnchere;
 	}
 	

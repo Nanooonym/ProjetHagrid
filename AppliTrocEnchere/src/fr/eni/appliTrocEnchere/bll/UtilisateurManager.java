@@ -58,6 +58,13 @@ public class UtilisateurManager {
 		return utilisateur;
 	}
 	
+	
+	public Utilisateur selectUtilisateurByEnchereMax(int noArticle) throws BusinessException{
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur = utilisateurDAO.selectUtilisateurByEnchereMax(noArticle);
+		return utilisateur;	
+	}
+	
 	public void insertUtilisateur (Utilisateur utilisateur) throws BusinessException{
 		be = new BusinessException();
 		verificationUtilisateur(utilisateur, be);
@@ -123,7 +130,7 @@ public class UtilisateurManager {
 		
 	}
 	
-	public void updateUtilisateur (int credit, int noUtilisateur) throws BusinessException {
+	public void updateCreditUtilisateur (int credit, int noUtilisateur) throws BusinessException {
 		
 		be = new BusinessException();
 		if (!be.hasErreurs()) {

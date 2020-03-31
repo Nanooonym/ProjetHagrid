@@ -25,7 +25,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String DELETE_UTILISATEUR = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
 	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 	private static final String UPDATE_CREDIT_UTILISATEUR = "UPDATE UTILISATEURS SET credit =? where no_utilisateur=?;";
-
+	private static final String SELECT_UTILISATEUR_BY_ENCHERE_MAX ="SELECT  TOP 1 u.pseudo,u.no_utilisateur, MAX(e.montant_enchere) as montant_max FROM ARTICLES_VENDUS a INNER JOIN ENCHERES e ON e.no_article = a.no_article INNER JOIN UTILISATEURS u ON u.no_utilisateur = e.no_utilisateur WHERE e.no_article = ? GROUP BY u.no_utilisateur, u.pseudo order by  MAX(e.montant_enchere) DESC";
+	
 	public Utilisateur selectUtilisateurById(int noUtilisateur) throws BusinessException {
 		Utilisateur utilisateurCourant;
 
@@ -270,5 +271,35 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw be;
 		}
 
+	}
+
+	@Override
+	public Utilisateur selectUtilisateurByEnchereMax(int noArticle) throws BusinessException {
+		Utilisateur utilisateurCourant;
+
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement psmt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_ENCHERE_MAX);) {
+			psmt.setInt(1, noArticle);
+			ResultSet rs = psmt.executeQuery();
+
+			utilisateurCourant = new Utilisateur();
+
+			while (rs.next()) {
+
+				utilisateurCourant.setNoUtilisateur(rs.getInt("no_utilisateur"));
+				utilisateurCourant.setPseudo(rs.getString("pseudo"));
+
+			}
+			System.out.println(utilisateurCourant.toString());
+			return utilisateurCourant;
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_BY_ID_ECHEC);
+			throw be;
+
+		}
 	}
 }
