@@ -3,15 +3,11 @@
 </head>
 <body>
 
-<<<<<<< HEAD
 <header style=flex>
 <div class="eni-encheres">
 				<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
 			</div>
-=======
-<header class="container">
-<h2>ENI-Enchères</h2>
->>>>>>> refs/heads/master
+
 </header>
 
 

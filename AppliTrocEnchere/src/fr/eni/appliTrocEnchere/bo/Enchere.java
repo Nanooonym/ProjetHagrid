@@ -1,5 +1,6 @@
 package fr.eni.appliTrocEnchere.bo;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -7,7 +8,7 @@ public class Enchere {
 
 	private int noUtilisateur;
 	private int noArticle;
-	private LocalTime dateEnchere;
+	private LocalDate dateEnchere;
 	private int montantEnchere;
 	private Utilisateur utilisateur; 
 	private ArticleVendu articleVendu;
@@ -37,11 +38,11 @@ public class Enchere {
 		this.noArticle = noArticle;
 	}
 
-	public LocalTime getDateEnchere() {
+	public LocalDate getDateEnchere() {
 		return dateEnchere;
 	}
 
-	public void setDateEnchere(LocalTime dateEnchere) {
+	public void setDateEnchere(LocalDate dateEnchere) {
 		this.dateEnchere = dateEnchere;
 	}
 

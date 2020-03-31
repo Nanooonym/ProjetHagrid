@@ -1,6 +1,7 @@
 package fr.eni.appliTrocEnchere.ihm;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import javax.servlet.RequestDispatcher;
@@ -33,7 +34,7 @@ public class DetailVente extends HttpServlet {
 	HttpSession session;
 	ArticleVendu articleVendu;
 	int montantEnchere;
-	LocalTime dateEnchere;
+	LocalDate dateEnchere;
 	BusinessException be;
 
 	/**
@@ -91,7 +92,7 @@ public class DetailVente extends HttpServlet {
 		articleVendu = (ArticleVendu) request.getAttribute("articleVendu");
 
 		// Date de l'enchère
-		dateEnchere = LocalTime.now();
+		dateEnchere = LocalDate.now();
 
 		try {
 			enchereManager = new EnchereManager();

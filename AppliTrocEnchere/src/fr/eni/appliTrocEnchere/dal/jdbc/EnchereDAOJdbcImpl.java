@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import fr.eni.appliTrocEnchere.bo.ArticleVendu;
@@ -91,31 +90,26 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			Connection cnx = ConnectionProvider.getConnection();	
 
 			String[] requete = filtresRequetes(categorie, article, AFFICHER_ENCHERES_OUVERTES);
-			System.out.println(requete[0]);
 			
 			switch (requete[1]) {
 			case "Pas de Filtre":
 				Statement smt = cnx.createStatement();
 				rs = smt.executeQuery(requete[0]);	
-				System.out.println("Pas de Filtre");
 				break;
 			case "Filtre Article":
 				psmt = cnx.prepareStatement(requete[0]);
 				psmt.setString(1, "%" + article + "%");
 				rs = psmt.executeQuery();
-				System.out.println("Filtre Article");
 				break;
 			case "Filtre Categorie":
 				psmt = cnx.prepareStatement(requete[0]);
 				psmt.setInt(1, categorie);
 				rs = psmt.executeQuery();
-				System.out.println("Filtre Categorie");
 				break;
 			case "Filtre Article ET Categorie":
 				psmt = cnx.prepareStatement(requete[0]);
 				psmt.setInt(1, categorie);
 				psmt.setString(2, "%" + article + "%");
-				System.out.println("Filtre Article ET Categorie");
 				rs = psmt.executeQuery();
 				break;
 			}	
@@ -143,7 +137,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		try{
 			Connection cnx = ConnectionProvider.getConnection();	
 			String[] requete = filtresRequetes(categorie, article, AFFICHER_ENCHERES_EN_COURS);
-			System.out.println(requete[0]);
 			
 			switch (requete[1]) {
 			case "Pas de Filtre":
@@ -299,7 +292,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			smt.setInt(1, enchere.getUtilisateur().getNoUtilisateur());
 			smt.setInt(2, enchere.getArticleVendu().getNoArticle());
 //			smt.setTime(3, Time.valueOf(enchere.getDateEnchere()));
-			// smt.setDate(3, LocalDate.valueOf(enchere.getDateEnchere()));
+//			smt.set(3, enchere.getDateEnchere());
 			smt.setInt(4, enchere.getMontantEnchere());
 
 			//smt.setDate(3, enchere.getDateEnchere());
