@@ -3,15 +3,8 @@
 </head>
 <body>
 
-<<<<<<< HEAD
 	<header style="">
-	<div class="eni-encheres">
-				<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
-			</div>
-=======
-	<header>
-		<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
->>>>>>> refs/heads/master
+		<h2>ENI-Enchères</h2>
 	</header>
 
 
@@ -43,7 +36,7 @@
 					</div>
 
 					<div class="container-formulaire">
-						<label>Mot de passe :</label> <input type="password" id="textfield"
+						<label>Mot de passe :</label> <input type="text" id="textfield"
 							name="motDePasse">
 					</div>
 				</div>
@@ -68,7 +61,7 @@
 					</div>
 
 					<div class="container-formulaire">
-						<label>Confirmation :</label> <input type="password" id="textfield"
+						<label>Confirmation :</label> <input type="text" id="textfield"
 							name="confirmation">
 					</div>
 

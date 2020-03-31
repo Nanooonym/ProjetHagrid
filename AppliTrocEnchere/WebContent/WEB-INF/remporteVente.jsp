@@ -18,15 +18,15 @@
 <div style="text-align:center">
 
 <h3>Vous avez remporté la vente</h3>
-<p>${ articleVendu.nomArticle }</p>
-<p>Description : ${ articleVendu.description }</p>
-<p>Meilleure offre : ${ articleVendu.prixVente }  </p>
-<p>Mise à prix : ${ enchere.montantEnchere } </p>
+<p>${ retrait.article.nomArticle }</p>
+<p>Description : ${ retrait.article.description }</p>
+<p>Meilleure offre : ${ retrait.article.prixVente }  </p>
+<p>Mise à prix : ${ retrait.article.miseAPrix } </p>
 <br/>
 <p>Retrait : ${ retrait.rue } ${ retrait.codePostal } ${ retrait.ville }</p>
 <br/>
-<p>Vendeur : ${ utilisateur.pseudo }</p>
-<p>Tel : ${ utilisateur.telephone }
+<p>Vendeur : ${ retrait.article.utilisateur.pseudo }</p>
+<p>Tel : ${ retrait.article.utilisateur.telephone }</p>
 <br>
 <form action="<%=request.getContextPath()%>/Accueil" method="get">
 			<button type="submit" value="accueil">Retour</button>

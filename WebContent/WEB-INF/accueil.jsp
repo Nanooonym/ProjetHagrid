@@ -42,7 +42,7 @@
 <div style=flex>
 
 		<c:forEach items="${encheres}" var="enchere"><br>
-			<div> <a href ="<%=request.getContextPath()%>/RemporteVente?idArticle=${enchere.articleVendu.noArticle}" > ${ enchere.articleVendu.nomArticle } </a></div><br>
+			<c:out value="${enchere.articleVendu.nomArticle}" /><br>
 			<c:out value="${enchere.articleVendu.dateFinEncheres}" /><br>
 			<c:out value="${enchere.montantEnchere}" /><br>
 			<c:out value="${enchere.utilisateur.pseudo}" /><br>

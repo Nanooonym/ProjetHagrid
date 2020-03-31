@@ -6,7 +6,7 @@ package fr.eni.appliTrocEnchere.dal;
 public abstract class CodesResultatDAL {
 
 	/**
-	 * Echec général quand erreur à l'insertion
+	 * Listes des codes erreurs possibles dans la DAL
 	 */
 	public static final int SELECT_UTILISATEURS_ECHEC = 10000;
 	public static final int INSERT_UTILISATEUR_ECHEC = 10001;
@@ -22,4 +22,8 @@ public abstract class CodesResultatDAL {
 	public static final int UPDATE_UTILISATEUR_ECHEC = 12000;
 	public static final int SELECT_UTILISATEUR_BY_PSEUDO_ECHEC = 12001;
 	public static final int SELECT_UTILISATEUR_BY_EMAIL_ECHEC = 12002;
+	public static final int INSERT_RETRAIT_ECHEC = 13001;
+	public static final int SELECT_CATEGORIE_ECHEC = 14012;
+	public static final int SELECT_CATEGORIE_BY_NUMERO_ECHEC = 14013;
+	public static final int DELETE_ARTICLE_ECHEC = 14014;
 }

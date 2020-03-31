@@ -3,19 +3,12 @@
 </head>
 <body>
 
-<<<<<<< HEAD
 <header style=flex>
-<div class="eni-encheres">
-				<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
-			</div>
-=======
-<header class="container">
 <h2>ENI-Enchères</h2>
->>>>>>> refs/heads/master
 </header>
 
 
-		
+		<h1 class="title">Mon profil</h1>
 <div class="container-column">
 
 
@@ -30,7 +23,7 @@
 
 				<div class="container-formulaire">
 					<label>Mot de passe :</label>
-					<input type="password" id="textfield" name="motDePasse">
+					<input type="text" id="textfield" name="motDePasse">
 				</div>
 				<div class="container-formulaire">
 

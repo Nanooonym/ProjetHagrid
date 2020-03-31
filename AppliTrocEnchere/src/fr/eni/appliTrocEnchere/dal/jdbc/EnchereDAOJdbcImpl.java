@@ -22,9 +22,10 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 
 	private final static String AFFICHER_ENCHERES = "SELECT a.nom_article, a.no_article, a.date_fin_encheres, e.montant_enchere, u.pseudo FROM ARTICLES_VENDUS AS a INNER JOIN ENCHERES e ON a.no_utilisateur = e.no_utilisateur INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur";
 	private static final String AJOUTER_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?,?,GETDATE(),?);";											
-	private static final String SUPPRIMER_ENCHERE = "DELETE * FROM ENCHERES WHERE no_enchere=?";		
-	
-	
+	private static final String SUPPRIMER_ENCHERE = "DELETE * FROM ENCHERES WHERE no_enchere=?";
+	private static final String AFFICHER_ENCHERES_OUVERTES = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.etat_vente LIKE '%En cours%'";
+	private static final String AFFICHER_ENCHERES_EN_COURS = "SELECT a.no_article, a.etat_vente, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur, e.date_enchere, e.montant_enchere FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie RIGHT JOIN ENCHERES e ON e.no_utilisateur = a.no_utilisateur WHERE a.etat_vente LIKE 'En cours' AND e.no_utilisateur = ?";
+	private static final String AFFICHER_ENCHERES_REMPORTEES = "SELECT a.no_article, a.etat_vente, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur, e.date_enchere, e.montant_enchere FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie RIGHT JOIN ENCHERES e ON e.no_utilisateur = a.no_utilisateur WHERE a.etat_vente LIKE 'Terminée' AND e.montant_enchere = a.prix_vente AND a.no_utilisateur = ?";
 	
 	//Methode pour afficher toutes les encheres en page d'accueil
 	@Override
@@ -115,6 +116,36 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 			throw be;
 			}
 		}
+
+	/**
+	 * {@inheritDoc}
+	 * @see fr.eni.appliTrocEnchere.dal.EnchereDAO#afficherEncheresOuvertes()
+	 */
+	@Override
+	public List<Enchere> afficherEncheresOuvertes() throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see fr.eni.appliTrocEnchere.dal.EnchereDAO#afficherEncheresEnCours(fr.eni.appliTrocEnchere.bo.Utilisateur)
+	 */
+	@Override
+	public List<Enchere> afficherEncheresEnCours(Utilisateur utilisateur) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see fr.eni.appliTrocEnchere.dal.EnchereDAO#afficherEncheresRemportees(fr.eni.appliTrocEnchere.bo.Utilisateur)
+	 */
+	@Override
+	public List<Enchere> afficherEncheresRemportees(Utilisateur utilisateur) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	
 	

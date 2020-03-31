@@ -1,6 +1,6 @@
 package fr.eni.appliTrocEnchere.bo;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * 
@@ -8,15 +8,18 @@ import java.util.ArrayList;
  *
  */
 
-public class Categorie {
 
+public class Categorie implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3257461444937293750L;
 	private int noCategorie;
 	private String libelle;
-	//Creation d'une ArrayList (plusieurs articleVendu peuvent être dans une même categorie)
-	private ArrayList<ArticleVendu> categorieArticle = new ArrayList<>();
 	
 	
-	//Creation du constructeur par défaut
+	// Creation du constructeur par d�faut
 	public Categorie() {
 	}
 
@@ -44,13 +47,6 @@ public class Categorie {
 		this.libelle = libelle;
 	}
 	
-	public ArrayList<ArticleVendu> getCategorieArticle() {
-		return categorieArticle;
-	}
-
-	public void setCategorieArticle(ArrayList<ArticleVendu> categorieArticle) {
-		this.categorieArticle = categorieArticle;
-	}
 	
 	//Creation du ToString
 	@Override
