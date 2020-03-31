@@ -31,6 +31,7 @@ public class Accueil extends HttpServlet {
 	String encheresEnCours;
 	String encheresRemportées;
 
+
 	public Accueil() {
 		super();
 
@@ -46,6 +47,17 @@ public class Accueil extends HttpServlet {
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
+		enchereManager = new EnchereManager();
+		List<Enchere> listeEncheres = new ArrayList<Enchere>();
+		
+		try {
+			
+			listeEncheres = enchereManager.afficherEncheres();
+			
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		
 		request.setAttribute("encheres", listeEncheres);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");

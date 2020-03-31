@@ -42,6 +42,10 @@
 		"header header"
 		"filtres filtres"
 		"rechercher rechercher"
+	grid-template-rows: 100px 300px auto;
+	grid-template-areas:
+		"header header"
+		"filtres rechercher"
 		"encheres encheres";
 	row-gap:20px;
 	grid-auto-rows:200px;
@@ -102,6 +106,12 @@ header{
 }
 
 
+.filtres{
+	grid-area: filtres;
+	display:flex;
+	flex-direction:column;
+	padding-left:100px;
+}
 
 .formulaire-items{
 

@@ -57,27 +57,27 @@ public class AjoutArticle extends HttpServlet {
 			throws ServletException, IOException {
 
 		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
-		// Lecture de tous les paramètres :
+		// Lecture de tous les paramï¿½tres :
 		request.setCharacterEncoding("UTF-8");
 
 		try {
 			verificationSaisieArticle(request);
 
-			//Récupération de l'utilisateur
+			//Rï¿½cupï¿½ration de l'utilisateur
 			session = request.getSession();
 			utilisateur = new Utilisateur();
 			utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 
-			//Récupération de la catégorie choisie
+			//Rï¿½cupï¿½ration de la catï¿½gorie choisie
 			categorie = new Categorie();
 			noCategorie = Integer.parseInt(request.getParameter("categorie"));
 			categorie = articleVenduManager.selectCategorieById(noCategorie);
 
-			//Création de l'Article
+			//Crï¿½ation de l'Article
 			articleVendu = new ArticleVendu();
 			articleVendu = mappingArticle(request);
 
-			//Création du lieu de retrait
+			//Crï¿½ation du lieu de retrait
 			rue = request.getParameter("rue");
 			ville = request.getParameter("ville");
 			codePostal = request.getParameter("codePostal");
@@ -98,7 +98,7 @@ public class AjoutArticle extends HttpServlet {
 		nomArticle = request.getParameter("nomArticle");
 		BusinessException be = new BusinessException();
 
-		//Vérification de la mise à prix
+		//Vï¿½rification de la mise ï¿½ prix
 		miseAPrixCheck = request.getParameter("miseAPrix");
 		if(miseAPrixCheck == null || miseAPrixCheck.equals("")) {
 			miseAPrixCheck = "0";
@@ -108,7 +108,7 @@ public class AjoutArticle extends HttpServlet {
 			be.ajouterErreur(CodesResultatIHM.FORMAT_MISE_A_PRIX_ERREUR);
 		}
 
-		//Vérification des dates de la vente
+		//Vï¿½rification des dates de la vente
 		try {
 			dateDebutEncheres = LocalDate.parse(request.getParameter("dateDebut"));
 			dateFinEncheres = LocalDate.parse(request.getParameter("dateFin"));
@@ -134,7 +134,7 @@ public class AjoutArticle extends HttpServlet {
 		if (dateDebutEncheres.isBefore(LocalDate.now())) {
 			etatVente = "En cours";
 		} else {
-			etatVente = "Créée";
+			etatVente = "Crï¿½ï¿½e";
 		}
 
 		ArticleVendu article = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix,
