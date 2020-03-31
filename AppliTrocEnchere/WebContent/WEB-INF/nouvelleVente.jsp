@@ -39,12 +39,12 @@
 			</div>
 
 			<div>
-				<label for="dateDebut">date</label> 
+				<label for="dateDebut">Début de l'enchère : </label> 
 				<input type="date" id="dateDebut"name="dateDebut"> 
 			</div>
 			
 			<div>
-				<label for="dateFin">date</label> 
+				<label for="dateFin">Fin de l'enchère : </label> 
 				<input type="date" id="dateFin"name="dateFin"> 
 			</div>
 							

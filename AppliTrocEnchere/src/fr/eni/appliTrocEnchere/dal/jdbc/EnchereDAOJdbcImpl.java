@@ -1,6 +1,7 @@
 package fr.eni.appliTrocEnchere.dal.jdbc;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -161,10 +162,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO{
 				
 			smt.setInt(1, enchere.getUtilisateur().getNoUtilisateur());
 			smt.setInt(2, enchere.getArticleVendu().getNoArticle());
-			//smt.setDate(3, enchere.getDateEnchere());
-			smt.setFloat(4, enchere.getMontantEnchere());
+			smt.setDate(3, Date.valueOf(enchere.getDateEnchere()));
+			smt.setInt(4, enchere.getMontantEnchere());
 
 			smt.executeUpdate();
+			cnx.close();
+		
 		
 		} catch (SQLException e) {
 		e.printStackTrace();

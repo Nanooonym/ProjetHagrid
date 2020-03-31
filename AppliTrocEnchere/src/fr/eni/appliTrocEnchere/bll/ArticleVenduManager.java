@@ -2,6 +2,7 @@ package fr.eni.appliTrocEnchere.bll;
 
 import java.time.LocalDate;
 
+import fr.eni.appliTrocEnchere.bo.ArticleVendu;
 import fr.eni.appliTrocEnchere.bo.Categorie;
 import fr.eni.appliTrocEnchere.bo.Retrait;
 import fr.eni.appliTrocEnchere.dal.ArticleVenduDAO;
@@ -38,6 +39,10 @@ public class ArticleVenduManager {
 		categorie = categorieDAO.selectCategorieByNumeroCategorie(noCategorie);
 		return categorie;
 	}
+	
+	 public void deleteArticle(ArticleVendu article) throws BusinessException {
+	        articleVenduDAO.deleteArticle(article);
+	    }
 
 	private void validerLesChamps(Retrait retrait, BusinessException be) throws BusinessException {
 		String nomArticle = retrait.getArticle().getNomArticle();

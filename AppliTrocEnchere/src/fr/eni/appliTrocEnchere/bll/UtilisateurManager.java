@@ -122,6 +122,15 @@ public class UtilisateurManager {
 		
 		
 	}
+	
+	public void updateUtilisateur (int credit, int noUtilisateur) throws BusinessException {
+		
+		be = new BusinessException();
+		if (!be.hasErreurs()) {
+			utilisateurDAO.updateCreditUtilisateur(credit, noUtilisateur);
+			throw be;
+		}
+	}
 }
 
 
