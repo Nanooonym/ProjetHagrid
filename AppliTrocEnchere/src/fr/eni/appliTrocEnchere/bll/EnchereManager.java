@@ -94,6 +94,54 @@ public class EnchereManager {
 		}
 		return listeEnchere;
 	}
+	
+	public List<Enchere> afficherMesVentesEnCours(Utilisateur utilisateur, String categorie, String article)
+			throws BusinessException {
+		List<Enchere> listeEnchere = new ArrayList<Enchere>();
+		try {
+			listeEnchere = enchereDAO.afficherMesVentesEnCours(utilisateur, parseCategorie(categorie), article);
+			if(listeEnchere.isEmpty()) {
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatBLL.AUCUN_RESULTAT);
+				throw be;
+			}
+		} catch (BusinessException e) {
+			throw e;
+		}
+		return listeEnchere;
+	}
+	
+	public List<Enchere> afficherMesVentesNonDebutees(Utilisateur utilisateur, String categorie, String article)
+			throws BusinessException {
+		List<Enchere> listeEnchere = new ArrayList<Enchere>();
+		try {
+			listeEnchere = enchereDAO.afficherMesVentesEnCours(utilisateur, parseCategorie(categorie), article);
+			if(listeEnchere.isEmpty()) {
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatBLL.AUCUN_RESULTAT);
+				throw be;
+			}
+		} catch (BusinessException e) {
+			throw e;
+		}
+		return listeEnchere;
+	}
+	
+	public List<Enchere> afficherMesVentesTerminees(Utilisateur utilisateur, String categorie, String article)
+			throws BusinessException {
+		List<Enchere> listeEnchere = new ArrayList<Enchere>();
+		try {
+			listeEnchere = enchereDAO.afficherMesVentesTerminees(utilisateur, parseCategorie(categorie), article);
+			if(listeEnchere.isEmpty()) {
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatBLL.AUCUN_RESULTAT);
+				throw be;
+			}
+		} catch (BusinessException e) {
+			throw e;
+		}
+		return listeEnchere;
+	}
 
 	public int parseCategorie(String categorie) {
 		int noCategorie;

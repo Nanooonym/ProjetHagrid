@@ -71,6 +71,8 @@ public class AjoutArticle extends HttpServlet {
 			//R�cup�ration de la cat�gorie choisie
 			categorie = new Categorie();
 			noCategorie = Integer.parseInt(request.getParameter("categorie"));
+			System.out.println(noCategorie);
+			categorie.setNoCategorie(noCategorie);
 			//Requête modifiée (gestion de retraits)
 			//categorie = articleVenduManager.selectCategorieById(noCategorie);
 
@@ -135,7 +137,7 @@ public class AjoutArticle extends HttpServlet {
 		if (dateDebutEncheres.isBefore(LocalDate.now())) {
 			etatVente = "En cours";
 		} else {
-			etatVente = "Cr��e";
+			etatVente = "Créée";
 		}
 
 		ArticleVendu article = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix,

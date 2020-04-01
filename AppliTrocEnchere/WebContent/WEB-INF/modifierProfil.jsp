@@ -46,8 +46,12 @@
 					</div>
 					
 					<div class="container-formulaire">
-						<label>Nouveau mot de passe:</label> <input type="text" id="textfield" name="nouveauMotDePasse">
+						<label>Nouveau mot de passe :</label> <input type="password" id="textfield"
+							name="nouveauMotDePasse">
 					</div>
+					
+					
+					
 				</div>
 
 				<div class="container-column">
@@ -75,7 +79,7 @@
 						<label>Confirmation :</label> <input type="password" id="textfield"
 							name="confirmation">
 					</div>
-							<c:out value="${sessionScope.utilisateur.credit}"/>
+							<c:out value="Crédits : ${sessionScope.utilisateur.credit}"/>
 				</div>
 
 			</div>

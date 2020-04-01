@@ -21,19 +21,18 @@
 			<p>Description : ${retrait.article.description}</p>
 		</div>
 
+		
+
+		<!-- Catégorie de l'article -->
+		<div id="categorieArticle">
+			<p>Catégorie : ${retrait.article.categorie.libelle}</p>
+
+		</div>
+
 		<div>
 			<p>Meilleur offre : ${retrait.article.prixVente} points par
 				${utilisateurMax.pseudo}</p>
 		</div>
-
-		<!-- Catégorie de l'article -->
-		<div id="categorieArticle">
-			<label>Catégorie : </label> <input type="text" name="categorie"
-				value="${retrait.article.categorie.libelle}" readonly>
-
-		</div>
-
-
 
 
 		<!-- Mise à prix de l'article -->
@@ -63,7 +62,7 @@
 		<div id="proposition">
 			<label>Ma proposition : </label> <input type="number"
 				id="proposition" name="proposition"
-				min="${retrait.article.prixVente+1}" max="100000000">
+				min="${retrait.article.prixVente+1}" max="100000000" value="${retrait.article.prixVente+1}">
 		</div>
 
 		<div id="boutonEncherir">

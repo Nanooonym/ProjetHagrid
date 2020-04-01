@@ -88,16 +88,17 @@ header{
 	
 }
 
+.option{
+	display:flex;
+	padding-right:8px;
+}
+
 .title{
 	grid-area:title;
 	justify-self:center;
 	font-size: 25px;
 	
 }
-
-
-
-
 
 
 .filtres{

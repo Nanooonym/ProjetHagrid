@@ -62,7 +62,7 @@ public class DetailVente extends HttpServlet {
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
-		System.out.println(retrait.toString());
+		
 		request.setAttribute("retrait", retrait);
 		request.setAttribute("utilisateurMax", utilisateur);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/detailVente.jsp");
@@ -102,8 +102,8 @@ public class DetailVente extends HttpServlet {
 			Enchere enchere = new Enchere();
 			enchere.setDateEnchere(dateEnchere);
 			enchere.setMontantEnchere(montantEnchere);
-			enchere.setNoArticle(articleVendu.getNoArticle());
-			enchere.setNoUtilisateur(utilisateur.getNoUtilisateur());
+			enchere.getArticleVendu().setNoArticle(articleVendu.getNoArticle());
+			enchere.getArticleVendu().setNoArticle(utilisateur.getNoUtilisateur());
 
 			int creditDebite = utilisateur.getCredit() - montantEnchere;
 

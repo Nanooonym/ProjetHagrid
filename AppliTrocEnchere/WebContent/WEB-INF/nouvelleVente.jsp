@@ -24,7 +24,7 @@
 			<div>
 				<label id="categorie" for="categorie">Catégories</label>
 				<select id="categorie" name="categorie">
-					<option value="Toutes">Toutes</option>
+					<option value="0">Toutes</option>
 					<option value="1">Informatique</option>
 					<option value="2">Ameublement</option>
 					<option value="3">Vêtement</option>

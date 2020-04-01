@@ -1,3 +1,4 @@
+<link href="css/page.css" rel="stylesheet">
 <title>Accueil</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -12,18 +13,18 @@
 			</div>
 
 			<div class="options">
-				<c:if test="${empty sessionScope.utilisateur}">
+				<div><c:if test="${empty sessionScope.utilisateur}">
 					<a href="<%=request.getContextPath()%>/Connexion">S'inscrire -
 						Se connecter</a>
-				</c:if>
+				</c:if></div>
 
 				<c:if test="${!empty sessionScope['utilisateur'] }">
-					<c:out value="Utilisateur : ${sessionScope.utilisateur.pseudo}" />
-					<c:out value="Encheres" />
-					<a href="<%=request.getContextPath()%>/AjoutArticle">Vendre un
-						article</a>
-					<a href="<%=request.getContextPath()%>/MonProfil">Mon Profil</a>
-					<a href="<%=request.getContextPath()%>/Deconnexion">Déconnexion</a>
+					<div class="option"><c:out value="Utilisateur : ${sessionScope.utilisateur.pseudo}" /></div>
+					<div class="option"><c:out value="Encheres" /></div>
+					<div class="option"><a href="<%=request.getContextPath()%>/AjoutArticle">Vendre un
+						article</a></div>
+					<div class="option"><a href="<%=request.getContextPath()%>/MonProfil">Mon Profil</a></div>
+					<div class="option"><a href="<%=request.getContextPath()%>/Deconnexion">Déconnexion</a></div>
 				</c:if>
 			</div>
 
@@ -54,8 +55,11 @@
 				</div>
 
 <!-- 					Checkbox et Radio Buttons -->
+				<c:if test="${!empty sessionScope['utilisateur'] }">
 				<div class=choix>
+
 					<div class="achatVente">
+
 						<div class="formulaire">
 							<input class="formulaire-items" type="radio" id="achats"
 								name="AchatVente" value="Achats" checked="checked"> <label
@@ -93,25 +97,27 @@
 
 						<div class="formulaire-checkbox">
 							<input class="formulaire-items" type="checkbox"
-								id="ventesEnCours" name="Ventes" value="ventesEnCours" disabled>
+								id="ventesEnCours" name="Ventes" value="mesVentesEnCours" disabled>
 							<label class="formulaire-items" for="ventesEnCours">mes
 								ventes en cours</label>
 						</div>
 
 						<div class="formulaire-checkbox">
 							<input class="formulaire-items" type="checkbox"
-								id="ventesNonDebutees" name="Ventes" value="ventesNonDebutees"
+								id="ventesNonDebutees" name="Ventes" value="mesVentesNonDebutees"
 								disabled> <label class="formulaire-items"
 								for="ventesNonDebutees">ventes non débutées</label>
 						</div>
 
 						<div class="formulaire-checkbox">
 							<input class="formulaire-items" type="checkbox"
-								id="ventesTerminees" name="Ventes" value="ventesTerminees"
+								id="ventesTerminees" name="Ventes" value="mesVentesTerminees"
 								disabled> <label class="formulaire-items"
 								for="ventesTerminees">ventes terminées</label>
 						</div>
+
 					</div>
+
 					<script>
 			        	$('input[name="AchatVente"]').on('change', function()
 			        	{
@@ -119,11 +125,11 @@
 			        		$('input[name="Achat"]').attr('enabled',this.value=="Achats")
 			        		$('input[name="Ventes"]').attr('disabled',this.value=="Achats")
 			        		$('input[name="Ventes"]').attr('enabled',this.value!="Achats")
+			        		
 			        	});
 			        </script>
-
-
 				</div>
+					</c:if>
 
 
 		</div>
@@ -138,18 +144,15 @@
 
 			<c:forEach items="${encheres}" var="enchere">
 				<div class="enchere">
-					<div>
-						<c:out value="${enchere.articleVendu.nomArticle}" />
-					</div>
-					
-					<div>
-						<div> <a href ="<%=request.getContextPath()%>/RemporteVente?idArticle=${enchere.articleVendu.noArticle}" > RemporteVente : ${ enchere.articleVendu.nomArticle } </a></div>
-					</div>
+
+<!-- 					<div> -->
+<%-- 						<div> <a href ="<%=request.getContextPath()%>/RemporteVente?idArticle=${enchere.articleVendu.noArticle}" > RemporteVente : ${ enchere.articleVendu.nomArticle } </a></div> --%>
+<!-- 					</div> -->
 					
 					<div>
 							<a
 								href="<%=request.getContextPath()%>/DetailVente?idArticle=${enchere.articleVendu.noArticle}">
-								DetailsVente :${ enchere.articleVendu.nomArticle } </a>
+								${ enchere.articleVendu.nomArticle } </a>
 						</div>
 					
 					<div>

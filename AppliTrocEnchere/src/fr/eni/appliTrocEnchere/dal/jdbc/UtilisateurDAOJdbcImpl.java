@@ -22,10 +22,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_UTILISATEUR_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo LIKE ? ";
 	private static final String SELECT_UTILISATEUR_BY_EMAIL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE email LIKE ?" ;
 	private static final String SELECT_UTILISATEUR_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
-	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET ?,?,?,?,?,?,?,?,? WHERE no_utilisateur = ?";
+	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE no_utilisateur = ?";
 	private static final String DELETE_UTILISATEUR = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
-	private static final String UPDATE_CREDIT_UTILISATEUR = "UPDATE UTILISATEURS SET credit =? where no_utilisateur=?;";
-	private static final String SELECT_UTILISATEUR_BY_ENCHERE_MAX ="SELECT  TOP 1 u.pseudo,u.no_utilisateur, MAX(e.montant_enchere) as montant_max FROM ARTICLES_VENDUS a INNER JOIN ENCHERES e ON e.no_article = a.no_article INNER JOIN UTILISATEURS u ON u.no_utilisateur = e.no_utilisateur WHERE e.no_article = ? GROUP BY u.no_utilisateur, u.pseudo order by  MAX(e.montant_enchere) DESC";
+	private static final String UPDATE_CREDIT_UTILISATEUR = "UPDATE UTILISATEURS SET credit =? where no_utilisateur=?";
+	private static final String SELECT_UTILISATEUR_BY_ENCHERE_MAX ="SELECT TOP 1 u.pseudo,u.no_utilisateur, MAX(e.montant_enchere) as montant_max FROM ARTICLES_VENDUS a INNER JOIN ENCHERES e ON e.no_article = a.no_article INNER JOIN UTILISATEURS u ON u.no_utilisateur = e.no_utilisateur WHERE e.no_article = ? GROUP BY u.no_utilisateur, u.pseudo order by  MAX(e.montant_enchere) DESC";
 	
 	
 
@@ -99,6 +99,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			smt.setString(7, utilisateur.getCodePostal());
 			smt.setString(8, utilisateur.getVille());
 			smt.setString(9, utilisateur.getMotDePasse());
+
 
 		
 			
@@ -296,7 +297,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				utilisateurCourant.setPseudo(rs.getString("pseudo"));
 
 			}
-			System.out.println(utilisateurCourant.toString());
 			return utilisateurCourant;
 		} catch (SQLException e) {
 
