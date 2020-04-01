@@ -2,7 +2,6 @@ package fr.eni.appliTrocEnchere.ihm;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +16,6 @@ import fr.eni.appliTrocEnchere.bll.EnchereManager;
 import fr.eni.appliTrocEnchere.bll.RetraitManager;
 import fr.eni.appliTrocEnchere.bll.UtilisateurManager;
 import fr.eni.appliTrocEnchere.bo.ArticleVendu;
-import fr.eni.appliTrocEnchere.bo.Enchere;
 import fr.eni.appliTrocEnchere.bo.Retrait;
 import fr.eni.appliTrocEnchere.bo.Utilisateur;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
@@ -31,9 +29,10 @@ public class DetailVente extends HttpServlet {
 	RetraitManager retraitManager;
 	EnchereManager enchereManager;
 	Utilisateur utilisateur;
+	Utilisateur utilisateurMax;
 	HttpSession session;
 	ArticleVendu articleVendu;
-	int montantEnchere;
+	int montantEnchereEnCours;
 	LocalDate dateEnchere;
 	BusinessException be;
 
@@ -55,16 +54,16 @@ public class DetailVente extends HttpServlet {
 		
 		try {
 			retrait = articleVenduManager.selectArticleById(noArticle);
-			utilisateur = new Utilisateur();
+			utilisateurMax = new Utilisateur();
 			utilisateurManager = new UtilisateurManager();
-			utilisateur = utilisateurManager.selectUtilisateurByEnchereMax(noArticle);
+			utilisateurMax = utilisateurManager.selectUtilisateurByEnchereMax(noArticle);
 			
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
 		System.out.println(retrait.toString());
 		request.setAttribute("retrait", retrait);
-		request.setAttribute("utilisateurMax", utilisateur);
+		request.setAttribute("utilisateurMax", utilisateurMax);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/detailVente.jsp");
 		rd.forward(request, response);
 
@@ -87,33 +86,44 @@ public class DetailVente extends HttpServlet {
 
 		// Récupération de la proposition d'enchère
 		int proposition = Integer.parseInt(request.getParameter("proposition"));
-		montantEnchere = Integer.parseInt(request.getParameter("montantEnchere"));
-
+		
 		articleVendu = (ArticleVendu) request.getAttribute("articleVendu");
 
 		// Date de l'enchère
 		dateEnchere = LocalDate.now();
+		
+		String idArticle = (String) request.getParameter("noArticle");
+		int noArticle = Integer.parseInt(idArticle);
 
 		try {
 			enchereManager = new EnchereManager();
 			be = new BusinessException();
 
 	   // Construction de l'objet et requête d'insertion
-			Enchere enchere = new Enchere();
-			enchere.setDateEnchere(dateEnchere);
-			enchere.setMontantEnchere(montantEnchere);
-			enchere.setNoArticle(articleVendu.getNoArticle());
-			enchere.setNoUtilisateur(utilisateur.getNoUtilisateur());
-
-			int creditDebite = utilisateur.getCredit() - montantEnchere;
-
-			if (proposition > montantEnchere && creditDebite > 0) {
-				enchereManager.ajouterEnchere(enchere);
-				utilisateurManager.updateCreditUtilisateur(creditDebite, utilisateur.getNoUtilisateur());
-				utilisateur.setCredit(creditDebite);
-			}
-
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+			
+			//Select utilisateur meilleure enchère
+			
+				Retrait retrait = new Retrait();
+	
+				retrait = articleVenduManager.selectArticleById(noArticle);
+				Utilisateur utilisateurMax = new Utilisateur();
+				utilisateurManager = new UtilisateurManager();
+				utilisateurMax = utilisateurManager.selectUtilisateurByEnchereMax(noArticle);
+				
+				System.out.println(utilisateur.toString());
+				System.out.println(proposition);
+				System.out.println(retrait.toString());
+				validerProposition(proposition, retrait, utilisateur);
+				enchereManager = new EnchereManager();
+				
+				enchereManager.encherir(montantEnchereEnCours, proposition, utilisateurMax, utilisateurMax, noArticle);
+			
+				retrait = articleVenduManager.selectArticleById(noArticle);
+				request.setAttribute("retrait", retrait);
+				request.setAttribute("utilisateurMax", utilisateur);
+				
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/detailVente.jsp");
 			rd.forward(request, response);
 
 		} catch (BusinessException be) {
@@ -121,4 +131,22 @@ public class DetailVente extends HttpServlet {
 			doGet(request, response);
 		}
 	}
+	
+	
+	public void validerProposition (int proposition,Retrait retrait,Utilisateur utilisateur) throws BusinessException {
+		
+		
+		if ((proposition<= retrait.getArticle().getPrixVente()) || (utilisateur.getCredit()-proposition <0) || (proposition<=0)) {
+			System.out.println("pas validé");
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatIHM.PROPOSITION_INCORRECTE);
+			throw be;
+		}
+		
+		
+		
+	}
+	
+
+	
 }

@@ -26,7 +26,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String INSERT_RETRAIT = "INSERT INTO RETRAITS VALUES (?,?,?,?)";
 	private static final String SELECT_ARTICLE_BY_ID = "SELECT a.no_article, a.nom_article, a.description, a.prix_initial, a.prix_vente,  a.date_debut_encheres, a.date_fin_encheres, r.rue, r.code_postal, r.ville, u.pseudo, u.telephone FROM ARTICLES_VENDUS a INNER JOIN RETRAITS r ON r.no_article = a.no_article INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur  WHERE a.no_article=?";
 	private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ? ";
-	private static final String UPDATE_PRIX_VENTE = "UPDATE ARTICLES_VENDUS SET prix_vente= (SELECT MAX(montant_enchere) as montant_enchere from ENCHERES where no_article=?) where no_article=?;";
+	//private static final String UPDATE_PRIX_VENTE = "UPDATE ARTICLES_VENDUS SET prix_vente= (SELECT MAX(montant_enchere) from ENCHERES where no_article=?) where no_article=?;";
+
 	
 	@Override
 	public void addArticle(Retrait retrait) throws BusinessException {
@@ -236,21 +237,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	}
 
-	@Override
-	public void updatePrixDeVente(int noArticle) throws BusinessException {
+@Override
+public void updatePrixDeVente(int proposition, int noArticle) throws BusinessException {
+	// TODO Auto-generated method stub
+	
+}
 
-		try (Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement stmt = cnx.prepareStatement(UPDATE_PRIX_VENTE);) {
-			stmt.setInt(1, noArticle);
-			stmt.setInt(2, noArticle);
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			BusinessException be = new BusinessException();
-			be.ajouterErreur(CodesResultatDAL.UPDATE_PRIX_VENTE_ERREUR);
-			throw be;
-
-		}
-
-	}
 }

@@ -42,6 +42,16 @@ public class ArticleVenduManager {
 		return retrait ;
 		}
 	
+	public void updatePrixDeVente (int proposition,int noArticle) throws BusinessException {
+		try {
+			be = new BusinessException();
+			articleVenduDAO.updatePrixDeVente(proposition,noArticle);
+		} catch (Exception e) {
+			throw be;
+		}
+		
+	}
+	
 	public Categorie selectCategorieById(int noCategorie) throws BusinessException{
 		Categorie categorie = new Categorie();
 		categorie = categorieDAO.selectCategorieByNumeroCategorie(noCategorie);

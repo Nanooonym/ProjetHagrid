@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>Détails vente</h1>
-	<form id="formDetailVente" action="DetailVente" method="post">
+	<form id="formDetailVente" action="./DetailVente" method="post">
 
 		<!-- Nom de l'article sélectionné -->
 		<div id="nomArticle">
@@ -22,8 +22,11 @@
 		</div>
 
 		<div>
-			<p>Meilleur offre : ${retrait.article.prixVente} points par
-				${utilisateurMax.pseudo}</p>
+			<p>Meilleur offre :</p>
+			<label id="meilleureOffre">${retrait.article.prixVente} </label> <input
+				type="hidden" name="montantEnchere"
+				value="${retrait.article.prixVente}" readonly>
+			<p>points par ${utilisateurMax.pseudo}</p>
 		</div>
 
 		<!-- Catégorie de l'article -->
@@ -67,9 +70,8 @@
 		</div>
 
 		<div id="boutonEncherir">
-			<input type="submit" id="encherir" value="Enchérir"> <a
-				href="<%=request.getContextPath()%>/Accueil"><input
-				type="button" id="annuler" value="Annuler"></a>
+			<button type="submit" id="encherir"> Enchérir </button>
+			
 		</div>
 
 

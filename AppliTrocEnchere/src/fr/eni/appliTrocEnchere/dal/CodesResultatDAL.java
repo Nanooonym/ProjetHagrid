@@ -29,4 +29,5 @@ public abstract class CodesResultatDAL {
 	public static final int UPDATE_PRIX_VENTE_ERREUR = 14015;
 	public static final int UPDATE_ARTICLE_ECHEC = 14016;
 	public static final int SELECT_UTILISATEUR_BY_ENCHERE_MAX=14017;
+	public static final int UPDATE_CREDIT_ECHEC=14018;
 }
