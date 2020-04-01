@@ -18,11 +18,12 @@
 		</div>
 		<!-- Description de l'article -->
 		<div id="descriptionArticle">
-			<p>Description : ${retrait.article.description} </p>
+			<p>Description : ${retrait.article.description}</p>
 		</div>
-		
+
 		<div>
-			<p> Meilleur offre : ${retrait.article.prixVente} points par ${utilisateurMax.pseudo}  </p>
+			<p>Meilleur offre : ${retrait.article.prixVente} points par
+				${utilisateurMax.pseudo}</p>
 		</div>
 
 		<!-- Catégorie de l'article -->
@@ -37,26 +38,24 @@
 
 		<!-- Mise à prix de l'article -->
 		<div id="miseAPrix">
-			
+
 			<p>Mise à prix :${retrait.article.miseAPrix}points</p>
 		</div>
 
 		<!-- Date de fin d'enchère -->
 		<div id="finEnchereArticle">
-			<p>Fin de l'enchère : ${retrait.article.dateFinEncheres}</p> 
+			<p>Fin de l'enchère : ${retrait.article.dateFinEncheres}</p>
 		</div>
 
 		<!-- Adresse de retrait -->
 		<div id="retrait">
-			<p>Retrait: ${retrait.rue}
-				${retrait.codePostal} 
-				${retrait.ville}</p>
+			<p>Retrait: ${retrait.rue} ${retrait.codePostal} ${retrait.ville}</p>
 		</div>
 
 
 		<!-- Nom du vendeur -->
 		<div id="vendeurArticle">
-			<p>Vendeur : ${retrait.article.utilisateur.pseudo} </p>
+			<p>Vendeur : ${retrait.article.utilisateur.pseudo}</p>
 		</div>
 
 

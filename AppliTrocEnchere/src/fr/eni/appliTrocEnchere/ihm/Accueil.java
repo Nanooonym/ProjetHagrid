@@ -117,7 +117,7 @@ public class Accueil extends HttpServlet {
 			rd.forward(request, response);
 
 		} catch (BusinessException e) {
-			request.setAttribute("errorMessage", LecteurMessage.codesErreurToString(e));
+			request.setAttribute("errorMessages", LecteurMessage.codesErreurToString(e));
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 			rd.forward(request, response);
 		}
