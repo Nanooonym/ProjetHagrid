@@ -61,6 +61,7 @@ public class Accueil extends HttpServlet {
 			throws ServletException, IOException {
 
 		String[] typesAchats = request.getParameterValues("Achat");
+		String[] typesVentes = request.getParameterValues("Ventes");
 		listeEncheres = new ArrayList<Enchere>();
 		listeEncheresFiltre = new ArrayList<Enchere>();
 		enchereManager = new EnchereManager();
@@ -70,6 +71,10 @@ public class Accueil extends HttpServlet {
 		if (typesAchats == null) {
 			typesAchats = new String[] { "tout" };
 		}
+		if (typesVentes == null) {
+			typesVentes = new String[] { "tout" };
+		}
+	
 
 		try {
 
@@ -104,14 +109,55 @@ public class Accueil extends HttpServlet {
 						listeEncheres.add(enchere);
 					}
 				}
+				
+			}
+			
+			for (String checkValue : typesVentes) {
 
-				if (checkValue.equals("tout")) {
-					listeEncheresFiltre = enchereManager.afficherEncheres(categorie, article);
+			
+				// Filtre Mes Ventes En Cours
+				if (checkValue.equals("mesVentesEnCours")) {
+					HttpSession session = request.getSession();
+					Utilisateur utilisateur = new Utilisateur();
+					utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+					listeEncheresFiltre = enchereManager.afficherMesVentesEnCours(utilisateur, categorie, article);
+					for (Enchere enchere : listeEncheresFiltre) {
+						listeEncheres.add(enchere);
+					}
+				}
+				
+				// Filtre Mes Ventes Non Débutées
+				if (checkValue.equals("mesVentesNonDebutees")) {
+					HttpSession session = request.getSession();
+					Utilisateur utilisateur = new Utilisateur();
+					utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+					listeEncheresFiltre = enchereManager.afficherMesVentesNonDebutees(utilisateur, categorie, article);
+					for (Enchere enchere : listeEncheresFiltre) {
+						listeEncheres.add(enchere);
+					}
+				}
+				
+				// Filtre Mes Ventes Terminées
+				if (checkValue.equals("mesVentesTerminees")) {
+					HttpSession session = request.getSession();
+					Utilisateur utilisateur = new Utilisateur();
+					utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+					listeEncheresFiltre = enchereManager.afficherMesVentesTerminees(utilisateur, categorie, article);
 					for (Enchere enchere : listeEncheresFiltre) {
 						listeEncheres.add(enchere);
 					}
 				}
 			}
+			
+			// Affiche toutes les enchères si aucun filtre appliqué
+			if (typesAchats[0].equals("tout") && typesVentes[0].equals("tout")) {
+				listeEncheresFiltre = enchereManager.afficherEncheres(categorie, article);
+				for (Enchere enchere : listeEncheresFiltre) {
+					listeEncheres.add(enchere);
+				}
+			}
+			
+			
 			request.setAttribute("encheres", listeEncheres);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 			rd.forward(request, response);

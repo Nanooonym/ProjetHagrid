@@ -3,7 +3,6 @@ package fr.eni.appliTrocEnchere.bll;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.appliTrocEnchere.bo.ArticleVendu;
 import fr.eni.appliTrocEnchere.bo.Enchere;
 import fr.eni.appliTrocEnchere.bo.Utilisateur;
 import fr.eni.appliTrocEnchere.dal.DAOFactory;
@@ -87,6 +86,54 @@ public class EnchereManager {
 		try {
 			listeEnchere = enchereDAO.afficherEncheresRemportees(utilisateur, parseCategorie(categorie), article);
 			if (listeEnchere.isEmpty()) {
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatBLL.AUCUN_RESULTAT);
+				throw be;
+			}
+		} catch (BusinessException e) {
+			throw e;
+		}
+		return listeEnchere;
+	}
+	
+	public List<Enchere> afficherMesVentesEnCours(Utilisateur utilisateur, String categorie, String article)
+			throws BusinessException {
+		List<Enchere> listeEnchere = new ArrayList<Enchere>();
+		try {
+			listeEnchere = enchereDAO.afficherMesVentesEnCours(utilisateur, parseCategorie(categorie), article);
+			if(listeEnchere.isEmpty()) {
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatBLL.AUCUN_RESULTAT);
+				throw be;
+			}
+		} catch (BusinessException e) {
+			throw e;
+		}
+		return listeEnchere;
+	}
+	
+	public List<Enchere> afficherMesVentesNonDebutees(Utilisateur utilisateur, String categorie, String article)
+			throws BusinessException {
+		List<Enchere> listeEnchere = new ArrayList<Enchere>();
+		try {
+			listeEnchere = enchereDAO.afficherMesVentesEnCours(utilisateur, parseCategorie(categorie), article);
+			if(listeEnchere.isEmpty()) {
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatBLL.AUCUN_RESULTAT);
+				throw be;
+			}
+		} catch (BusinessException e) {
+			throw e;
+		}
+		return listeEnchere;
+	}
+	
+	public List<Enchere> afficherMesVentesTerminees(Utilisateur utilisateur, String categorie, String article)
+			throws BusinessException {
+		List<Enchere> listeEnchere = new ArrayList<Enchere>();
+		try {
+			listeEnchere = enchereDAO.afficherMesVentesTerminees(utilisateur, parseCategorie(categorie), article);
+			if(listeEnchere.isEmpty()) {
 				BusinessException be = new BusinessException();
 				be.ajouterErreur(CodesResultatBLL.AUCUN_RESULTAT);
 				throw be;

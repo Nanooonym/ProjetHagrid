@@ -28,13 +28,18 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String AFFICHER_ENCHERES_OUVERTES = "SELECT a.no_article, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.etat_vente LIKE 'En cours'";
 	private static final String AFFICHER_ENCHERES_EN_COURS = "SELECT a.no_article, a.etat_vente, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur, e.date_enchere, e.montant_enchere FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie RIGHT JOIN ENCHERES e ON e.no_utilisateur = a.no_utilisateur WHERE a.etat_vente LIKE 'En cours' AND e.no_utilisateur = ?";
 	private static final String AFFICHER_ENCHERES_REMPORTEES = "SELECT a.no_article, a.etat_vente, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur, e.date_enchere, e.montant_enchere FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie RIGHT JOIN ENCHERES e ON e.no_utilisateur = a.no_utilisateur WHERE a.etat_vente LIKE 'Terminée' AND e.montant_enchere = a.prix_vente AND a.no_utilisateur = ?";
+	
+	private static final String AFFICHER_VENTES_EN_COURS = "SELECT a.no_article, a.etat_vente, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.etat_vente LIKE 'En cours' AND a.no_utilisateur = ?";
+	private static final String AFFICHER_VENTES_NON_DEBUTEES = "SELECT a.no_article, a.etat_vente, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.etat_vente LIKE 'Créée' AND a.no_utilisateur = ?";
+	private static final String AFFICHER_VENTES_TERMINEES = "SELECT a.no_article, a.etat_vente, a.nom_article, a.description, c.libelle, a.date_fin_encheres, a.prix_vente, a.prix_initial, a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo, a.no_utilisateur FROM ARTICLES_VENDUS AS a INNER JOIN UTILISATEURS AS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.etat_vente LIKE 'Terminée' AND a.no_utilisateur = ?";
+	
 	private static final String FILTRE_CATEGORIES = "a.no_categorie = ?";
 	private static final String FILTRE_ARTICLES = "a.nom_article LIKE ?";
 	private static final String UPDATE_PRIX_VENTE = "UPDATE ARTICLES_VENDUS SET prix_vente=? WHERE no_article=?";
 	private static final String UPDATE_CREDITER_UTILISATEUR = "UPDATE UTILISATEURS SET credit =? where no_utilisateur=?";
 	private static final String UPDATE_DEBITER_UTILISATEUR = "UPDATE UTILISATEURS SET credit =? where no_utilisateur=?";
-	private static final String UPDATE_ENCHERE = "UPDATE ENCHERES SET montant_enchere=? date_enchere = GETDATE() WHERE no_utilisateur = ? AND no_article = ?";
-	private static final String VERIF_ENCHERE_EXISTANTE = "SELECT no_utilisateur,no_article WHERE no_utilisateur = ? AND no_article = ?";
+	private static final String UPDATE_ENCHERE = "UPDATE ENCHERES SET montant_enchere=?, date_enchere = GETDATE() WHERE no_utilisateur = ? AND no_article = ?";
+	private static final String VERIF_ENCHERE_EXISTANTE = "SELECT no_utilisateur,no_article FROM ENCHERES WHERE no_utilisateur = ? AND no_article = ?";
 
 	public List<Enchere> afficherEncheres(int categorie, String article) throws BusinessException {
 
@@ -221,6 +226,147 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		}
 		return listeEncheres;
 	}
+	public  List<Enchere> afficherMesVentesEnCours(Utilisateur utilisateur, int categorie, String article) throws BusinessException {
+
+		List<Enchere> listeEncheres = new ArrayList<Enchere>();
+		ResultSet rs = null;
+		PreparedStatement psmt = null;
+		
+		try{
+			Connection cnx = ConnectionProvider.getConnection();	
+			String[] requete = filtresRequetes(categorie, article, AFFICHER_VENTES_EN_COURS);
+			
+			switch (requete[1]) {
+			case "Pas de Filtre":
+				psmt = cnx.prepareStatement(requete[0]);
+				psmt.setInt(1, utilisateur.getNoUtilisateur());
+				break;
+			case "Filtre Article":
+				psmt = cnx.prepareStatement(requete[0]);
+				psmt.setInt(1, utilisateur.getNoUtilisateur());
+				psmt.setString(2, "%" + article + "%");
+				break;
+			case "Filtre Categorie":
+				psmt = cnx.prepareStatement(requete[0]);
+				psmt.setInt(1, utilisateur.getNoUtilisateur());
+				psmt.setInt(2, categorie);
+				break;
+			case "Filtre Article ET Categorie":
+				psmt = cnx.prepareStatement(requete[0]);
+				psmt.setInt(1, utilisateur.getNoUtilisateur());
+				psmt.setInt(2, categorie);
+				psmt.setString(3, "%" + article + "%");
+				break;
+			}	
+			rs = psmt.executeQuery();
+			while(rs.next())
+			{
+				listeEncheres.add(mappingEnchere(rs));
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.AFFICHER_ENCHERES_ECHEC);
+			throw be;
+		}
+			return listeEncheres;		
+
+	}
+	
+	public  List<Enchere> afficherMesVentesNonDebutees(Utilisateur utilisateur, int categorie, String article) throws BusinessException {
+
+		List<Enchere> listeEncheres = new ArrayList<Enchere>();
+		ResultSet rs = null;
+		PreparedStatement psmt = null;
+		
+		try{
+			Connection cnx = ConnectionProvider.getConnection();	
+			String[] requete = filtresRequetes(categorie, article, AFFICHER_VENTES_NON_DEBUTEES);
+			
+			switch (requete[1]) {
+			case "Pas de Filtre":
+				psmt = cnx.prepareStatement(requete[0]);
+				psmt.setInt(1, utilisateur.getNoUtilisateur());
+				break;
+			case "Filtre Article":
+				psmt = cnx.prepareStatement(requete[0]);
+				psmt.setInt(1, utilisateur.getNoUtilisateur());
+				psmt.setString(2, "%" + article + "%");
+				break;
+			case "Filtre Categorie":
+				psmt = cnx.prepareStatement(requete[0]);
+				psmt.setInt(1, utilisateur.getNoUtilisateur());
+				psmt.setInt(2, categorie);
+				break;
+			case "Filtre Article ET Categorie":
+				psmt = cnx.prepareStatement(requete[0]);
+				psmt.setInt(1, utilisateur.getNoUtilisateur());
+				psmt.setInt(2, categorie);
+				psmt.setString(3, "%" + article + "%");
+				break;
+			}	
+			rs = psmt.executeQuery();
+			while(rs.next())
+			{
+				listeEncheres.add(mappingEnchere(rs));
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.AFFICHER_ENCHERES_ECHEC);
+			throw be;
+		}
+			return listeEncheres;		
+
+	}
+	
+	public  List<Enchere> afficherMesVentesTerminees(Utilisateur utilisateur, int categorie, String article) throws BusinessException {
+
+		List<Enchere> listeEncheres = new ArrayList<Enchere>();
+		ResultSet rs = null;
+		PreparedStatement psmt = null;
+		
+		try{
+			Connection cnx = ConnectionProvider.getConnection();	
+			String[] requete = filtresRequetes(categorie, article, AFFICHER_VENTES_TERMINEES);
+			
+			switch (requete[1]) {
+			case "Pas de Filtre":
+				psmt = cnx.prepareStatement(requete[0]);
+				psmt.setInt(1, utilisateur.getNoUtilisateur());
+				break;
+			case "Filtre Article":
+				psmt = cnx.prepareStatement(requete[0]);
+				psmt.setInt(1, utilisateur.getNoUtilisateur());
+				psmt.setString(2, "%" + article + "%");
+				break;
+			case "Filtre Categorie":
+				psmt = cnx.prepareStatement(requete[0]);
+				psmt.setInt(1, utilisateur.getNoUtilisateur());
+				psmt.setInt(2, categorie);
+				break;
+			case "Filtre Article ET Categorie":
+				psmt = cnx.prepareStatement(requete[0]);
+				psmt.setInt(1, utilisateur.getNoUtilisateur());
+				psmt.setInt(2, categorie);
+				psmt.setString(3, "%" + article + "%");
+				break;
+			}	
+			rs = psmt.executeQuery();
+			while(rs.next())
+			{
+				listeEncheres.add(mappingEnchere(rs));
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.AFFICHER_ENCHERES_ECHEC);
+			throw be;
+		}
+			return listeEncheres;		
+
+	}
+	
 
 	// Mapping d'une enchere
 
@@ -322,23 +468,21 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 			else {
 				psmt.close();
-				cnx.close();
 			}
 
 			psmt = cnx.prepareStatement(UPDATE_DEBITER_UTILISATEUR);
 
 			psmt.setInt(1, utilisateur.getCredit() - nouvelleEnchere);
 			psmt.setInt(2, utilisateur.getNoUtilisateur());
-			nombreUtilisateurModifie = psmt.executeUpdate();
+			int nombreUtilisateurModifie2 = psmt.executeUpdate();
 
-			if (nombreUtilisateurModifie != 1) {
+			if (nombreUtilisateurModifie2 != 1) {
 				be.ajouterErreur(CodesResultatDAL.UPDATE_CREDIT_ECHEC);
 				throw be;
 			}
 
 			else {
 				psmt.close();
-				cnx.close();
 
 			}
 			updatePrixDeVente(nouvelleEnchere, noArticle,cnx);
@@ -349,7 +493,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			else {
 				ajouterEnchere(noArticle, utilisateur, nouvelleEnchere, cnx);
 			}
-			
+			cnx.commit();
 
 		} catch (Exception e) {
 
@@ -389,28 +533,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		}
 	}
 
-	// Methode pour afficher une enchere ****CA MARCHE PAS*****
-	@Override
-	public List<Enchere> afficherDetailEnchere() throws BusinessException {
-		List<Enchere> listeDetailEnchere = new ArrayList<Enchere>();
-		try (Connection cnx = ConnectionProvider.getConnection(); Statement smt = cnx.createStatement();) {
-			ResultSet rs = smt.executeQuery(AFFICHER_ENCHERES);
-			Enchere enchereCourant = new Enchere();
-			while (rs.next()) {
-				if (rs.getInt("no_article") != enchereCourant.getNoArticle()) {
-					enchereCourant = mappingEnchere(rs);
-					listeDetailEnchere.add(enchereCourant);
-				}
-			}
-			return listeDetailEnchere;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			BusinessException be = new BusinessException();
-			be.ajouterErreur(CodesResultatDAL.AFFICHER_ENCHERES_ECHEC);
-			throw be;
-		}
-	}
 
 	@Override
 	public void updatePrixDeVente(int proposition, int noArticle, Connection cnx) throws BusinessException {
@@ -480,6 +602,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			throw be;
 		}
 
+		
+	}
+
+	@Override
+	public void ajouterEnchere(Enchere enchere) throws BusinessException {
+		// TODO Auto-generated method stub
 		
 	}
 }

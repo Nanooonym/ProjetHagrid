@@ -19,6 +19,7 @@ import fr.eni.appliTrocEnchere.bo.ArticleVendu;
 import fr.eni.appliTrocEnchere.bo.Retrait;
 import fr.eni.appliTrocEnchere.bo.Utilisateur;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
+import fr.eni.appliTrocEnchere.exception.LecteurMessage;
 
 
 @WebServlet("/DetailVente")
@@ -61,7 +62,6 @@ public class DetailVente extends HttpServlet {
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
-		System.out.println(retrait.toString());
 		request.setAttribute("retrait", retrait);
 		request.setAttribute("utilisateurMax", utilisateurMax);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/detailVente.jsp");
@@ -73,9 +73,7 @@ public class DetailVente extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		enchereManager = new EnchereManager();
 		articleVenduManager = new ArticleVenduManager();
-		utilisateurManager = new UtilisateurManager();
 
 		request.setCharacterEncoding("UTF-8");
 
@@ -96,38 +94,39 @@ public class DetailVente extends HttpServlet {
 		int noArticle = Integer.parseInt(idArticle);
 
 		try {
-			enchereManager = new EnchereManager();
-			be = new BusinessException();
+		
 
 	   // Construction de l'objet et requête d'insertion
 			
 			//Select utilisateur meilleure enchère
 			
 				Retrait retrait = new Retrait();
+				
 	
 				retrait = articleVenduManager.selectArticleById(noArticle);
+				montantEnchereEnCours = retrait.getArticle().getPrixVente();
 				Utilisateur utilisateurMax = new Utilisateur();
 				utilisateurManager = new UtilisateurManager();
 				utilisateurMax = utilisateurManager.selectUtilisateurByEnchereMax(noArticle);
 				
-				System.out.println(utilisateur.toString());
-				System.out.println(proposition);
-				System.out.println(retrait.toString());
+			
 				validerProposition(proposition, retrait, utilisateur);
 				enchereManager = new EnchereManager();
 				
-				enchereManager.encherir(montantEnchereEnCours, proposition, utilisateurMax, utilisateurMax, noArticle);
+				enchereManager.encherir(montantEnchereEnCours, proposition, utilisateur, utilisateurMax, noArticle);
 			
 				retrait = articleVenduManager.selectArticleById(noArticle);
 				request.setAttribute("retrait", retrait);
 				request.setAttribute("utilisateurMax", utilisateur);
+				
 				
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/detailVente.jsp");
 			rd.forward(request, response);
 
 		} catch (BusinessException be) {
-			be.printStackTrace();
+			be = new BusinessException();
+			request.setAttribute("errorMessages", LecteurMessage.codesErreurToString(be));
 			doGet(request, response);
 		}
 	}
@@ -137,7 +136,6 @@ public class DetailVente extends HttpServlet {
 		
 		
 		if ((proposition<= retrait.getArticle().getPrixVente()) || (utilisateur.getCredit()-proposition <0) || (proposition<=0)) {
-			System.out.println("pas validé");
 			BusinessException be = new BusinessException();
 			be.ajouterErreur(CodesResultatIHM.PROPOSITION_INCORRECTE);
 			throw be;
@@ -150,3 +148,4 @@ public class DetailVente extends HttpServlet {
 
 	
 }
+

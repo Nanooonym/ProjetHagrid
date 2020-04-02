@@ -42,9 +42,7 @@
 	grid-template-areas:
 		"header header"
 		"filtres filtres"
-		"rechercher rechercher"
-
-		
+		"rechercher rechercher"	
 		"encheres encheres";
 	row-gap:20px;
 	grid-auto-rows:200px;
@@ -88,16 +86,17 @@ header{
 	
 }
 
+.option{
+	display:flex;
+	padding-right:8px;
+}
+
 .title{
 	grid-area:title;
 	justify-self:center;
 	font-size: 25px;
 	
 }
-
-
-
-
 
 
 .filtres{

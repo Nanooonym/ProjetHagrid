@@ -10,30 +10,43 @@
 
 	</header>
 
-
-
 	<div class="container-column">
-
 
 		<div class="container-row">
 
 			<div class="container-column">
 				<form action="./Connexion" method="post">
 					<div class="container-formulaire">
-						<label>Identifiant :</label> <input type="text" id="textfield"
-							name="pseudo">
+						<label>Identifiant :</label>
+						<c:if test="${cookie.remember.value == 'rmb'}">
+							<input type="text"  name="pseudo" value="${cookie.login.value}">
+						</c:if>
+						<c:if test="${cookie.remember.value == null}">
+							<input type="text"  name="pseudo">
+						</c:if>
+
 					</div>
 
 					<div class="container-formulaire">
-						<label>Mot de passe :</label> <input type="password"
-							id="textfield" name="motDePasse">
+						<label>Mot de passe :</label>
+						<c:if test="${cookie.remember.value == 'rmb'}">
+							<input type="password" name="motDePasse" value="${cookie.password.value}">
+						</c:if>
+						<c:if test="${cookie.remember.value == null}">
+							<input type="password" name="motDePasse">
+						</c:if>
 					</div>
 					<div class="container-formulaire">
 
 						<button type="submit">Connexion</button>
 						<div class="container-column">
 							<div class="container-formulaire">
-								<input type="checkbox" value="remember">
+								<c:if test="${cookie.remember.value == 'rmb'}">
+									<input type="checkbox" name="checkRemember" value="rmb" checked>
+								</c:if>
+								<c:if test="${cookie.remember.value == null}">
+									<input type="checkbox" name="checkRemember" value="rmb">
+								</c:if>	
 								<p>Se souvenir de moi</p>
 							</div>
 							<p>Mot de Passe oublié</p>
@@ -48,8 +61,6 @@
 
 			</div>
 		</div>
-
-
 
 	</div>
 

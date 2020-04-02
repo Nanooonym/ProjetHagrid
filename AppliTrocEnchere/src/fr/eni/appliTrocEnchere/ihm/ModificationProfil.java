@@ -68,14 +68,12 @@ public class ModificationProfil extends HttpServlet {
 			//Récupération de l'utilisateur
 			session = request.getSession();	
 			utilisateurSession = (Utilisateur) session.getAttribute("utilisateur");
-			
-			motDePasseActuel = request.getParameter("motDePasseActuel");
-			Utilities.validationMotDePasse(utilisateurSession, motDePasseActuel);
-			
+
 			//Affectation des valeurs non-demandées dans le formulaire, pour contourner les nullPointerException
 			utilisateurUpdate.setNoUtilisateur(utilisateurSession.getNoUtilisateur());
 			utilisateurUpdate.setCredit(utilisateurSession.getCredit());
 			utilisateurUpdate.setAdministrateur(utilisateurSession.isAdministrateur());
+			utilisateurUpdate.setMotDePasse(nouveauMotDePasse);
 			
 			//Vérification si pseudo et email déjà existants en cas de modification apportée
 			existantCheck(utilisateurSession, utilisateurUpdate);
@@ -129,7 +127,7 @@ public class ModificationProfil extends HttpServlet {
 		prenom = request.getParameter("prenom");
 		telephone = request.getParameter("telephone");
 		codePostal = request.getParameter("codePostal");
-		nouveauMotDePasse = request.getParameter("motDePasse");
+		nouveauMotDePasse = request.getParameter("nouveauMotDePasse");
 		nom = request.getParameter("nom");
 		email = request.getParameter("email");
 		rue = request.getParameter("rue");
