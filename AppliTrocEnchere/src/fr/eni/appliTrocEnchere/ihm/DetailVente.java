@@ -2,7 +2,6 @@ package fr.eni.appliTrocEnchere.ihm;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,7 +20,6 @@ import fr.eni.appliTrocEnchere.bo.Enchere;
 import fr.eni.appliTrocEnchere.bo.Retrait;
 import fr.eni.appliTrocEnchere.bo.Utilisateur;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
-
 
 @WebServlet("/DetailVente")
 public class DetailVente extends HttpServlet {
