@@ -1,0 +1,115 @@
+/*!
+ * Start Bootstrap - 4 Col Portfolio (https://startbootstrap.com/template-overviews/4-col-portfolio)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-4-col-portfolio/blob/master/LICENSE)
+ */
+
+body{
+	margin : 0;
+	padding : 0;
+	font-size: 18px;
+	font-family: comic sans ms !important;
+}
+
+.eni-encheres{
+	grid-area: eni-encheres;
+	padding-left : 30px;
+	padding-top : 20px;
+	display:flex;
+	justify-self:left;
+	align-self:center;
+	font-size: 20px;
+}
+
+.grid{
+	display: grid;
+	grid-template-columns:   1fr 350px 1fr ;
+	grid-template-rows: 200px  500px 200px;
+	grid-template-areas: 
+	"header header header"
+	". connexion ."
+	". . .";
+	
+}
+
+
+
+.connexion{
+	
+	
+	grid-area: connexion;
+	display: flex;
+	flex-direction: column;
+
+	
+}
+
+.pseudo{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.password{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.con{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+
+.remember{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.blocText{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.boutonCo{
+	display: flex;
+	width: 120px !important;
+	height: 70px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+}
+
+
+.creerCompte{
+	display: flex;
+	width: 430px !important;
+	height: 100px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+}
+
+.annuler{
+	display: flex;
+	width: 70px !important;
+	height: 20px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+}
+
+
+
+

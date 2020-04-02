@@ -4,11 +4,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="css/monProfil.css" rel="stylesheet">
 <title>Mon profil</title>
 </head>
 <body>
+	<div class="grid">
+	<header >
+		<div class="eni-encheres">
+			<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
+		</div>
 
-
+	</header>
+	
 	<div class="container-formulaire">
 
 		<label type="text" value="pseudo">Pseudo :</label>
@@ -78,6 +85,7 @@
 		</form>
 
 
+	</div>
 	</div>
 </body>
 </html>

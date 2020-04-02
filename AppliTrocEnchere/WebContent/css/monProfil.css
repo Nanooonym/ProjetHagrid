@@ -4,6 +4,25 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-4-col-portfolio/blob/master/LICENSE)
  */
 
+body{
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+	font-family : comic sans ms !important;
+}
+
+.eni-encheres{
+	grid-area: eni-encheres;
+	padding-left : 30px;
+	padding-top : 20px;
+	display:flex;
+	justify-self:left;
+	align-self:center;
+	font-size: 20px;
+}
+
+
+
 
 .container-column {
   display:flex;
@@ -50,12 +69,6 @@
 	grid-auto-rows:200px;
 }
 
-body{
-	margin: 0;
-	padding: 0;
-	font-size: 18px;
-	font-family : comic sans ms !important;
-}
 
 header{
 	display:grid;
@@ -67,15 +80,7 @@ header{
 		"title title"
 }
 
-.eni-encheres{
-	grid-area: eni-encheres;
-	padding-left : 30px;
-	padding-top : 20px;
-	display:flex;
-	justify-self:left;
-	align-self:center;
-	font-size: 20px;
-}
+
 
 .options{
 	grid-area: options;
