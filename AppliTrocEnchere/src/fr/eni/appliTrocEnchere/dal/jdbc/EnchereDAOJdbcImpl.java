@@ -21,7 +21,7 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO {
 
-	private final static String AFFICHER_ENCHERES = "SELECT a.no_article, a.nom_article, a.description, a.prix_vente, a.date_fin_encheres, a.prix_initial, u.pseudo, u.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur";
+	private final static String AFFICHER_ENCHERES = "SELECT a.no_article, a.nom_article, a.description, a.prix_vente, a.date_fin_encheres, a.prix_initial, u.pseudo, u.no_utilisateur FROM ARTICLES_VENDUS a INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur WHERE a.etat_vente LIKE 'En cours'";
 	private static final String AJOUTER_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?,?,GETDATE(),?);";
 
 	private static final String SUPPRIMER_ENCHERE = "DELETE * FROM ENCHERES WHERE no_enchere=?";
