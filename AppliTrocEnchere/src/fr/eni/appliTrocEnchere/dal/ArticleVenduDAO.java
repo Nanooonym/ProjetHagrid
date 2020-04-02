@@ -18,10 +18,6 @@ public abstract interface ArticleVenduDAO {
 	public void deleteVente(int noArticle) throws BusinessException;
 	//public ArticleVendu selectArticleById(int noArticle) throws BusinessException;
 	public Retrait selectArticleById(int noArticle) throws BusinessException;
-<<<<<<< HEAD
-	public void updatePrixDeVente (int noArticle) throws BusinessException;
 	public void modifierVente(Retrait retrait) throws BusinessException;
-=======
 	public void updatePrixDeVente (int proposition,int noArticle) throws BusinessException;
->>>>>>> refs/heads/fonctionEncherir
 }
