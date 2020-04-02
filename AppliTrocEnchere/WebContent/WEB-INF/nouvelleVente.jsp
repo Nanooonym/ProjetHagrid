@@ -2,28 +2,38 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="css/page.css" rel="stylesheet">
+<link href="css/nouvelleVente.css" rel="stylesheet">
 <title>Nouvelle Vente</title>
 
 </head>
 <body>
+<header >
+		<div class="eni-encheres">
+			<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
+		</div>
 
+	</header>
+	
+<div class="title">
 	<h1>Nouvelle Vente</h1>
+</div>
 
+<div class="contenu">
 	<form action="<%=request.getContextPath()%>/AjoutArticle" method="post">
-		<div>
+		
 
-			<div>
+			<div class="article">
 				<label id="labelArticle" for="article">Article : </label>
 				<input type="text" name="nomArticle" id="nomArticle"><br>
 			</div>
-			
-			<label id="labelDescription" for="description">Description :</label>
-			<textarea name="description" rows="3" cols="40" required> </textarea>
 			<br>
-			
-			<div>
-				<label id="categorie" for="categorie">Catégories</label>
+		<div class="desc">
+			<label id="labelDescription" for="description">Description : </label>
+			<textarea name="description" rows="3" cols="25" required> </textarea>
+			<br>
+		</div>
+			<div class="categories">
+				<label id="categorie" for="categorie">Catégories : </label>
 				<select id="categorie" name="categorie">
 					<option value="Toutes">Toutes</option>
 					<option value="1">Informatique</option>
@@ -32,24 +42,25 @@
 					<option value="4">Sport et Loisirs</option>
 				</select>
 				<br>
+				<br>
 			</div>
 			
-			<div>
+			<div class="miseAPrix">
 				<label id="labelMiseAPrix" for="miseAPrix">Mise à prix : </label>
 				<input type="text" name="miseAPrix" id="miseAPrix"><br>
 			</div>
-
-			<div>
+				<br>
+			<div class="debutEnchere">
 				<label for="dateDebut">Début de l'enchère : </label> 
 				<input type="date" id="dateDebut"name="dateDebut"> 
 			</div>
-			
-			<div>
+				
+			<div class="finEnchere">
 				<label for="dateFin">Fin de l'enchère : </label> 
 				<input type="date" id="dateFin"name="dateFin"> 
 			</div>
-							
-			<div>
+				<br>			
+			<div class="retrait">
 				<fieldset>
 					<legend>
 						<label for="lieuDeRetrait">Retrait</label>
@@ -70,10 +81,10 @@
 					</div>
 				</fieldset>
 			</div>
-
-			<button type="submit">Enregistrer</button>
+				<br>
+			<button class="save" type="submit">Enregistrer</button>
 			
-		</div>
+	
 
 	</form>
 			
@@ -86,6 +97,6 @@
 				<br>
 		</c:forEach>
 
-
+</div>
 </body>
 </html>
