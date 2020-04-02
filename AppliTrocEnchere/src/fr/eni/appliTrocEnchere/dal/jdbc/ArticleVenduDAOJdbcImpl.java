@@ -27,9 +27,14 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String INSERT_RETRAIT = "INSERT INTO RETRAITS VALUES (?,?,?,?)";
 	private static final String SELECT_ARTICLE_BY_ID = "SELECT a.no_article, a.nom_article, a.description, a.prix_initial, a.prix_vente, a.date_debut_encheres, a.date_fin_encheres, r.rue, r.code_postal, r.ville, u.pseudo, u.telephone, c.libelle FROM ARTICLES_VENDUS a INNER JOIN RETRAITS r ON r.no_article = a.no_article INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.no_article=?";
 	private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ? ";
+<<<<<<< HEAD
 	private static final String UPDATE_PRIX_VENTE = "UPDATE ARTICLES_VENDUS SET prix_vente= (SELECT MAX(montant_enchere) as montant_enchere from ENCHERES where no_article=?) where no_article=?;";
 	private static final String DELETE_RETRAIT = "DELETE FROM RETRAITS WHERE no_article = ?";
 	private static final String UPDATE_RETRAIT = "UPDATE_RETRAITS SET rue=?, code_postal = ?, ville = ? WHERE no_article = ?";
+=======
+	//private static final String UPDATE_PRIX_VENTE = "UPDATE ARTICLES_VENDUS SET prix_vente= (SELECT MAX(montant_enchere) from ENCHERES where no_article=?) where no_article=?;";
+
+>>>>>>> refs/heads/fonctionEncherir
 	
 	@Override
 	public void addArticle(Retrait retrait) throws BusinessException {
@@ -309,6 +314,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	}
 
+<<<<<<< HEAD
 
 
 	public int deleteRetrait(int noArticle, Connection cnx) throws BusinessException {
@@ -365,7 +371,15 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	@Override
 	public void updatePrixDeVente(int noArticle) throws BusinessException {
+=======
+@Override
+public void updatePrixDeVente(int proposition, int noArticle) throws BusinessException {
+	// TODO Auto-generated method stub
+	
+}
+>>>>>>> refs/heads/fonctionEncherir
 
+<<<<<<< HEAD
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement stmt = cnx.prepareStatement(UPDATE_PRIX_VENTE);) {
 			stmt.setInt(1, noArticle);
@@ -381,4 +395,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	}
 
+=======
+>>>>>>> refs/heads/fonctionEncherir
 }

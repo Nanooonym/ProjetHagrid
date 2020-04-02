@@ -14,5 +14,6 @@ public abstract class CodesResultatIHM {
 	public static final int FORMAT_CATEGORIE_ERREUR = 34005;
 	public static final int FORMAT_MISE_A_PRIX_ERREUR = 34006;
 	public static final int FORMAT_DATE_ERREUR=34007;
+	public static final int PROPOSITION_INCORRECTE = 34008;
 	
 }

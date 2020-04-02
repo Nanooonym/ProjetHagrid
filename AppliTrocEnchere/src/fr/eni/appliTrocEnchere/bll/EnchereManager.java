@@ -17,22 +17,23 @@ public class EnchereManager {
 	public EnchereManager() {
 		enchereDAO = DAOFactory.getEnchereDAO();
 	}
-	
-	public void ajouterEnchere(Enchere enchere) throws BusinessException {
 
-		be = new BusinessException();
-			if(!be.hasErreurs()) {
-				enchereDAO.ajouterEnchere(enchere);
-			}else {
-				throw be;
-			}
-	    }
+	public void encherir(int ancienneEnchere, int nouvelleEnchere, Utilisateur utilisateur, Utilisateur utilisateurMax,
+			int noArticle) throws BusinessException {
+		try {
+			enchereDAO.encherir(ancienneEnchere, nouvelleEnchere, utilisateur, utilisateurMax, noArticle);
+
+		} catch (BusinessException be) {
+			throw be;
+		}
+
+	}
 
 	public List<Enchere> afficherEncheres(String categorie, String article) throws BusinessException {
 		List<Enchere> listeEnchere = new ArrayList<Enchere>();
 		try {
 			listeEnchere = enchereDAO.afficherEncheres(parseCategorie(categorie), article);
-			if(listeEnchere.isEmpty()) {
+			if (listeEnchere.isEmpty()) {
 				BusinessException be = new BusinessException();
 				be.ajouterErreur(CodesResultatBLL.AUCUN_RESULTAT);
 				throw be;
@@ -52,7 +53,7 @@ public class EnchereManager {
 		List<Enchere> listeEnchere = new ArrayList<Enchere>();
 		try {
 			listeEnchere = enchereDAO.afficherEncheresOuvertes(parseCategorie(categorie), article);
-			if(listeEnchere.isEmpty()) {
+			if (listeEnchere.isEmpty()) {
 				BusinessException be = new BusinessException();
 				be.ajouterErreur(CodesResultatBLL.AUCUN_RESULTAT);
 				throw be;
@@ -68,7 +69,7 @@ public class EnchereManager {
 		List<Enchere> listeEnchere = new ArrayList<Enchere>();
 		try {
 			listeEnchere = enchereDAO.afficherEncheresEnCours(utilisateur, parseCategorie(categorie), article);
-			if(listeEnchere.isEmpty()) {
+			if (listeEnchere.isEmpty()) {
 				BusinessException be = new BusinessException();
 				be.ajouterErreur(CodesResultatBLL.AUCUN_RESULTAT);
 				throw be;
@@ -84,7 +85,7 @@ public class EnchereManager {
 		List<Enchere> listeEnchere = new ArrayList<Enchere>();
 		try {
 			listeEnchere = enchereDAO.afficherEncheresRemportees(utilisateur, parseCategorie(categorie), article);
-			if(listeEnchere.isEmpty()) {
+			if (listeEnchere.isEmpty()) {
 				BusinessException be = new BusinessException();
 				be.ajouterErreur(CodesResultatBLL.AUCUN_RESULTAT);
 				throw be;
@@ -152,9 +153,9 @@ public class EnchereManager {
 		}
 		return noCategorie;
 	}
-	
+
 	public void testListeVide(List<Enchere> listeEnchere) throws BusinessException {
-		if(listeEnchere.isEmpty()) {
+		if (listeEnchere.isEmpty()) {
 			BusinessException be = new BusinessException();
 			be.ajouterErreur(CodesResultatBLL.AUCUN_RESULTAT);
 			throw be;

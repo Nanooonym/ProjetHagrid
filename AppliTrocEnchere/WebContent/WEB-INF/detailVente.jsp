@@ -8,7 +8,10 @@
 </head>
 <body>
 	<h1>Détails vente</h1>
-	<form id="formDetailVente" action="DetailVente" method="post">
+
+
+
+	<form id="formDetailVente" action="./DetailVente" method="post">
 
 		<!-- Nom de l'article sélectionné -->
 		<div id="nomArticle">
@@ -21,25 +24,31 @@
 			<p>Description : ${retrait.article.description}</p>
 		</div>
 
-		
+
 
 		<!-- Catégorie de l'article -->
 		<div id="categorieArticle">
+
 			<p>Catégorie : ${retrait.article.categorie.libelle}</p>
 
 		</div>
 
+
 		<div>
-			<p>Meilleur offre : ${retrait.article.prixVente} points par
-				${utilisateurMax.pseudo}</p>
+			<p>Meilleure offre :</p>
+			<label id="meilleureOffre">${retrait.article.prixVente} </label> <input
+				type="hidden" name="montantEnchere"
+				value="${retrait.article.prixVente}" readonly>
+			<p>points par ${utilisateurMax.pseudo}</p>
 		</div>
 
 
 		<!-- Mise à prix de l'article -->
 		<div id="miseAPrix">
 
-			<p>Mise à prix :${retrait.article.miseAPrix}points</p>
+			<p>Mise à prix : ${retrait.article.miseAPrix} points</p>
 		</div>
+
 
 		<!-- Date de fin d'enchère -->
 		<div id="finEnchereArticle">
@@ -60,20 +69,39 @@
 
 		<!-- Proposition -->
 		<div id="proposition">
-			<label>Ma proposition : </label> <input type="number"
-				id="proposition" name="proposition"
-				min="${retrait.article.prixVente+1}" max="100000000" value="${retrait.article.prixVente+1}">
+			<label>Ma proposition : </label>
+			<c:if
+				test="${sessionScope.utilisateur.pseudo ne utilisateurMax.pseudo}">
+				<input type="number" id="proposition" name="proposition"
+					min="${retrait.article.prixVente+1}" max="100000000"
+					value="${retrait.article.prixVente+1}">
+			</c:if>
+			<c:if
+				test="${sessionScope.utilisateur.pseudo eq utilisateurMax.pseudo}">
+				<c:out value="${retrait.article.prixVente}" />
+			</c:if>
 		</div>
+
+		<c:if test="${retrait.article.dateFinEncheres < now}">
+			<p>Téléphone : ${retrait.article.utilisateur.telephone}</p>
+		</c:if>
 
 		<div id="boutonEncherir">
-			<input type="submit" id="encherir" value="Enchérir"> <a
-				href="<%=request.getContextPath()%>/Accueil"><input
-				type="button" id="annuler" value="Annuler"></a>
+			<button type="submit" id="encherir">Enchérir</button>
+
 		</div>
-
-
-
 	</form>
+	<form action="./Accueil" method="get">
+		<input type="submit" value="Annuler">
+	</form>
+
+	<c:forEach items="${errorMessages}" var="error">
+		<c:out value="${error}" />
+		<br>
+	</c:forEach>
+
+
+
 
 
 </body>
