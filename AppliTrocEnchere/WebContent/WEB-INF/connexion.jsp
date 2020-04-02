@@ -71,7 +71,6 @@
 	<form action="./Accueil" method="get">
 		<input class="annuler" type="submit" value="Annuler">
 	</form>
-			</div>
 	</div>
 
 </body>

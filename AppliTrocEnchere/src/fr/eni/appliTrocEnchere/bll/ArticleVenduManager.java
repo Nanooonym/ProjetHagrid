@@ -2,7 +2,6 @@ package fr.eni.appliTrocEnchere.bll;
 
 import java.time.LocalDate;
 
-import fr.eni.appliTrocEnchere.bo.ArticleVendu;
 import fr.eni.appliTrocEnchere.bo.Categorie;
 import fr.eni.appliTrocEnchere.bo.Retrait;
 import fr.eni.appliTrocEnchere.dal.ArticleVenduDAO;

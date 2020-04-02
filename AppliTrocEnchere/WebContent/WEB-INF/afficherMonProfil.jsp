@@ -19,7 +19,7 @@
 	
 	<div class="container-formulaire">
 
-		<label type="text" value="pseudo">Pseudo :</label>
+		<label>Pseudo :</label>
 		<p>${sessionScope.utilisateur.pseudo}</p>
 
 
@@ -27,49 +27,49 @@
 
 	<div class="container-formulaire">
 
-		<label type="text" value="Nom">Nom :</label>
+		<label>Nom :</label>
 		<p>${sessionScope.utilisateur.nom}</p>
 
 	</div>
 
 	<div class="container-formulaire">
 
-		<label type="text" value="Prenom">Prénom :</label>
+		<label>Prénom :</label>
 		<p>${sessionScope.utilisateur.prenom}</p>
 
 	</div>
 
 	<div class="container-formulaire">
 
-		<label type="text" value="Email">Email :</label>
+		<label>Email :</label>
 		<p>${sessionScope.utilisateur.email}</p>
 
 	</div>
 
 	<div class="container-formulaire">
 
-		<label type="text" value="pseudo">Téléphone :</label>
+		<label>Téléphone :</label>
 		<p>${sessionScope.utilisateur.telephone}</p>
 
 	</div>
 
 	<div class="container-formulaire">
 
-		<label type="text" value="pseudo">Rue :</label>
+		<label>Rue :</label>
 		<p>${sessionScope.utilisateur.rue}</p>
 
 	</div>
 
 	<div class="container-formulaire">
 
-		<label type="text" value="pseudo">Code postal :</label>
+		<label>Code postal :</label>
 		<p>${sessionScope.utilisateur.codePostal}</p>
 
 	</div>
 
 	<div class="container-formulaire">
 
-		<label type="text" value="pseudo">Ville :</label>
+		<label>Ville :</label>
 		<p>${sessionScope.utilisateur.ville}</p>
 
 	</div>

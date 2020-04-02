@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.appliTrocEnchere.bo.ArticleVendu;
-import fr.eni.appliTrocEnchere.bo.Categorie;
 import fr.eni.appliTrocEnchere.bo.Enchere;
-import fr.eni.appliTrocEnchere.bo.Retrait;
 import fr.eni.appliTrocEnchere.bo.Utilisateur;
 import fr.eni.appliTrocEnchere.dal.CodesResultatDAL;
 import fr.eni.appliTrocEnchere.dal.ConnectionProvider;
@@ -374,8 +372,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		Enchere enchere = new Enchere();
 		ArticleVendu articleVendu = new ArticleVendu();
 		Utilisateur utilisateur = new Utilisateur();
-		Retrait retrait = new Retrait();
-		Categorie categorie = new Categorie();
 
 		articleVendu.setNoArticle(rs.getInt("no_article"));
 		articleVendu.setNomArticle(rs.getString("nom_article"));
@@ -553,12 +549,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	}
 
 	@Override
-	public List<Enchere> afficherEncheres() throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void updateEnchere(int noArticle, Utilisateur utilisateur, int proposition, Connection cnx)
 			throws BusinessException {
 		try {
@@ -602,12 +592,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			throw be;
 		}
 
-		
-	}
-
-	@Override
-	public void ajouterEnchere(Enchere enchere) throws BusinessException {
-		// TODO Auto-generated method stub
 		
 	}
 }
