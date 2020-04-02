@@ -42,9 +42,7 @@
 	grid-template-areas:
 		"header header"
 		"filtres filtres"
-		"rechercher rechercher"
-
-		
+		"rechercher rechercher"	
 		"encheres encheres";
 	row-gap:20px;
 	grid-auto-rows:200px;

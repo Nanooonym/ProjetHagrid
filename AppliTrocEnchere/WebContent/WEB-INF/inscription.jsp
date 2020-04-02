@@ -81,7 +81,7 @@
 			<button type="submit">Créer</button>
 		</form>
 	</div>
-	<form action="./Accueil" method="get">
+	<form action="./Connexion" method="get">
 		<input type="submit" value="Annuler">
 	</form>
 
