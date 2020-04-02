@@ -5,17 +5,34 @@
  */
 
 
+.container-column {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  margin-left:100px;
+  margin-right:100px;
+}
 
+.container-row {
+
+ 	display:flex;
+  	flex-direction:row;
+  	justify-content:center;
+
+}
 
 .container-formulaire {
   display:flex;
   flex-direction:row;
   justify-content:space-between;
-  margin-left:750px;
-  margin-right:750px;
-  align-items: center;
+  margin-left:100px;
+  margin-right:100px;
 }
 
+.grid > div {
+	border: solid 1px #999;
+	background-color: #ccc;
+}
 
 
 
@@ -47,31 +64,61 @@ header{
 }
 
 
+.title{
+	display: flex;
+	grid-area:title;
+	justify-self:center;
+	font-size: 25px;
+	justify-content: center;
+	
+}
+
+.save{
+	display: flex;
+	width: 100px !important;
+	height: 40px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+}
+
+.delete{
+	display: flex;
+	width: 180px !important;
+	height: 40px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+}
+
+.retour{
+	display: flex;
+	width: 100px !important;
+	height: 40px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+}
+
+.boutons{
+	display: flex;
+	justify-content:center;
+	padding: 150px;
+}
+
 
 input:disabled + label {
     color:#ccc;
 }
 
-.modif{
-	display: flex;
-	width: 100px !important;
-	height: 70px !important;
-	box-shadow: 5px 5px #787575;
-	align-self: center;
-	justify-self: center;
-	align-content: center;
-	justify-content: center;
+
+
+footer{
+	font-size:12px;
 }
-
-.cancel{
-	display: flex;
-	width: 100px !important;
-	height: 70px !important;
-	box-shadow: 5px 5px #787575;
-	align-self: center;
-	justify-self: center;
-	align-content: center;
-	justify-content: center;
-}
-
-

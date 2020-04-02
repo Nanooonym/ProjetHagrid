@@ -1,5 +1,5 @@
 <title>Suppression Compte</title>
-<link href="css/page.css" rel="stylesheet">
+<link href="css/supprimerCompte.css" rel="stylesheet">
 </head>
 <body>
 
@@ -11,17 +11,17 @@
 
 
 	<h1 class="title">Etes-vous sûr de supprimer votre compte ?</h1>
-
+<div class="boutons">
 	<form action="./SupprimerCompte" method="post">
-		<button type="submit" value="suppression">
+		<button class="delete" type="submit" value="suppression">
 			Supprimer
 		</button>
 	</form>
 	<form action="<%=request.getContextPath()%>/Accueil" method="get">
-		<button type="submit" value="accueil">
+		<button class="annuler" type="submit" value="accueil">
 			Accueil
 		</button>
 	</form>
-
+</div>
 </body>
 </html>

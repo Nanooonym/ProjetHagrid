@@ -7,15 +7,10 @@
 
 
 
-.container-formulaire {
-  display:flex;
-  flex-direction:row;
-  justify-content:space-between;
-  margin-left:750px;
-  margin-right:750px;
-  align-items: center;
+.grid > div {
+	border: solid 1px #999;
+	background-color: #ccc;
 }
-
 
 
 
@@ -48,30 +43,51 @@ header{
 
 
 
+.title{
+	grid-area:title;
+	justify-self:center;
+	font-size: 25px;
+	display: flex;
+	justify-content: center;
+	padding: 200px;
+}
+
+.boutons{
+	display: flex;
+	justify-content: center;
+	
+}
+
+.delete{
+	display: flex;
+	width: 100px !important;
+	height: 40px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+	color: red;
+}
+
+.annuler{
+	display: flex;
+	width: 100px !important;
+	height: 40px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+	color: blue;
+}
+
 input:disabled + label {
     color:#ccc;
 }
 
-.modif{
-	display: flex;
-	width: 100px !important;
-	height: 70px !important;
-	box-shadow: 5px 5px #787575;
-	align-self: center;
-	justify-self: center;
-	align-content: center;
-	justify-content: center;
+
+
+footer{
+	font-size:12px;
 }
-
-.cancel{
-	display: flex;
-	width: 100px !important;
-	height: 70px !important;
-	box-shadow: 5px 5px #787575;
-	align-self: center;
-	justify-self: center;
-	align-content: center;
-	justify-content: center;
-}
-
-
