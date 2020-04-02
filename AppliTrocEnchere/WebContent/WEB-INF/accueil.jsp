@@ -144,16 +144,19 @@
 
 			<c:forEach items="${encheres}" var="enchere">
 				<div class="enchere">
-
-<!-- 					<div> -->
-<%-- 						<div> <a href ="<%=request.getContextPath()%>/RemporteVente?idArticle=${enchere.articleVendu.noArticle}" > RemporteVente : ${ enchere.articleVendu.nomArticle } </a></div> --%>
-<!-- 					</div> -->
+					
 					
 					<div>
-							<a
-								href="<%=request.getContextPath()%>/DetailVente?idArticle=${enchere.articleVendu.noArticle}">
-								${ enchere.articleVendu.nomArticle } </a>
-						</div>
+						<c:if test="${enchere.utilisateur.pseudo == sessionScope.utilisateur.pseudo}">
+						<a href="<%=request.getContextPath()%>/ModifierVente?idArticle=${enchere.articleVendu.noArticle}">
+								${ enchere.articleVendu.nomArticle }</a>
+						</c:if>
+						<c:if test="${enchere.utilisateur.pseudo != sessionScope.utilisateur.pseudo}">
+						<a href="<%=request.getContextPath()%>/DetailVente?idArticle=${enchere.articleVendu.noArticle}">
+								${ enchere.articleVendu.nomArticle }</a>
+						</c:if>
+						
+					</div>
 					
 					<div>
 						<c:out value="Prix : ${enchere.articleVendu.prixVente}" />

@@ -21,13 +21,15 @@ import fr.eni.appliTrocEnchere.exception.BusinessException;
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	private static final String INSERT_NOUVEL_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description,etat_vente, date_debut_encheres,date_fin_encheres, prix_initial,prix_vente,no_utilisateur,no_categorie) VALUES (?,?,?,?,?,?,?,?,?)";
-	private static final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDUS set nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_vente=? no_categorie=? where no_article=?; ";
+	private static final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDUS set nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_initial=? no_categorie=? where no_article=?";
 	private static final String SELECT_ALL = "SELECT no_article, nom_article,description, prix_vente, date_fin_encheres, pseudo"
 			+ "FROM ARTICLES_VENDUS INNER JOIN utilisateurs on ARTICLES_VENDUS.no_utilisateur=UTILISATEURS.no_utilisateur;";
 	private static final String INSERT_RETRAIT = "INSERT INTO RETRAITS VALUES (?,?,?,?)";
 	private static final String SELECT_ARTICLE_BY_ID = "SELECT a.no_article, a.nom_article, a.description, a.prix_initial, a.prix_vente, a.date_debut_encheres, a.date_fin_encheres, r.rue, r.code_postal, r.ville, u.pseudo, u.telephone, c.libelle FROM ARTICLES_VENDUS a INNER JOIN RETRAITS r ON r.no_article = a.no_article INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.no_article=?";
 	private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ? ";
 	private static final String UPDATE_PRIX_VENTE = "UPDATE ARTICLES_VENDUS SET prix_vente= (SELECT MAX(montant_enchere) as montant_enchere from ENCHERES where no_article=?) where no_article=?;";
+	private static final String DELETE_RETRAIT = "DELETE FROM RETRAITS WHERE no_article = ?";
+	private static final String UPDATE_RETRAIT = "UPDATE_RETRAITS SET rue=?, code_postal = ?, ville = ? WHERE no_article = ?";
 	
 	@Override
 	public void addArticle(Retrait retrait) throws BusinessException {
@@ -68,10 +70,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			}
 
 			psmt = cnx.prepareStatement(INSERT_RETRAIT);
-			psmt.setInt(1, article.getNoArticle());
-			psmt.setString(2, retrait.getRue());
-			psmt.setString(3, retrait.getCodePostal());
-			psmt.setString(4, retrait.getVille());
+			psmt.setString(1, retrait.getRue());
+			psmt.setString(2, retrait.getCodePostal());
+			psmt.setString(3, retrait.getVille());
+			psmt.setInt(4, article.getNoArticle());
 			
 			nombreArticleInsere = psmt.executeUpdate();
 
@@ -94,6 +96,71 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				cnx.close();
 			} catch (SQLException e) {
 				be.ajouterErreur(CodesResultatDAL.INSERT_NOUVEL_ARTICLE_ECHEC);
+			}
+			if (be.hasErreurs()) {
+				throw be;
+			}
+		}
+	}
+	
+	@Override
+	public void modifierVente(Retrait retrait) throws BusinessException {
+		Connection cnx = null;
+		BusinessException be = new BusinessException();
+		PreparedStatement psmt = null;
+
+		try {
+			cnx = ConnectionProvider.getConnection();
+			cnx.setAutoCommit(false);
+			// pr�paration de la requ�te avec r�cup�ration de l'id correspondant �
+			// l'insertion
+			ArticleVendu article = new ArticleVendu();
+			article = retrait.getArticle();
+			psmt = cnx.prepareStatement(UPDATE_ARTICLE);
+			psmt.setString(1, article.getNomArticle());
+			psmt.setString(2, article.getDescription());
+			psmt.setDate(3, Date.valueOf(article.getDateDebutEncheres()));
+			psmt.setDate(4, Date.valueOf(article.getDateFinEncheres()));
+			psmt.setInt(5, article.getMiseAPrix());
+			psmt.setInt(6, article.getCategorie().getNoCategorie());
+			psmt.setInt(7, article.getNoArticle());
+			
+			int nombreArticleInsere = psmt.executeUpdate();
+
+			if (nombreArticleInsere != 1) {
+				be.ajouterErreur(CodesResultatDAL.UPDATE_ARTICLE_ECHEC);
+				throw be;
+			} else {
+				psmt.close();
+			}
+
+			psmt = cnx.prepareStatement(UPDATE_RETRAIT);
+			psmt.setString(1, retrait.getRue());
+			psmt.setString(2, retrait.getCodePostal());
+			psmt.setString(3, retrait.getVille());
+			psmt.setInt(4, article.getNoArticle());
+			
+			nombreArticleInsere = psmt.executeUpdate();
+
+			if (nombreArticleInsere != 1) {
+				be.ajouterErreur(CodesResultatDAL.UPDATE_RETRAIT_ECHEC);
+				throw be;
+			}
+			psmt.close();
+			cnx.commit();
+
+		} catch (Exception e) {
+
+			try {
+				cnx.rollback();
+			} catch (SQLException e1) {
+				be.ajouterErreur(CodesResultatDAL.UPDATE_VENTE_ECHEC);
+			}
+		} finally {
+			try {
+				cnx.close();
+			} catch (SQLException e) {
+				be.ajouterErreur(CodesResultatDAL.UPDATE_VENTE_ECHEC);
 			}
 			if (be.hasErreurs()) {
 				throw be;
@@ -225,19 +292,73 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			throw be;
 		}
 	}
-@Override
-	public void deleteArticle(ArticleVendu article) throws BusinessException {
 
-		try (Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement stmt = cnx.prepareStatement(DELETE_ARTICLE);) {
-			stmt.setInt(1, article.getNoArticle());
-			stmt.executeUpdate();
-			cnx.close();
+	public int deleteArticle(int noArticle, Connection cnx) throws BusinessException {
+	
+		try (PreparedStatement stmt = cnx.prepareStatement(DELETE_ARTICLE);) {
+			stmt.setInt(1, noArticle);
+			int nbRetraitSupprime = stmt.executeUpdate();
+			stmt.close();
+			return nbRetraitSupprime;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
 			be.ajouterErreur(CodesResultatDAL.DELETE_ARTICLE_ECHEC);
 			throw be;
+		}
+
+	}
+
+
+
+	public int deleteRetrait(int noArticle, Connection cnx) throws BusinessException {
+	
+		try (PreparedStatement stmt = cnx.prepareStatement(DELETE_RETRAIT);) {
+			stmt.setInt(1, noArticle);
+			int nbRetraitSupprime = stmt.executeUpdate();
+			stmt.close();
+			return nbRetraitSupprime;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.ajouterErreur(CodesResultatDAL.DELETE_ARTICLE_ECHEC);
+			throw be;
+		}
+	
+	}
+	
+	public void deleteVente(int noArticle) throws BusinessException{
+		Connection cnx = null;
+		BusinessException be = new BusinessException();
+		try {
+			cnx = ConnectionProvider.getConnection();
+			int check = deleteArticle(noArticle, cnx);
+			if(check != 1) {
+				be.ajouterErreur(CodesResultatDAL.DELETE_ARTICLE_ECHEC);
+				throw be;
+			}
+			check = deleteRetrait(noArticle, cnx);
+			if(check != 1) {
+				be.ajouterErreur(CodesResultatDAL.DELETE_ARTICLE_ECHEC);
+				throw be;
+			}
+			cnx.commit();
+		}catch (Exception e) {
+
+			try {
+				cnx.rollback();
+			} catch (SQLException e1) {
+				be.ajouterErreur(CodesResultatDAL.DELETE_ARTICLE_ECHEC);
+			}
+		} finally {
+			try {
+				cnx.close();
+			} catch (SQLException e) {
+				be.ajouterErreur(CodesResultatDAL.DELETE_ARTICLE_ECHEC);
+			}
+			if (be.hasErreurs()) {
+				throw be;
+			}
 		}
 
 	}
@@ -259,4 +380,5 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		}
 
 	}
+
 }

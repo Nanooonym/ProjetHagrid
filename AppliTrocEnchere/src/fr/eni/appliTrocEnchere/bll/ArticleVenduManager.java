@@ -48,9 +48,21 @@ public class ArticleVenduManager {
 		return categorie;
 	}
 	
-	 public void deleteArticle(ArticleVendu article) throws BusinessException {
-	        articleVenduDAO.deleteArticle(article);
+	 public void deleteVente(int noArticle) throws BusinessException {
+	        articleVenduDAO.deleteVente(noArticle);
 	    }
+	 
+	 public Retrait modifierVente(Retrait retrait) throws BusinessException {
+
+			try {
+				be = new BusinessException();
+				validerLesChamps(retrait, be);
+				articleVenduDAO.modifierVente(retrait);
+			} catch (Exception e) {
+				throw be;
+			}
+			return retrait;
+		}
 
 	private void validerLesChamps(Retrait retrait, BusinessException be) throws BusinessException {
 		String nomArticle = retrait.getArticle().getNomArticle();
