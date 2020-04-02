@@ -10,13 +10,12 @@
 
 	</header>
 
-	<div class="container-column">
+		<div class="connexion">
 
-		<div class="container-row">
-
-			<div class="container-column">
 				<form action="./Connexion" method="post">
-					<div class="container-formulaire">
+				
+				<div class="pseudo">
+					
 						<label>Identifiant :</label>
 						<c:if test="${cookie.remember.value == 'rmb'}">
 							<input type="text"  name="pseudo" value="${cookie.login.value}">
@@ -27,7 +26,9 @@
 
 					</div>
 
-					<div class="container-formulaire">
+			
+					<div class="password">
+						
 						<label>Mot de passe :</label>
 						<c:if test="${cookie.remember.value == 'rmb'}">
 							<input type="password" name="motDePasse" value="${cookie.password.value}">
@@ -36,11 +37,13 @@
 							<input type="password" name="motDePasse">
 						</c:if>
 					</div>
-					<div class="container-formulaire">
+					
+					<div class="con">
+						<button class="boutonCo" type="submit">Connexion</button>
 
-						<button type="submit">Connexion</button>
-						<div class="container-column">
-							<div class="container-formulaire">
+
+						<div class="blocText">
+							<div class="remember">
 								<c:if test="${cookie.remember.value == 'rmb'}">
 									<input type="checkbox" name="checkRemember" value="rmb" checked>
 								</c:if>
@@ -56,13 +59,9 @@
 				</form>
 
 				<form action="./Inscription" method="get">
-					<button type="submit">Créer un Compte</button>
+					<button class="creerCompte" type="submit">Créer un Compte</button>
 				</form>
 
-			</div>
-		</div>
-
-	</div>
 
 	<c:forEach items="${errorMessages}" var="error">
 		<c:out value="${error}" />
@@ -70,8 +69,10 @@
 	</c:forEach>
 
 	<form action="./Accueil" method="get">
-		<input type="submit" value="Annuler">
+		<input class="annuler" type="submit" value="Annuler">
 	</form>
+			</div>
+	</div>
 
 </body>
 </html>

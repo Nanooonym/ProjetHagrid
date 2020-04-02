@@ -1,0 +1,77 @@
+/*!
+ * Start Bootstrap - 4 Col Portfolio (https://startbootstrap.com/template-overviews/4-col-portfolio)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-4-col-portfolio/blob/master/LICENSE)
+ */
+
+
+
+
+.container-formulaire {
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  margin-left:750px;
+  margin-right:750px;
+  align-items: center;
+}
+
+
+
+
+body{
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+	font-family : comic sans ms !important;
+}
+
+header{
+	display:grid;
+	grid-area: header;
+	grid-template-columns: 1fr 1fr;
+	grid-template-row: 1fr 1fr;
+	grid-template-areas:
+		"eni-encheres options"
+		"title title"
+}
+
+.eni-encheres{
+	grid-area: eni-encheres;
+	padding-left : 30px;
+	padding-top : 20px;
+	display:flex;
+	justify-self:left;
+	align-self:center;
+	font-size: 20px;
+}
+
+
+
+input:disabled + label {
+    color:#ccc;
+}
+
+.modif{
+	display: flex;
+	width: 100px !important;
+	height: 70px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+}
+
+.cancel{
+	display: flex;
+	width: 100px !important;
+	height: 70px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+}
+
+

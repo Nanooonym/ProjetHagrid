@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Modification du profil</title>
-<link href="css/page.css" rel="stylesheet">
+<link href="css/modifProfil.css" rel="stylesheet">
 </head>
 <body>
 

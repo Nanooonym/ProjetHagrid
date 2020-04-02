@@ -143,6 +143,7 @@ input:disabled + label {
 	flex-direction:column;
 }
 
+
 .rechercher{
 	grid-area: rechercher;
 	display:flex;
@@ -153,6 +154,9 @@ input:disabled + label {
 	align-content:center;
 	justify-content:center;
 	box-shadow:5px 5px #787575;
+	
+	grid-column-start:2;
+	grid-row-start:3;
 }
 
 .encheres{
@@ -163,8 +167,6 @@ input:disabled + label {
 /*   		grid-template-columns: 1fr; */
 /*   		grid-template-rows: 1fr; */
 
-		flex-direction:row;
-		padding-left:60px;
 
 }
 

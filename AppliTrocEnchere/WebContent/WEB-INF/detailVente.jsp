@@ -8,10 +8,7 @@
 </head>
 <body>
 	<h1>Détails vente</h1>
-
-
-
-	<form id="formDetailVente" action="./DetailVente" method="post">
+	<form id="formDetailVente" action="DetailVente" method="post">
 
 		<!-- Nom de l'article sélectionné -->
 		<div id="nomArticle">

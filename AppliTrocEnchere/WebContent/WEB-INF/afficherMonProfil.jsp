@@ -4,11 +4,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="css/monProfil.css" rel="stylesheet">
 <title>Mon profil</title>
 </head>
+
 <body>
+	
+	<header >
+		<div class="eni-encheres">
+			<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
+		</div>
 
-
+	</header>
+	
 	<div class="container-formulaire">
 
 		<label type="text" value="pseudo">Pseudo :</label>
@@ -61,7 +69,7 @@
 
 	<div class="container-formulaire">
 
-		<label type="text" value="pseudo">ville :</label>
+		<label type="text" value="pseudo">Ville :</label>
 		<p>${sessionScope.utilisateur.ville}</p>
 
 	</div>
@@ -70,14 +78,15 @@
 
 		<div class="contenu">
 			<a href="<%=request.getContextPath()%>/ModificationProfil"><input
-				type="button" class="btn btn-primary" value="Modifier" /></a>
+				type="button" class="modif" value="Modifier" /></a>
 		</div>
 
 		<form action="<%=request.getContextPath()%>/Accueil" method="get">
-			<button type="submit" value="accueil">Accueil</button>
+			<button type="submit" class="cancel" value="accueil">Accueil</button>
 		</form>
 
 
 	</div>
+	
 </body>
 </html>

@@ -1,0 +1,124 @@
+/*!
+ * Start Bootstrap - 4 Col Portfolio (https://startbootstrap.com/template-overviews/4-col-portfolio)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-4-col-portfolio/blob/master/LICENSE)
+ */
+
+
+.container-column {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  margin-left:100px;
+  margin-right:100px;
+}
+
+.container-row {
+
+ 	display:flex;
+  	flex-direction:row;
+  	justify-content:center;
+
+}
+
+.container-formulaire {
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  margin-left:100px;
+  margin-right:100px;
+}
+
+.grid > div {
+	border: solid 1px #999;
+	background-color: #ccc;
+}
+
+
+
+body{
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+	font-family : comic sans ms !important;
+}
+
+header{
+	display:grid;
+	grid-area: header;
+	grid-template-columns: 1fr 1fr;
+	grid-template-row: 1fr 1fr;
+	grid-template-areas:
+		"eni-encheres options"
+		"title title"
+}
+
+.eni-encheres{
+	grid-area: eni-encheres;
+	padding-left : 30px;
+	padding-top : 20px;
+	display:flex;
+	justify-self:left;
+	align-self:center;
+	font-size: 20px;
+}
+
+
+.title{
+	display: flex;
+	grid-area:title;
+	justify-self:center;
+	font-size: 25px;
+	justify-content: center;
+	
+}
+
+.save{
+	display: flex;
+	width: 100px !important;
+	height: 40px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+}
+
+.delete{
+	display: flex;
+	width: 180px !important;
+	height: 40px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+}
+
+.retour{
+	display: flex;
+	width: 100px !important;
+	height: 40px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+}
+
+.boutons{
+	display: flex;
+	justify-content:center;
+	padding: 150px;
+}
+
+
+input:disabled + label {
+    color:#ccc;
+}
+
+
+
+footer{
+	font-size:12px;
+}
