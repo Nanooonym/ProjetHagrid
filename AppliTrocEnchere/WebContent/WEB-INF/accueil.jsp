@@ -37,11 +37,15 @@
 			</div>
 
 		</header>
-		<div class="filtres-container">
-			<form action="<%=request.getContextPath()%>/Accueil" method="post">
-		<div class="filtres">
 
-			<p>Filtres :</p>
+			<div class="rechercher">
+				<button type="submit" class="rechercher" form="filtres">Rechercher</button>
+			</div>
+
+			<div class="filtres">
+				<form action="<%=request.getContextPath()%>/Accueil" method="post" id="filtres">
+
+				<p>Filtres :</p>
 
 <!-- 					Filtres par nom et par catégorie -->
 				<input class="formulaire-items" type="text" id="article"
@@ -134,15 +138,11 @@
 			        </script>
 				</div>
 					</c:if>
-
-
-		</div>
+				</form>
+			</div>
 		
-		<div class="rechercher">
-			<button type="submit" class="rechercher">Rechercher</button>
-		</div>
-		</form>
-		</div>
+
+
 		
 		<div class="encheres">
 
@@ -195,7 +195,6 @@
 
 		</div>
 	</div>
-
 	<footer>
 	<p>©ProjetHagrid - Team Moldus</p>
 	</footer>

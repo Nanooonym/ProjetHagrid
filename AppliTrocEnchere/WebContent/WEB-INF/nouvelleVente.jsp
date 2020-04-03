@@ -92,11 +92,12 @@
 			<input type="submit" value="Annuler">
 		</form>
 		
+		<div class="error">
 		<c:forEach items="${errorMessages}" var="error">
 				<c:out value="${error}" />
 				<br>
 		</c:forEach>
-
+		</div>
 </div>
 </body>
 </html>

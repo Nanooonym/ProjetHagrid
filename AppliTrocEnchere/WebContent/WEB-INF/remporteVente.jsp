@@ -14,7 +14,14 @@
 	
 
 <div class="leTitre">
-	<h2>Vous avez remporté la vente</h2>
+		<c:if
+	            test="${sessionScope.utilisateur.pseudo eq utilisateurMax.pseudo and retrait.article.dateFinEncheres > dateDuJour}">
+	            <h2>Vous a remporté la vente</h2>
+		</c:if>
+		<c:if
+	            test="${sessionScope.utilisateur.pseudo ne utilisateurMax.pseudo and retrait.article.dateFinEncheres > dateDuJour}">
+	            <h2>${utilisateurMax.pseudo} a remporté la vente</h2>
+		</c:if>
 </div>
 
 <div class="laDescription">

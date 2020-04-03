@@ -1,6 +1,7 @@
 package fr.eni.appliTrocEnchere.ihm;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.appliTrocEnchere.bll.ArticleVenduManager;
+import fr.eni.appliTrocEnchere.bll.UtilisateurManager;
 import fr.eni.appliTrocEnchere.bo.ArticleVendu;
 import fr.eni.appliTrocEnchere.bo.Retrait;
+import fr.eni.appliTrocEnchere.bo.Utilisateur;
 import fr.eni.appliTrocEnchere.exception.BusinessException;
 
 /**
@@ -23,6 +26,7 @@ public class RemporteVente extends HttpServlet {
        
 	ArticleVenduManager articleVenduManager;
 	ArticleVendu articleVendu;
+	UtilisateurManager utilisateurManager;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -43,11 +47,18 @@ public class RemporteVente extends HttpServlet {
 		
 		try {
 			retrait = articleVenduManager.selectArticleById(noArticle);
+			Utilisateur utilisateurMax = new Utilisateur();
+			utilisateurManager = new UtilisateurManager();
+			utilisateurMax = utilisateurManager.selectUtilisateurByEnchereMax(noArticle);
+			request.setAttribute("utilisateurMax", utilisateurMax);
 			
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		LocalDate dateDuJour = LocalDate.now();
+		request.setAttribute("dateDuJour", dateDuJour);
 		
 		request.setAttribute("retrait", retrait);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/remporteVente.jsp");

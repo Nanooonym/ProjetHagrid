@@ -116,7 +116,7 @@ public class EnchereManager {
 			throws BusinessException {
 		List<Enchere> listeEnchere = new ArrayList<Enchere>();
 		try {
-			listeEnchere = enchereDAO.afficherMesVentesEnCours(utilisateur, parseCategorie(categorie), article);
+			listeEnchere = enchereDAO.afficherMesVentesNonDebutees(utilisateur, parseCategorie(categorie), article);
 			if(listeEnchere.isEmpty()) {
 				BusinessException be = new BusinessException();
 				be.ajouterErreur(CodesResultatBLL.AUCUN_RESULTAT);

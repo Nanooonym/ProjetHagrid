@@ -69,19 +69,23 @@
 					</div>
 				</fieldset>
 			</div>
-
+			<c:if test="${encheresDebutees == 'non' }">
 			<button type="submit">Enregistrer</button>
-			
+			</c:if>
 		</div>
 
 	</form>
 			
+					
 		<form action="<%=request.getContextPath()%>/Accueil" method="get">
 			<input type="submit" value="Annuler">
 		</form>
-		
-		<form action="<%=request.getContextPath()%>/SupprimerVente?" method="post">
+
+			
+		<form action="<%=request.getContextPath()%>/SupprimerVente?idArticle=${retrait.article.noArticle}" method="post">
+			<c:if test="${encheresDebutees == 'non' }">
 			<input type="submit" value="supprimerVente">
+			</c:if>
 			<input type="hidden" name="${retrait.article.noArticle}" value="${retrait.article.noArticle}">
 		</form>
 		
@@ -89,7 +93,6 @@
 				<c:out value="${error}" />
 				<br>
 		</c:forEach>
-
 
 </body>
 </html>

@@ -333,12 +333,13 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		BusinessException be = new BusinessException();
 		try {
 			cnx = ConnectionProvider.getConnection();
-			int check = deleteArticle(noArticle, cnx);
+			
+			int check = deleteRetrait(noArticle, cnx);
 			if(check != 1) {
 				be.ajouterErreur(CodesResultatDAL.DELETE_ARTICLE_ECHEC);
 				throw be;
 			}
-			check = deleteRetrait(noArticle, cnx);
+			check = deleteArticle(noArticle, cnx);
 			if(check != 1) {
 				be.ajouterErreur(CodesResultatDAL.DELETE_ARTICLE_ECHEC);
 				throw be;

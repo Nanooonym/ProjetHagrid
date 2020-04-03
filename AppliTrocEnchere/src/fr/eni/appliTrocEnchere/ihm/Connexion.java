@@ -56,12 +56,19 @@ public class Connexion extends HttpServlet {
 
 			verificationUtilisateurExistant(utilisateur);
 			session.setAttribute("utilisateur", utilisateur);
+			
+			} catch (BusinessException e) {
 
+				request.setAttribute("errorMessages", LecteurMessage.codesErreurToString(e));
+				doGet(request, response);
+			}
+		
+			
 			Cookie[] cookies = null;
 			String[] checkRemember = request.getParameterValues("checkRemember");
 			 if(checkRemember == null) {
 				 checkRemember = new String[] {"noRmb"};
-			 }
+			 } 
 			 
 			cookies = request.getCookies();
 			if (cookies.length > 1) {
@@ -78,7 +85,7 @@ public class Connexion extends HttpServlet {
 						cookie.setMaxAge(0);
 						response.addCookie(cookie);
 					}else if (cookie.getName().equals("login") && checkRemember[0].equals("rmb")) {
-						cookie.setValue(utilisateur.getPseudo());
+						cookie.setValue( request.getParameter("pseudo"));
 						response.addCookie(cookie);
 					}
 					
@@ -87,16 +94,24 @@ public class Connexion extends HttpServlet {
 						cookie.setMaxAge(0);
 						response.addCookie(cookie);
 					}else if (cookie.getName().equals("password") && checkRemember[0].equals("rmb")){
-						cookie.setValue(utilisateur.getMotDePasse());
+						cookie.setValue(request.getParameter("motDePasse"));
 						response.addCookie(cookie);
 					}
 				}
 			} else if (cookies.length == 1 && checkRemember[0].equals("rmb")) {
 
 				Cookie remember = new Cookie("remember", request.getParameter("checkRemember"));
-				Cookie login = new Cookie("login", utilisateur.getPseudo());
-				Cookie password = new Cookie("password", utilisateur.getMotDePasse());
+				Cookie login = new Cookie("login", request.getParameter("pseudo"));
+				Cookie password = new Cookie("password", request.getParameter("motDePasse"));
 				response.addCookie(remember);
+				response.addCookie(login);
+				response.addCookie(password);
+			} 
+			
+			if (cookies.length == 2 && checkRemember[0].equals("rmb")) {
+
+				Cookie login = new Cookie("login", request.getParameter("pseudo"));
+				Cookie password = new Cookie("password", request.getParameter("motDePasse"));
 				response.addCookie(login);
 				response.addCookie(password);
 			}
@@ -104,13 +119,8 @@ public class Connexion extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/Accueil");
 			rd.forward(request, response);
 
-		} catch (BusinessException e) {
+		} 
 
-			request.setAttribute("errorMessages", LecteurMessage.codesErreurToString(e));
-			doGet(request, response);
-		}
-
-	}
 
 	public void verificationUtilisateurExistant(Utilisateur utilisateur) throws BusinessException {
 		if (utilisateur.getPseudo() == null) {

@@ -104,7 +104,7 @@ public class AjoutArticle extends HttpServlet {
 		//V�rification de la mise � prix
 		miseAPrixCheck = request.getParameter("miseAPrix");
 		if(miseAPrixCheck == null || miseAPrixCheck.equals("")) {
-			miseAPrixCheck = "0";
+			be.ajouterErreur(CodesResultatIHM.FORMAT_MISE_A_PRIX_ERREUR);
 		}
 		miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
 		if (miseAPrix <= 0 || miseAPrix%1 != 0) {

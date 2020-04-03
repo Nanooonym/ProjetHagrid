@@ -78,6 +78,10 @@ header{
 	
 }
 
+.error{
+	display: flex;
+}
+
 
 input:disabled + label {
     color:#ccc;

@@ -26,7 +26,12 @@ public class ArticleVenduManager {
 		try {
 			be = new BusinessException();
 			validerLesChamps(retrait, be);
-			articleVenduDAO.addArticle(retrait);
+			if(!be.hasErreurs()) {
+				articleVenduDAO.addArticle(retrait);
+			}else {
+				throw be;
+			}
+
 		} catch (Exception e) {
 			throw be;
 		}

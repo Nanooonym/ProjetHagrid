@@ -54,6 +54,14 @@ public class ModifierVente extends HttpServlet {
 		int idArticle = Integer.parseInt(request.getParameter("idArticle"));
 		try {
 			retrait = articleVenduManager.selectArticleById(idArticle);
+			
+			LocalDate dateDuJour = LocalDate.now();
+			if(dateDuJour.isBefore(retrait.getArticle().getDateDebutEncheres())) {
+				request.setAttribute("encheresDebutees", "non");
+			}else {
+				request.setAttribute("encheresDebutees", "oui");
+			}
+			
 			request.setAttribute("retrait", retrait);
 		} catch (BusinessException e) {
 			request.setAttribute("errorMessages", LecteurMessage.codesErreurToString(e));
