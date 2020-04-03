@@ -19,7 +19,7 @@
 </div>
 
 <div class="contenu">
-	<form action="<%=request.getContextPath()%>/AjoutArticle" method="post">
+	<form action="<%=request.getContextPath()%>/AjoutArticle" method="post" id="enregistrer">
 		
 
 			<div class="article">
@@ -82,15 +82,15 @@
 				</fieldset>
 			</div>
 				<br>
-			<button class="save" type="submit">Enregistrer</button>
-			
-	
-
 	</form>
+	</div>
+			<div class="lesBoutons">
+			<button class="save" type="submit" form="enregistrer">Enregistrer</button>
 			
-		<form action="<%=request.getContextPath()%>/Accueil" method="get">
-			<input type="submit" value="Annuler">
+				<form action="<%=request.getContextPath()%>/Accueil" method="get">
+					<input class="cancel" type="submit" value="Annuler">
 		</form>
+		</div>
 		
 		<div class="error">
 		<c:forEach items="${errorMessages}" var="error">
@@ -98,6 +98,5 @@
 				<br>
 		</c:forEach>
 		</div>
-</div>
 </body>
 </html>
