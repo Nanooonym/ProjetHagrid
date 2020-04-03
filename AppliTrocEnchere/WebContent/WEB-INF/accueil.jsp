@@ -128,12 +128,12 @@
 
 
 		</div>
-		
-		<div class="rechercher">
+		</div>
+		<div>
 			<button type="submit" class="rechercher">Rechercher</button>
 		</div>
 		</form>
-		</div>
+		
 		
 		<div class="encheres">
 

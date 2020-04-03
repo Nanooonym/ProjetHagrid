@@ -43,12 +43,12 @@
 					</div>
 
 					<div class="container-formulaire">
-						<label>Mot de passe actuel:</label> <input type="text" id="textfield"
+						<label>Mot de passe actuel:</label> <input type="password" id="textfield"
 							name="motDePasseActuel">
 					</div>
 					
 					<div class="container-formulaire">
-						<label>Nouveau mot de passe:</label> <input type="text" id="textfield" name="nouveauMotDePasse">
+						<label>Nouveau mot de passe:</label> <input type="password" id="textfield" name="nouveauMotDePasse">
 					</div>
 				</div>
 
