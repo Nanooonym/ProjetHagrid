@@ -1,15 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Inscription</title>
-<link href="css/page.css" rel="stylesheet">
+<link href="css/creationProfil.css" rel="stylesheet">
 </head>
 <body>
 
+
 	<header style="">
 	<div class="eni-encheres">
-				<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
+				<a href="<%=request.getContextPath()%>/Accueil">ENI-EnchÃ¨res</a>
 			</div>
 
 	</header>
-
+<div class="contenu">
 
 	<h1 class="title">Mon profil</h1>
 	<div class="container-column">
@@ -24,12 +31,12 @@
 					</div>
 
 					<div class="container-formulaire">
-						<label>Prénom :</label> <input type="text" id="textfield"
+						<label>PrÃ©nom :</label> <input type="text" id="textfield"
 							name="prenom">
 					</div>
 
 					<div class="container-formulaire">
-						<label>Téléphone :</label> <input type="text" id="textfield"
+						<label>TÃ©lÃ©phone :</label> <input type="text" id="textfield"
 							name="telephone">
 					</div>
 
@@ -76,13 +83,18 @@
 				<c:out value="${error}" />
 				<br>
 			</c:forEach>
-			
-			<button type="submit">Créer</button>
 		</form>
-	</div>
+		<div class="boutons">
+			
+				<button class="creation" type="submit">CrÃ©er</button>
+			
+	
 	<form action="./Connexion" method="get">
-		<input type="submit" value="Annuler">
+		<input class="retour" type="submit" value="Annuler">
 	</form>
-
+	
+	</div>
+</div>
+</div>	
 </body>
 </html>

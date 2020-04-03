@@ -5,7 +5,8 @@
 
 	<header style="">
 		<div class="eni-encheres">
-			<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
+
+			<a href="<%=request.getContextPath()%>/Accueil">ENI-EnchÃ¨res</a>
 		</div>
 	</header>
 
@@ -37,12 +38,14 @@
 					</div>
 
 					<div class="container-formulaire">
-						<label>Mot de passe actuel:</label> <input type="password" id="textfield"
-							name="motDePasseActuel">
+						<label>Mot de passe actuel:</label> <input type="text"
+							id="textfield" name="motDePasseActuel">
 					</div>
-					
+
 					<div class="container-formulaire">
-						<label>Nouveau mot de passe:</label> <input type="password" id="textfield" name="nouveauMotDePasse">
+
+						<label>Nouveau mot de passe:</label> <input type="password"
+							id="textfield" name="nouveauMotDePasse">
 					</div>
 				</div>
 
@@ -66,30 +69,38 @@
 						<label>Ville :</label> <input type="text" id="textfield"
 							name="ville" value="${sessionScope.utilisateur.ville}">
 					</div>
-					
-					
-					
+
+
+
 
 					<div class="container-formulaire">
-						<label>Confirmation :</label> <input type="password" id="textfield"
-							name="confirmation">
+						<label>Confirmation :</label> <input type="password"
+							id="textfield" name="confirmation">
 					</div>
-						<p>Crédit <c:out value="${sessionScope.utilisateur.credit}"/> </p>
+					<p>
+						Crédit
+						<c:out value="${sessionScope.utilisateur.credit}" />
+					</p>
 				</div>
 
 			</div>
 		</form>
-			
+
+
 
 		<div class="boutons">
-		<input type="submit" value="Enregistrer" class="save" form="enregistrer">
-		<form action="<%=request.getContextPath()%>/SupprimerCompte" method="get">
-			<button class="delete" type="submit" value="supprimerCompte">Supprimer mon compte</button>
-		</form>
-		<form action="<%=request.getContextPath()%>/MonProfil" method="get">
-			<button class="retour" type="submit" value="monProfil">Retour</button>
-		</form>
-</div>
+			<input type="submit" value="Enregistrer" class="save"
+				form="enregistrer">
+
+			<form action="<%=request.getContextPath()%>/SupprimerCompte"
+				method="get">
+				<button class="delete" type="submit" value="supprimerCompte">Supprimer
+					mon Compte</button>
+			</form>
+			<form action="<%=request.getContextPath()%>/MonProfil" method="get">
+				<button class="retour" type="submit" value="monProfil">Retour</button>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

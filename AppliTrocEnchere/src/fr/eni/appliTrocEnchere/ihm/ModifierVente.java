@@ -56,7 +56,7 @@ public class ModifierVente extends HttpServlet {
 			retrait = articleVenduManager.selectArticleById(idArticle);
 			
 			LocalDate dateDuJour = LocalDate.now();
-			if(dateDuJour.isBefore(retrait.getArticle().getDateDebutEncheres())) {
+			if(dateDuJour.isAfter(retrait.getArticle().getDateDebutEncheres())) {
 				request.setAttribute("encheresDebutees", "non");
 			}else {
 				request.setAttribute("encheresDebutees", "oui");

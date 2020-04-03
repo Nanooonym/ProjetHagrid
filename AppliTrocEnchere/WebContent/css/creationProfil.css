@@ -4,7 +4,34 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-4-col-portfolio/blob/master/LICENSE)
  */
 
+.contenu{
+	margin-left: 550px;	
+	margin-right: 550px;
+	margin-top: 50px;
+}
 
+.container-column {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+ 
+}
+
+.container-row {
+
+ 	display:flex;
+  	flex-direction:row;
+  	justify-content:center;
+
+}
+
+.container-formulaire {
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  margin-left:50px;
+  margin-right:50px;
+}
 
 .grid > div {
 	border: solid 1px #999;
@@ -27,7 +54,7 @@ header{
 	grid-template-row: 1fr 1fr;
 	grid-template-areas:
 		"eni-encheres options"
-		"title title "
+		"title title"
 }
 
 .eni-encheres{
@@ -41,33 +68,16 @@ header{
 }
 
 
-
 .title{
+	display: flex;
 	grid-area:title;
 	justify-self:center;
-	font-size: 15px;
-	display: flex;
+	font-size: 25px;
 	justify-content: center;
 	
 }
 
-.contenu{
-	display: flex;
-	justify-content: center;
-	padding: 100px;
-	
-}
-
-.desc{
-	display: flex;
-	align-items: center;
-	
-}
-
-.retrait{
-	display: flex;
-}
-.save{
+.creation{
 	display: flex;
 	width: 100px !important;
 	height: 40px !important;
@@ -76,12 +86,12 @@ header{
 	justify-self: center;
 	align-content: center;
 	justify-content: center;
-	color:green;
+	color: green;
 }
 
 .delete{
 	display: flex;
-	width: 100px !important;
+	width: 180px !important;
 	height: 40px !important;
 	box-shadow: 5px 5px #787575;
 	align-self: center;
@@ -89,13 +99,9 @@ header{
 	align-content: center;
 	justify-content: center;
 	color:red;
-	}
-	
-.error{
-	display: flex;
 }
 
-.cancel{
+.retour{
 	display: flex;
 	width: 100px !important;
 	height: 40px !important;
@@ -107,15 +113,17 @@ header{
 	color:blue;
 }
 
-.lesBoutons{
+.boutons{
 	display: flex;
-	justify-content: center;
+	justify-content:space-around;
+	padding: 150px;
 }
 
 
 input:disabled + label {
     color:#ccc;
 }
+
 
 
 footer{

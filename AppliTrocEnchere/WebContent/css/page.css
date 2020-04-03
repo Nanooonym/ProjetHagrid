@@ -156,7 +156,7 @@ input:disabled + label {
 	display:flex;
 	align-self:center;
 	justify-self:center;
-	width:250px !important;
+	width:400px !important;
 	height:100px !important;
 	align-content:center;
 	justify-content:center;

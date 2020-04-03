@@ -1,9 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html >
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="css/monProfil.css" rel="stylesheet">
 <title>Mon profil</title>
 </head>
@@ -12,7 +6,7 @@
 	
 	<header >
 		<div class="eni-encheres">
-			<a href="<%=request.getContextPath()%>/Accueil">ENI-EnchÃ¨res</a>
+			<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
 		</div>
 
 	</header>
@@ -34,7 +28,7 @@
 
 	<div class="container-formulaire">
 
-		<label>PrÃ©nom :</label>
+		<label>Prénom :</label>
 		<p>${sessionScope.utilisateur.prenom}</p>
 
 	</div>
@@ -48,7 +42,7 @@
 
 	<div class="container-formulaire">
 
-		<label>TÃ©lÃ©phone :</label>
+		<label>Téléphone :</label>
 		<p>${sessionScope.utilisateur.telephone}</p>
 
 	</div>

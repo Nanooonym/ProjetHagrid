@@ -140,10 +140,11 @@
 					</c:if>
 				</form>
 			</div>
-		
 
 
-		
+
+		</div>
+
 		<div class="encheres">
 
 			<c:forEach items="${encheres}" var="enchere">
@@ -194,7 +195,6 @@
 			</c:forEach>
 
 		</div>
-	</div>
 	<footer>
 	<p>©ProjetHagrid - Team Moldus</p>
 	</footer>
