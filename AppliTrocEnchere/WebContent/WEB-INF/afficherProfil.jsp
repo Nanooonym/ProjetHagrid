@@ -4,70 +4,84 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Affichage du profil</title>
+<link href="css/monProfil.css" rel="stylesheet">
+<title>Profil de ${utilisateur.pseudo}</title>
 </head>
+
 <body>
-	<div class="container-column">
-
-		<div class="container-formulaire">
-
-			<label type="text" value="pseudo">Pseudo :</label>
-			<p>${utilisateur.pseudo }</p>
-
-
+	
+	<header >
+		<div class="eni-encheres">
+			<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
 		</div>
 
-		<div class="container-formulaire">
+	</header>
+	
+	<div class="container-formulaire">
 
-			<label type="text" value="Nom">Nom :</label>
-			<p>${utilisateur.nom }</p>
-
-		</div>
-
-		<div class="container-formulaire">
-
-			<label type="text" value="Prenom">Prénom :</label>
-			<p>${utilisateur.prenom }</p>
-
-		</div>
-
-		<div class="container-formulaire">
-
-			<label type="text" value="Email">Email :</label>
-			<p>${utilisateur.email }</p>
-
-		</div>
-
-		<div class="container-formulaire">
-
-			<label type="text" value="pseudo">Téléphone :</label>
-			<p>${utilisateur.telephone }</p>
-
-		</div>
-
-		<div class="container-formulaire">
-
-			<label type="text" value="pseudo">Rue :</label>
-			<p>${utilisateur.rue }</p>
-
-		</div>
-
-		<div class="container-formulaire">
-
-			<label type="text" value="pseudo">Code postal :</label>
-			<p>${utilisateur.codePostal }</p>
-
-		</div>
-
-		<div class="container-formulaire">
-
-			<label type="text" value="pseudo">ville :</label>
-			<p>${utilisateur.ville }</p>
-
-		</div>
-
+		<label>Pseudo :</label>
+		<p>${utilisateur.pseudo}</p>
 
 
 	</div>
+
+	<div class="container-formulaire">
+
+		<label>Nom :</label>
+		<p>${utilisateur.nom}</p>
+
+	</div>
+
+	<div class="container-formulaire">
+
+		<label>Prénom :</label>
+		<p>${utilisateur.prenom}</p>
+
+	</div>
+
+	<div class="container-formulaire">
+
+		<label>Email :</label>
+		<p>${utilisateur.email}</p>
+
+	</div>
+
+	<div class="container-formulaire">
+
+		<label>Téléphone :</label>
+		<p>${utilisateur.telephone}</p>
+
+	</div>
+
+	<div class="container-formulaire">
+
+		<label>Rue :</label>
+		<p>${utilisateur.rue}</p>
+
+	</div>
+
+	<div class="container-formulaire">
+
+		<label>Code postal :</label>
+		<p>${utilisateur.codePostal}</p>
+
+	</div>
+
+	<div class="container-formulaire">
+
+		<label>Ville :</label>
+		<p>${utilisateur.ville}</p>
+
+	</div>
+
+	<div class="container-formulaire">
+
+		<form action="<%=request.getContextPath()%>/Accueil" method="get">
+			<button type="submit" class="cancel" value="accueil">Accueil</button>
+		</form>
+
+
+	</div>
+	
 </body>
 </html>

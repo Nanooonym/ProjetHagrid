@@ -25,7 +25,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String SELECT_ALL = "SELECT no_article, nom_article,description, prix_vente, date_fin_encheres, pseudo"
 			+ "FROM ARTICLES_VENDUS INNER JOIN utilisateurs on ARTICLES_VENDUS.no_utilisateur=UTILISATEURS.no_utilisateur;";
 	private static final String INSERT_RETRAIT = "INSERT INTO RETRAITS VALUES (?,?,?,?)";
-	private static final String SELECT_ARTICLE_BY_ID = "SELECT a.no_article, a.nom_article, a.description, a.prix_initial, a.prix_vente, a.date_debut_encheres, a.date_fin_encheres, r.rue, r.code_postal, r.ville, u.pseudo, u.telephone, c.libelle FROM ARTICLES_VENDUS a INNER JOIN RETRAITS r ON r.no_article = a.no_article INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.no_article=?";
+	private static final String SELECT_ARTICLE_BY_ID = "SELECT a.no_article, a.nom_article, a.description, a.prix_initial, a.prix_vente, a.date_debut_encheres, a.date_fin_encheres, r.rue, r.code_postal, r.ville, u.pseudo, u.telephone, c.libelle, c.no_categorie FROM ARTICLES_VENDUS a INNER JOIN RETRAITS r ON r.no_article = a.no_article INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie WHERE a.no_article=?";
 	private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ? ";
 	private static final String UPDATE_PRIX_VENTE = "UPDATE ARTICLES_VENDUS SET prix_vente= (SELECT MAX(montant_enchere) as montant_enchere from ENCHERES where no_article=?) where no_article=?;";
 	private static final String DELETE_RETRAIT = "DELETE FROM RETRAITS WHERE no_article = ?";
@@ -71,14 +71,15 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			}
 
 			psmt = cnx.prepareStatement(INSERT_RETRAIT);
-			psmt.setString(1, retrait.getRue());
-			psmt.setString(2, retrait.getCodePostal());
-			psmt.setString(3, retrait.getVille());
-			psmt.setInt(4, article.getNoArticle());
-			
-			nombreArticleInsere = psmt.executeUpdate();
+			psmt.setInt(1, article.getNoArticle());
+			psmt.setString(2, retrait.getRue());
+			psmt.setString(3, retrait.getCodePostal());
+			psmt.setString(4, retrait.getVille());
 
-			if (nombreArticleInsere != 1) {
+			
+			int nombreArticleInsere2 = psmt.executeUpdate();
+
+			if (nombreArticleInsere2 != 1) {
 				be.ajouterErreur(CodesResultatDAL.INSERT_RETRAIT_ECHEC);
 				throw be;
 			}
@@ -263,6 +264,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		
 		Categorie categorie = new Categorie();
 		categorie.setLibelle(rs.getString("libelle"));
+		categorie.setNoCategorie(rs.getInt("no_categorie"));
 		
 		newArticle.setUtilisateur(utilisateur);
 		newArticle.setCategorie(categorie);

@@ -1,16 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>DÃ©tails de la vente</title>
+<title>Détails de la vente</title>
 </head>
 <body>
-	<h1>DÃ©tails vente</h1>
+	<h1>Détails vente</h1>
 	<form id="formDetailVente" action="DetailVente" method="post">
 
-		<!-- Nom de l'article sÃ©lectionnÃ© -->
+		<!-- Nom de l'article sélectionné -->
 		<div id="nomArticle">
 			<label id=labelArticle for="article">${retrait.article.nomArticle}</label>
 			<input type="hidden" name="noArticle"
@@ -23,10 +17,10 @@
 
 
 
-		<!-- CatÃ©gorie de l'article -->
+		<!-- Catégorie de l'article -->
 		<div id="categorieArticle">
 
-			<p>CatÃ©gorie : ${retrait.article.categorie.libelle}</p>
+			<p>Catégorie : ${retrait.article.categorie.libelle}</p>
 
 		</div>
 
@@ -40,16 +34,16 @@
 		</div>
 
 
-		<!-- Mise Ã  prix de l'article -->
+		<!-- Mise à prix de l'article -->
 		<div id="miseAPrix">
 
-			<p>Mise Ã  prix : ${retrait.article.miseAPrix} points</p>
+			<p>Mise à prix : ${retrait.article.miseAPrix} points</p>
 		</div>
 
 
-		<!-- Date de fin d'enchÃ¨re -->
+		<!-- Date de fin d'enchère -->
 		<div id="finEnchereArticle">
-			<p>Fin de l'enchÃ¨re : ${retrait.article.dateFinEncheres}</p>
+			<p>Fin de l'enchère : ${retrait.article.dateFinEncheres}</p>
 		</div>
 
 		<!-- Adresse de retrait -->
@@ -66,9 +60,9 @@
 
 		<!-- Proposition -->
 		<div id="proposition">
-			<label>Ma proposition : </label>
+			<label for="proposition">Ma proposition : </label>
 			<c:if
-				test="${sessionScope.utilisateur.pseudo ne utilisateurMax.pseudo}">
+				test="${sessionScope.utilisateur.pseudo != utilisateurMax.pseudo}">
 				<input type="number" id="proposition" name="proposition"
 					min="${retrait.article.prixVente+1}" max="100000000"
 					value="${retrait.article.prixVente+1}">
@@ -80,11 +74,11 @@
 		</div>
 
 		<c:if test="${retrait.article.dateFinEncheres < now}">
-			<p>TÃ©lÃ©phone : ${retrait.article.utilisateur.telephone}</p>
+			<p>Téléphone : ${retrait.article.utilisateur.telephone}</p>
 		</c:if>
 
 		<div id="boutonEncherir">
-			<button type="submit" id="encherir">EnchÃ©rir</button>
+			<button type="submit" id="encherir">Enchérir</button>
 
 		</div>
 	</form>

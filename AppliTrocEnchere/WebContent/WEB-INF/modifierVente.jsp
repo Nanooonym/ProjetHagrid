@@ -7,7 +7,7 @@
 </head>
 <body>
 
-	<h1>Nouvelle Vente</h1>
+	<h1>Modifier Vente</h1>
 
 	<form action="<%=request.getContextPath()%>/UpdateArticle" method="post">
 		<div>
@@ -25,10 +25,10 @@
 				<label id="categorie" for="categorie">Catégories</label>
 				<select id="categorie" name="categorie">
 					<option value="0">Toutes</option>
-					<option value="1">Informatique</option>
-					<option value="2">Ameublement</option>
-					<option value="3">Vêtement</option>
-					<option value="4">Sport et Loisirs</option>
+					<option value="1" <c:if test="${retrait.article.categorie.noCategorie == 1}">selected</c:if>>Informatique</option>
+					<option value="2" <c:if test="${retrait.article.categorie.noCategorie == 2}">selected</c:if>>Ameublement</option>
+					<option value="3" <c:if test="${retrait.article.categorie.noCategorie == 3}">selected</c:if>>Vêtement</option>
+					<option value="4" <c:if test="${retrait.article.categorie.noCategorie == 4}">selected</c:if>>Sport et Loisirs</option>
 				</select>
 				<br>
 			</div>

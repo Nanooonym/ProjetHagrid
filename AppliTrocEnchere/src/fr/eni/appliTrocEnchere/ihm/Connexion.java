@@ -77,11 +77,17 @@ public class Connexion extends HttpServlet {
 					if (cookie.getName().equals("login") && checkRemember[0].equals("noRmb")) {
 						cookie.setMaxAge(0);
 						response.addCookie(cookie);
+					}else if (cookie.getName().equals("login") && checkRemember[0].equals("rmb")) {
+						cookie.setValue(utilisateur.getPseudo());
+						response.addCookie(cookie);
 					}
 					
 					// Il y avait un cookie Password, mais "Remember" est décoché
 					if (cookie.getName().equals("password") && checkRemember[0].equals("noRmb")) {
 						cookie.setMaxAge(0);
+						response.addCookie(cookie);
+					}else if (cookie.getName().equals("password") && checkRemember[0].equals("rmb")){
+						cookie.setValue(utilisateur.getMotDePasse());
 						response.addCookie(cookie);
 					}
 				}

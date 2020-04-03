@@ -14,18 +14,21 @@
 			</div>
 
 			<div class="options">
-				<div><c:if test="${empty sessionScope.utilisateur}">
-					<a href="<%=request.getContextPath()%>/Connexion">S'inscrire -
-						Se connecter</a>
-				</c:if></div>
+				<div>
+				<c:if test="${empty sessionScope.utilisateur}">
+					<a href="<%=request.getContextPath()%>/Connexion">S'inscrire - Se connecter</a>
+				</c:if>
+				</div>
 
 				<c:if test="${!empty sessionScope['utilisateur'] }">
 					<div class="option"><c:out value="Utilisateur : ${sessionScope.utilisateur.pseudo}" /></div>
+									<div class="options-container">
 					<div class="option"><c:out value="Encheres" /></div>
 					<div class="option"><a href="<%=request.getContextPath()%>/AjoutArticle">Vendre un
 						article</a></div>
 					<div class="option"><a href="<%=request.getContextPath()%>/MonProfil">Mon Profil</a></div>
 					<div class="option"><a href="<%=request.getContextPath()%>/Deconnexion">Déconnexion</a></div>
+					</div>
 				</c:if>
 			</div>
 
@@ -170,9 +173,16 @@
 					<div>
 						<c:out value="Fin de l'enchère : ${newParsedDate}" />
 					</div>
+					
 					<div>
+					<c:if test="${enchere.utilisateur.pseudo == sessionScope.utilisateur.pseudo }">
 						<a href="<%=request.getContextPath()%>/MonProfil">Vendeur :
 							${enchere.utilisateur.pseudo}</a>
+					</c:if>
+					<c:if test="${sessionScope.utilisateur.pseudo  == null || enchere.utilisateur.pseudo != sessionScope.utilisateur.pseudo}">
+						<a href="<%=request.getContextPath()%>/AfficherUtilisateur?noUtilisateur=${enchere.utilisateur.noUtilisateur}">Vendeur :
+							${enchere.utilisateur.pseudo}</a>
+					</c:if>
 					</div>
 				</div>
 			</c:forEach>
