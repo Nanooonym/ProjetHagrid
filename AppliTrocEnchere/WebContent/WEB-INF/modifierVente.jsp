@@ -15,7 +15,7 @@
 	</header>
 	
 	<div class="title">
-	<h1>Nouvelle Vente</h1>
+	<h1>Modification de la Vente</h1>
 </div>
 
 <div class="contenu">
