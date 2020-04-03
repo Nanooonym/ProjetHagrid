@@ -26,13 +26,11 @@ body{
 	grid-template-columns:   1fr 350px 1fr ;
 	grid-template-rows: 200px  500px 200px;
 	grid-template-areas: 
-	"header header header"
-	". connexion ."
-	". . .";
+	"header header 		header"
+	". 		connexion 	."
+	". 		. 			.";
 	
 }
-
-
 
 .connexion{
 	
@@ -40,7 +38,6 @@ body{
 	grid-area: connexion;
 	display: flex;
 	flex-direction: column;
-
 	
 }
 

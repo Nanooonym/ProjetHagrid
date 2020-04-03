@@ -137,7 +137,7 @@ public class AjoutArticle extends HttpServlet {
 		if (dateDebutEncheres.isBefore(LocalDate.now())) {
 			etatVente = "En cours";
 		} else {
-			etatVente = "Créée";
+			etatVente = "Creee";
 		}
 
 		ArticleVendu article = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix,

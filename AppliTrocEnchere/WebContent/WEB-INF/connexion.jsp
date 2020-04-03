@@ -1,9 +1,10 @@
 <title>Connexion</title>
-<link href="css/page.css" rel="stylesheet">
+<link href="css/connexion.css" rel="stylesheet">
 </head>
 <body>
 
-	<header style="">
+<div class="grid">
+	<header>
 		<div class="eni-encheres">
 			<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
 		</div>
@@ -72,6 +73,6 @@
 		<input class="annuler" type="submit" value="Annuler">
 	</form>
 	</div>
-
+</div>
 </body>
 </html>
