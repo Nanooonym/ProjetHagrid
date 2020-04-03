@@ -1,22 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html >
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Modification du profil</title>
 <link href="css/modifProfil.css" rel="stylesheet">
 </head>
 <body>
 
 	<header style="">
-		<h2>ENI-EnchÃ¨res</h2>
+		<div class="eni-encheres">
+			<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
+		</div>
 	</header>
 
 	<h1 class="title">Mon profil</h1>
 	<div class="container-column">
 
-		<form action="./ModificationProfil" method="post">
+		<form action="./ModificationProfil" method="post" id="enregistrer">
 			<div class="container-row">
 
 				<div class="container-column">
@@ -26,12 +22,12 @@
 					</div>
 
 					<div class="container-formulaire">
-						<label>PrÃ©nom :</label> <input type="text" id="textfield"
+						<label>Prénom :</label> <input type="text" id="textfield"
 							name="prenom" value="${sessionScope.utilisateur.prenom}">
 					</div>
 
 					<div class="container-formulaire">
-						<label>TÃ©lÃ©phone :</label> <input type="text" id="textfield"
+						<label>Téléphone :</label> <input type="text" id="textfield"
 							name="telephone" value="${sessionScope.utilisateur.telephone}">
 					</div>
 
@@ -41,17 +37,13 @@
 					</div>
 
 					<div class="container-formulaire">
-						<label>Mot de passe actuel:</label> <input type="text" id="textfield"
+						<label>Mot de passe actuel:</label> <input type="password" id="textfield"
 							name="motDePasseActuel">
 					</div>
 					
 					<div class="container-formulaire">
-						<label>Nouveau mot de passe :</label> <input type="password" id="textfield"
-							name="nouveauMotDePasse">
+						<label>Nouveau mot de passe:</label> <input type="password" id="textfield" name="nouveauMotDePasse">
 					</div>
-					
-					
-					
 				</div>
 
 				<div class="container-column">
@@ -74,26 +66,30 @@
 						<label>Ville :</label> <input type="text" id="textfield"
 							name="ville" value="${sessionScope.utilisateur.ville}">
 					</div>
+					
+					
+					
 
 					<div class="container-formulaire">
 						<label>Confirmation :</label> <input type="password" id="textfield"
 							name="confirmation">
 					</div>
-							<c:out value="CrÃ©dits : ${sessionScope.utilisateur.credit}"/>
+						<p>Crédit <c:out value="${sessionScope.utilisateur.credit}"/> </p>
 				</div>
 
 			</div>
-			<input type="submit" value="Enregistrer" class="btn btn-primary">
 		</form>
+			
 
-
+		<div class="boutons">
+		<input type="submit" value="Enregistrer" class="save" form="enregistrer">
 		<form action="<%=request.getContextPath()%>/SupprimerCompte" method="get">
-			<button type="submit" value="supprimerCompte">Supprimer mon compte</button>
+			<button class="delete" type="submit" value="supprimerCompte">Supprimer mon compte</button>
 		</form>
 		<form action="<%=request.getContextPath()%>/MonProfil" method="get">
-			<button type="submit" value="monProfil">Retour</button>
+			<button class="retour" type="submit" value="monProfil">Retour</button>
 		</form>
-
+</div>
 	</div>
 </body>
 </html>

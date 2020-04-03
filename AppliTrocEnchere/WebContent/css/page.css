@@ -83,12 +83,18 @@ header{
 	justify-self:right;
 	align-items:center;
 	font-size: 18px;
-	
+	flex-direction:column;
+}
+
+.options-container{
+	display:flex;
+	flex-direction:row;
 }
 
 .option{
 	display:flex;
 	padding-right:8px;
+	justify-content:right;
 }
 
 .title{

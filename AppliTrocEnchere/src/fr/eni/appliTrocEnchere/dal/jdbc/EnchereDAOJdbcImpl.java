@@ -388,6 +388,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		articleVendu.setDateFinEncheres(LocalDate.parse(rs.getString("date_fin_encheres")));
 
 		utilisateur.setPseudo(rs.getString("pseudo"));
+		utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 		enchere.setUtilisateur(utilisateur);
 
 		// retrait.setRue(rs.getString("rue"));

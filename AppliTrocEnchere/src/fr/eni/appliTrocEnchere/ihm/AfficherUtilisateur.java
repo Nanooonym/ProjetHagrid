@@ -35,17 +35,9 @@ public class AfficherUtilisateur extends HttpServlet {
 		try {
 			
 			
-			//	utilisateur = utilisateurManager.selectUtilisateurById(request.getParameter("utilisateur"));
-				utilisateur = utilisateurManager.selectUtilisateurById(1);
+				utilisateur = utilisateurManager.selectUtilisateurById(Integer.parseInt(request.getParameter("noUtilisateur")));
 				
 				request.setAttribute("utilisateur", utilisateur);
-					
-				
-		
-			/*	Utilisateur user = new Utilisateur();
-				user = utilisateur.getNoUtilisateur();  
-				request.setAttribute("utilisateur", user);
-			*/
 				
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/afficherProfil.jsp");		
 				rd.forward(request, response);
@@ -62,7 +54,7 @@ public class AfficherUtilisateur extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		doGet(request, response);
 	}
 
