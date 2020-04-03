@@ -82,6 +82,7 @@ header{
 	justify-self: center;
 	align-content: center;
 	justify-content: center;
+	color: green;
 }
 
 .delete{
@@ -93,6 +94,7 @@ header{
 	justify-self: center;
 	align-content: center;
 	justify-content: center;
+	color:red;
 }
 
 .retour{
@@ -104,6 +106,7 @@ header{
 	justify-self: center;
 	align-content: center;
 	justify-content: center;
+	color:blue;
 }
 
 .boutons{
