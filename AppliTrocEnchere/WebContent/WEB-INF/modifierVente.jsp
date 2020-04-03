@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="css/nouvelleVente.css" rel="stylesheet">
+<link href="css/modifVente.css" rel="stylesheet">
 <title>Modification de la vente</title>
 
 </head>

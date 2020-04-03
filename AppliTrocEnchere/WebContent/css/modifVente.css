@@ -106,9 +106,8 @@ header{
 .lesBoutons{
 	display: flex;
 	justify-content: space-around;
-	
-	margin-left: 750px;
-	margin-right: 750px;
+	margin-left: 700px;
+	margin-right: 700px;
 }
 
 input:disabled + label {

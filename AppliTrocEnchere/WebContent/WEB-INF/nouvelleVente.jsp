@@ -82,21 +82,26 @@
 				</fieldset>
 			</div>
 				<br>
-			<button class="save" type="submit">Enregistrer</button>
+			
 			
 	
 
 	</form>
+	</div>
+		<div class="lesBoutons">
+			<button class="save" type="submit">Enregistrer</button>
 			
-		<form action="<%=request.getContextPath()%>/Accueil" method="get">
-			<input type="submit" value="Annuler">
+				<form action="<%=request.getContextPath()%>/Accueil" method="get">
+					<input class="cancel" type="submit" value="Annuler">
 		</form>
+		</div>
+		
 		
 		<c:forEach items="${errorMessages}" var="error">
 				<c:out value="${error}" />
 				<br>
 		</c:forEach>
 
-</div>
+
 </body>
 </html>

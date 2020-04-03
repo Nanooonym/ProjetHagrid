@@ -111,8 +111,10 @@ header{
 
 .boutons{
 	display: flex;
-	justify-content:center;
+	justify-content:space-around;
 	padding: 150px;
+	margin-left: 450px;
+	margin-right: 450px;
 }
 
 
