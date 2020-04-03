@@ -4,13 +4,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="css/page.css" rel="stylesheet">
+<link href="css/detailVente.css" rel="stylesheet">
 <title>Détails de la vente</title>
 </head>
 <body>
-	
+	<div class="grid">
 
-	<h1>Détails vente</h1>
+	<div class="leTitre">
+	<h2>Détails vente</h2>
+	</div>
+	
+	<div class="laDescription">
+	
 	<form id="formDetailVente" action="DetailVente" method="post">
 
 		<!-- Nom de l'article sélectionné -->
@@ -85,20 +90,22 @@
 		<c:if test="${retrait.article.dateFinEncheres < now}">
 			<p>Téléphone : ${retrait.article.utilisateur.telephone}</p>
 		</c:if>
-
-		<div id="boutonEncherir">
+	</div>
+<div class="lesBoutons">
+		<div class="boutonEncherir">
 			<button type="submit" id="encherir">Enchérir</button>
 
 		</div>
 	</form>
+	
 	<form action="./Accueil" method="get">
 		<input type="submit" value="Annuler">
 	</form>
-
+</div>
 	<c:forEach items="${errorMessages}" var="error">
 		<c:out value="${error}" />
 		<br>
 	</c:forEach>
-
+</div>
 </body>
 </html>

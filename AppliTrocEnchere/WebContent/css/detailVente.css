@@ -45,7 +45,8 @@ H2{
 	grid-row-start: 3;
 }
 
-.leBouton{
+.lesBoutons{
 	grid-column-start: 2;
 	grid-row-start: 4;
 }
+
