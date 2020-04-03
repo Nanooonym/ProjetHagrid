@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="css/page.css" rel="stylesheet">
 <title>Détails de la vente</title>
 </head>
 <body>
+	
+
 	<h1>Détails vente</h1>
 	<form id="formDetailVente" action="DetailVente" method="post">
 

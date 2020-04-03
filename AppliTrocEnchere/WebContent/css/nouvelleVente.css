@@ -54,7 +54,8 @@ header{
 .contenu{
 	display: flex;
 	justify-content: center;
-	padding: 150px;
+	padding: 100px;
+	
 }
 
 .desc{
@@ -75,9 +76,37 @@ header{
 	justify-self: center;
 	align-content: center;
 	justify-content: center;
-	
+	color:green;
 }
 
+.delete{
+	display: flex;
+	width: 100px !important;
+	height: 40px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+	color:red;
+}
+
+.cancel{
+	display: flex;
+	width: 100px !important;
+	height: 40px !important;
+	box-shadow: 5px 5px #787575;
+	align-self: center;
+	justify-self: center;
+	align-content: center;
+	justify-content: center;
+	color:blue;
+}
+
+.lesBoutons{
+	display: flex;
+	justify-content: center;
+}
 
 input:disabled + label {
     color:#ccc;

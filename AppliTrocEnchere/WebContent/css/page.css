@@ -149,11 +149,12 @@ input:disabled + label {
 	display:flex;
 	align-self:center;
 	justify-self:center;
-	width:250px !important;
+	width:400px !important;
 	height:100px !important;
 	align-content:center;
 	justify-content:center;
 	box-shadow:5px 5px #787575;
+	margin: 70px;
 	
 	grid-column-start:2;
 	grid-row-start:3;

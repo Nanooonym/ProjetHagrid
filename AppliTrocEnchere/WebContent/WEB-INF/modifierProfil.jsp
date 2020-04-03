@@ -10,7 +10,9 @@
 <body>
 
 	<header style="">
-		<h2>ENI-Enchères</h2>
+		<div class="eni-encheres">
+			<a href="<%=request.getContextPath()%>/Accueil">ENI-Enchères</a>
+		</div>
 	</header>
 
 	<h1 class="title">Mon profil</h1>
@@ -41,17 +43,13 @@
 					</div>
 
 					<div class="container-formulaire">
-						<label>Mot de passe actuel:</label> <input type="password" id="textfield"
+						<label>Mot de passe actuel:</label> <input type="text" id="textfield"
 							name="motDePasseActuel">
 					</div>
 					
 					<div class="container-formulaire">
-						<label>Nouveau mot de passe :</label> <input type="password" id="textfield"
-							name="nouveauMotDePasse">
+						<label>Nouveau mot de passe:</label> <input type="text" id="textfield" name="nouveauMotDePasse">
 					</div>
-					
-					
-					
 				</div>
 
 				<div class="container-column">
@@ -74,26 +72,31 @@
 						<label>Ville :</label> <input type="text" id="textfield"
 							name="ville" value="${sessionScope.utilisateur.ville}">
 					</div>
+					
+					
+					
 
 					<div class="container-formulaire">
 						<label>Confirmation :</label> <input type="password" id="textfield"
 							name="confirmation">
 					</div>
-							<c:out value="Crédits : ${sessionScope.utilisateur.credit}"/>
+						<p>Crédit <c:out value="${sessionScope.utilisateur.credit}"/> </p>
 				</div>
 
 			</div>
-			<input type="submit" value="Enregistrer" class="btn btn-primary">
+		
+			
 		</form>
-
+		<div class="boutons">
+		<input type="submit" value="Enregistrer" class="save">
 
 		<form action="<%=request.getContextPath()%>/SupprimerCompte" method="get">
-			<button type="submit" value="supprimerCompte">Supprimer mon compte</button>
+			<button class="delete" type="submit" value="supprimerCompte">Supprimer mon compte</button>
 		</form>
 		<form action="<%=request.getContextPath()%>/MonProfil" method="get">
-			<button type="submit" value="monProfil">Retour</button>
+			<button class="retour" type="submit" value="monProfil">Retour</button>
 		</form>
-
+</div>
 	</div>
 </body>
 </html>
