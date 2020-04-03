@@ -45,13 +45,13 @@
 				<!-- Mise � prix de l'article -->
 				<div id="miseAPrix">
 
-					<p>Mise � prix : ${retrait.article.miseAPrix} points</p>
+					<p>Mise a prix : ${retrait.article.miseAPrix} points</p>
 				</div>
 
 
 				<!-- Date de fin d'ench�re -->
 				<div id="finEnchereArticle">
-					<p>Fin de l'ench�re : ${retrait.article.dateFinEncheres}</p>
+					<p>Fin de l'enchere : ${retrait.article.dateFinEncheres}</p>
 				</div>
 
 				<!-- Adresse de retrait -->

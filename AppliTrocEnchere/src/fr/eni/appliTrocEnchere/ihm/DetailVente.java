@@ -36,6 +36,7 @@ public class DetailVente extends HttpServlet {
 	int montantEnchereEnCours;
 	LocalDate dateEnchere;
 	BusinessException be;
+	int noArticle;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -49,7 +50,12 @@ public class DetailVente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String idArticle = (String) request.getParameter("idArticle");
-		int noArticle = Integer.parseInt(idArticle);
+		if(idArticle != null) {
+			noArticle = Integer.parseInt(idArticle);
+		}else {
+			noArticle = Integer.parseInt((String) request.getAttribute("idArticle"));
+		}
+
 		Retrait retrait = new Retrait();
 		articleVenduManager = new ArticleVenduManager();
 		
@@ -125,7 +131,7 @@ public class DetailVente extends HttpServlet {
 			rd.forward(request, response);
 
 		} catch (BusinessException be) {
-			be = new BusinessException();
+			request.setAttribute("idArticle", String.valueOf(noArticle));
 			request.setAttribute("errorMessages", LecteurMessage.codesErreurToString(be));
 			doGet(request, response);
 		}
@@ -140,8 +146,6 @@ public class DetailVente extends HttpServlet {
 			be.ajouterErreur(CodesResultatIHM.PROPOSITION_INCORRECTE);
 			throw be;
 		}
-		
-		
 		
 	}
 	

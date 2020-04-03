@@ -21,7 +21,7 @@
 	<h1 class="title">Mon profil</h1>
 	<div class="container-column">
 
-		<form action="./Inscription" method="post">
+		<form action="./Inscription" method="post" id="inscription">
 			<div class="container-row">
 
 				<div class="container-column">
@@ -86,7 +86,7 @@
 		</form>
 		<div class="boutons">
 			
-				<button class="creation" type="submit">Créer</button>
+				<button class="creation" type="submit" form="inscription">Créer</button>
 			
 	
 	<form action="./Connexion" method="get">
